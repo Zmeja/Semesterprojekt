@@ -103,17 +103,31 @@ HfuSpTicTacToeBoardState >> getVictor [
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToeBoardState >> initiateBoardState [
+HfuSpTicTacToeBoardState >> initializeBoardState [
 
 	"Initiates empty board "
-	
+	self turnOrder: OrderedCollection new.
 	self boardTiles: #(-1 -1 -1 -1 -1 -1 -1 -1 -1) asOrderedCollection
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
+
+	"<^self>"
+	"Checks if a order is valid"
+	anGameOrder class = HfuSpTicTacToeOrder 
+		ifFalse: [ ^false.].
+	((anGameOrder fieldID) between: 0 and: 9)
+		ifFalse: [^false].
+	
+	^(self boardTiles at: (anGameOrder fieldID) )=-1
+
 ]
 
 { #category : 'Not categorized' }
 HfuSpTicTacToeBoardState >> setField: aFieldInteger asPlayerOwned: aPlayerInteger [
 
-	"Initiates empty board "
+	"Changes Ownership of a field to a Player"
 	|tempBoardTiles|
 	tempBoardTiles:= self boardTiles.
 	

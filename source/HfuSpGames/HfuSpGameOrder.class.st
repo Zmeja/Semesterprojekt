@@ -19,8 +19,8 @@ HfuSpGameOrder >> playerID [
 { #category : 'Not categorized' }
 HfuSpGameOrder >> playerID: aInteger [
 
-	"<^self>"
-	"Answer the receiver"
+	"<>"
+	"Sets playerID for this Order"
 
 	playerID:= aInteger
 ]
