@@ -23,6 +23,16 @@ HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 	
 ]
 
+{ #category : 'Not categorized' }
+HfuSpTurnStateController >> announceVictorToPlayers: aPlayerID [
+
+	"<^self>"
+	"Notifies all players about game end. aPlayerID is the Victors ID 
+	 If there is no Victor aPlayerID is -1"
+
+	self playerViewControllers do: [:aController| aController announceVictor: aPlayerID]
+]
+
 { #category : 'Accessing' }
 HfuSpTurnStateController >> createPlayer: anPlayerID [
 
@@ -53,13 +63,23 @@ HfuSpTurnStateController >> currentBoardState: anBoardState [
 	currentBoardState := anBoardState
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','ViewControllerNotifying'] }
 HfuSpTurnStateController >> demandPlayerInput: aPlayerID [
 
 	"<^self>"
 	"Answer the receiver"
 	
 	self
+]
+
+{ #category : 'Accessing' }
+HfuSpTurnStateController >> endGameHandling [
+
+	"<^self>"
+	"Checks if Game has ended "
+
+	self subclassResponsibility
 ]
 
 { #category : 'Accessing' }
@@ -99,7 +119,8 @@ HfuSpTurnStateController >> playerViewControllers: anDictionary [
 	playerViewControllers := anDictionary
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','ViewControllerNotifying'] }
 HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 
 	"<^>"
@@ -108,8 +129,10 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 		ifFalse:[
 					self demandPlayerInput: (aGameOrder playerID).
 					^nil].
-	self currentBoardSt
-		
+	self updateBoardState: aGameOrder.
+	self endGameHandling.
+	self currentBoardState makeTurnOrderStep.
+	self updateGameStateOfAllPlayers.
 ]
 
 { #category : 'Accessing' }
@@ -139,7 +162,8 @@ HfuSpTurnStateController >> updateBoardState: aGameOrder [
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','ViewControllerNotifying'] }
 HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 
 	"<>"

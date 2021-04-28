@@ -17,12 +17,30 @@ HfuSpBoardState >> addPlayerToTurnOrder: anPlayerID [
 ]
 
 { #category : 'Accessing' }
+HfuSpBoardState >> getVictor [
+
+	"<^self>"
+	"Answer the receiver"
+
+	self subclassResponsibility.
+]
+
+{ #category : 'Accessing' }
 HfuSpBoardState >> initializeBoardState [
 
 	"<^self>"
 	"Answer the receiver"
 
 	self subclassResponsibility
+]
+
+{ #category : 'Accessing' }
+HfuSpBoardState >> isGameDraw [
+
+	"<^self>"
+	"Answer the receiver"
+
+	self subclassResponsibility.
 ]
 
 { #category : 'Accessing' }

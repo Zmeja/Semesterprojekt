@@ -4,11 +4,20 @@ Class {
 	#instVars : [
 		'playerID',
 		'currentBoardState',
-		'isActingPlayer',
 		'turnStateController'
 	],
 	#category : 'HfuSpGames'
 }
+
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','ViewNotifying'] }
+HfuSpPlayerViewController >> announceVictor: aPlayerID [
+
+	"<^self>"
+	"tells the controlled view to display the games vicror"
+
+	self
+]
 
 { #category : 'Accessing' }
 HfuSpPlayerViewController >> currentBoardState [
@@ -34,19 +43,11 @@ HfuSpPlayerViewController >> isActingPlayer [
 	"<^iOf Boolean>"
 	"Answer the isActingPlayer of the receiver"
 
+	self currentBoardState = nil 
+	ifFalse: [^(self currentBoardState turnOrder first )= (self playerID) ].
+	^true
 	
-	"^(self currentBoardState turnOrder first )= (self playerID) "
-	^ isActingPlayer
 	
-]
-
-{ #category : 'Accessing' }
-HfuSpPlayerViewController >> isActingPlayer: aBoolean [
-
-	"<aBoolean: iOf Boolean, ^self>"
-	"Set the isActingPlayer of the receiver"
-
-	isActingPlayer := aBoolean
 ]
 
 { #category : 'Accessing' }
@@ -67,7 +68,8 @@ HfuSpPlayerViewController >> playerID: anInteger [
 	playerID := anInteger
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','ViewNotifying'] }
 HfuSpPlayerViewController >> resetViewBoardState [
 
 	"<^self>"
@@ -76,14 +78,14 @@ HfuSpPlayerViewController >> resetViewBoardState [
 	self
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','TurnStateControllerNotifying'] }
 HfuSpPlayerViewController >> transmitOrder: aGameOrder [
 
 	"<^self>"
 	"Answer the receiver"
 	self isActingPlayer = true 
 		ifFalse:[^nil].
-	self isActingPlayer: false.
 	self turnStateController receiveGameOrder:  aGameOrder
 ]
 

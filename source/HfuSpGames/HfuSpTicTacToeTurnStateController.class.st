@@ -5,6 +5,17 @@ Class {
 }
 
 { #category : 'Not categorized' }
+HfuSpTicTacToeTurnStateController >> endGameHandling [
+
+	"<^self>"
+	"Checks if Game should end and adjusts Game State if it should"
+	self currentBoardState getVictor = -1
+		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor) ].
+	self currentBoardState isGameDraw
+		ifTrue: [self announceVictorToPlayers: -1]
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToeTurnStateController >> exectueOrder: anGameOrder [
 
 	"<^self>"
@@ -13,20 +24,6 @@ HfuSpTicTacToeTurnStateController >> exectueOrder: anGameOrder [
 	
 	self currentBoardState setField: (anGameOrder fieldID) asPlayerOwned: (anGameOrder playerID).
 	^self currentBoardState
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToeTurnStateController >> receiveGameOrder: aGameOrder [
-
-	"<^>"
-	"Receives a Game Order, checks its Validity and executes it"
-	(self currentBoardState isValidOrder:  aGameOrder)
-		ifFalse:[
-					self demandPlayerInput: (aGameOrder playerID).
-					^nil].
-	self updateBoardState: aGameOrder.
-	self currentBoardState makeTurnOrderStep.
-		
 ]
 
 { #category : 'Not categorized' }

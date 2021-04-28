@@ -25,15 +25,13 @@ HfuSpGameCreationStub >> createGame [
 	
 	self myPlayer1: HfuSpTicTacToePlayerViewController new.
 	self myPlayer1 playerID: 1.
-	self myPlayer1 isActingPlayer: false.
 	myTurnStateController addPlayer: self myPlayer1 .
 	
 	self myPlayer2: HfuSpTicTacToePlayerViewController new.
 	self myPlayer2 playerID: 2.
-	self myPlayer2 isActingPlayer: false.
 	myTurnStateController addPlayer: self myPlayer2.
 	
-	"myTurnStateController updateGameStateOfAllPlayers"
+	myTurnStateController updateGameStateOfAllPlayers
 	
 ]
 

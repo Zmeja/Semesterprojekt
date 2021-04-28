@@ -111,6 +111,18 @@ HfuSpTicTacToeBoardState >> initializeBoardState [
 ]
 
 { #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> isGameDraw [
+
+	"<^Boolean>"
+	"checks if game can be wone by any player
+	asumes that there is no current winner"
+	
+	^ (self boardTiles count: [:aTileOwner| aTileOwner=-1]) =0
+
+	
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
 
 	"<^self>"
