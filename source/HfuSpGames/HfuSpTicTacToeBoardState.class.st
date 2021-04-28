@@ -28,6 +28,81 @@ HfuSpTicTacToeBoardState >> boardTiles: aCollection [
 ]
 
 { #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> getBoardCol: aInteger [
+
+	"<^aCollection>"
+	"returns a Row of board Tiles"
+	^OrderedCollection new 
+		add:( self boardTiles at: aInteger);
+		add: (self boardTiles at: aInteger+3);
+		add: (self boardTiles at: aInteger+6);
+		yourself.
+		
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> getBoardRow: aInteger [
+
+	"<^aCollection>"
+	"returns a Row of board Tiles"
+
+	^self boardTiles copyFrom: aInteger*3-2 to: aInteger*3 
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> getDiagonal: aInteger [
+
+	"<^aCollection>"
+	"returns a diagonal 
+	 (1 for 1 5 9 )
+	 (2 for 3 5 7)"
+	|result|
+	result:= OrderedCollection new.
+	aInteger = 1 
+		ifTrue: [result add: (self boardTiles at: 1).
+					result add: (self boardTiles at: 5).
+					result add: (self boardTiles at: 9).]
+		ifFalse: [result add: (self boardTiles at: 3).
+					result add: (self boardTiles at: 5).
+					result add: (self boardTiles at: 7)].
+	^result
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> getTile: aInteger [
+
+	"<^aInteger>"
+	"returns value of respective field"
+
+	^self boardTiles at: aInteger
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeBoardState >> getVictor [
+
+	"<^aInteger>"
+	"returns player if there is a winner else returns -1"
+	
+	"(self boardTiles at:1) = (self boardTiles at:2) &  (self boardTiles at:2) =(self boardTiles at: 3 )
+		ifTrue: [^true].
+	^false"
+	#(1 2 3) do:[:eachLine|
+			((self getBoardCol: eachLine) count:[:aField| aField= ((self getBoardCol: eachLine) first) ] )=3
+				ifTrue: [^ (self getBoardCol: eachLine) first].
+			((self getBoardRow: eachLine) count:[:aField| aField= ((self getBoardRow: eachLine) first) ] )=3
+				ifTrue: [^ (self getBoardRow: eachLine) first].
+		].
+		((self getDiagonal:  1) count:[:aField| aField= ((self getDiagonal: 1) first) ] )=3
+				ifTrue: [^ (self getDiagonal: 1) first].
+		((self getDiagonal:  2) count:[:aField| aField= ((self getDiagonal: 2) first) ] )=3
+				ifTrue: [^ (self getDiagonal: 2) first].
+		
+			
+	^-99		
+	
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToeBoardState >> initiateBoardState [
 
 	"Initiates empty board "
