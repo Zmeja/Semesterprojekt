@@ -7,7 +7,7 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpTicTacToeOrder >> fieldID [
 
 	"sets fieldID to value aInteger"
@@ -15,7 +15,7 @@ HfuSpTicTacToeOrder >> fieldID [
 	^fieldID 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpTicTacToeOrder >> fieldID: aInteger [
 
 	"sets fieldID to value aInteger"

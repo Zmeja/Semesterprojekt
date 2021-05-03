@@ -7,7 +7,7 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpGameOrder >> playerID [
 
 	"<^self>"
@@ -16,7 +16,7 @@ HfuSpGameOrder >> playerID [
 	^playerID
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpGameOrder >> playerID: aInteger [
 
 	"<>"

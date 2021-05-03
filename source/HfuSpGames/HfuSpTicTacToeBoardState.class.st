@@ -7,15 +7,16 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeBoardState >> boardTiles [
 
 	"^Collection"
+	"returns the current state of all board tiles "
 	
 	^boardTiles
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeBoardState >> boardTiles: aCollection [
 
 	"Sets a Collection as new boardTile
@@ -27,7 +28,7 @@ HfuSpTicTacToeBoardState >> boardTiles: aCollection [
 	boardTiles:=aCollection
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeBoardState >> getBoardCol: aInteger [
 
 	"<^aCollection>"
@@ -40,7 +41,7 @@ HfuSpTicTacToeBoardState >> getBoardCol: aInteger [
 		
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeBoardState >> getBoardRow: aInteger [
 
 	"<^aCollection>"
@@ -49,13 +50,16 @@ HfuSpTicTacToeBoardState >> getBoardRow: aInteger [
 	^self boardTiles copyFrom: aInteger*3-2 to: aInteger*3 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeBoardState >> getDiagonal: aInteger [
 
 	"<^aCollection>"
-	"returns a diagonal 
+	"returns the values of a diagonal of the board tiles.
 	 (1 for 1 5 9 )
-	 (2 for 3 5 7)"
+	 (2 for 3 5 7)  in 
+	 1 2 3 
+	 4 5 6
+	 7 8 9"
 	|result|
 	result:= OrderedCollection new.
 	aInteger = 1 
@@ -68,7 +72,7 @@ HfuSpTicTacToeBoardState >> getDiagonal: aInteger [
 	^result
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeBoardState >> getTile: aInteger [
 
 	"<^aInteger>"
@@ -77,15 +81,12 @@ HfuSpTicTacToeBoardState >> getTile: aInteger [
 	^self boardTiles at: aInteger
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeBoardState >> getVictor [
 
 	"<^aInteger>"
 	"returns player if there is a winner else returns -1"
 	
-	"(self boardTiles at:1) = (self boardTiles at:2) &  (self boardTiles at:2) =(self boardTiles at: 3 )
-		ifTrue: [^true].
-	^false"
 	#(1 2 3) do:[:eachLine|
 			((self getBoardCol: eachLine) count:[:aField| aField= ((self getBoardCol: eachLine) first) ] )=3
 				ifTrue: [^ (self getBoardCol: eachLine) first].
@@ -102,7 +103,7 @@ HfuSpTicTacToeBoardState >> getVictor [
 	
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeBoardState >> initializeBoardState [
 
 	"Initiates empty board "
@@ -110,7 +111,7 @@ HfuSpTicTacToeBoardState >> initializeBoardState [
 	self boardTiles: #(-1 -1 -1 -1 -1 -1 -1 -1 -1) asOrderedCollection
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeBoardState >> isGameDraw [
 
 	"<^Boolean>"
@@ -122,7 +123,7 @@ HfuSpTicTacToeBoardState >> isGameDraw [
 	
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
 
 	"<^self>"
@@ -136,10 +137,10 @@ HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeBoardState >> setField: aFieldInteger asPlayerOwned: aPlayerInteger [
 
-	"Changes Ownership of a field to a Player"
+	"Changes Ownership of a board tile to a Player"
 	|tempBoardTiles|
 	tempBoardTiles:= self boardTiles.
 	

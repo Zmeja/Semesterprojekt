@@ -20,7 +20,7 @@ HfuSpTicTacToeTurnStateController >> exectueOrder: anGameOrder [
 
 	"<^self>"
 	"executes a order without checking its validity. 
-	 should only be called ba receiveGameOrder"
+	 should only be called via receiveGameOrder"
 	
 	self currentBoardState setField: (anGameOrder fieldID) asPlayerOwned: (anGameOrder playerID).
 	^self currentBoardState
@@ -30,7 +30,7 @@ HfuSpTicTacToeTurnStateController >> exectueOrder: anGameOrder [
 HfuSpTicTacToeTurnStateController >> updateBoardState: aGameOrder [
 
 	"<^aInteget> aGameOrder playerID if order was Processed else -1 "
-	"updates own Board State According to a Order."
+	"updates own board state according to a order."
 	|board|
 	self currentBoardState setField: (aGameOrder fieldID) asPlayerOwned: (aGameOrder playerID).
 	^ aGameOrder playerID

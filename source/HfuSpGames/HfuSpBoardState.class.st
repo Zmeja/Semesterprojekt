@@ -7,16 +7,17 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> addPlayerToTurnOrder: anPlayerID [
 
 	"<^self>"
-	"Answer the receiver"
+	"Adds a Player to the turnorder of active players
+	 within said list players are identified via playerID"
 
 	self turnOrder addLast: anPlayerID
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> getVictor [
 
 	"<^self>"
@@ -25,25 +26,25 @@ HfuSpBoardState >> getVictor [
 	self subclassResponsibility.
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> initializeBoardState [
 
 	"<^self>"
-	"Answer the receiver"
+	"Creates the boardstate of  a unstarted game"
 
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> isGameDraw [
 
 	"<^self>"
-	"Answer the receiver"
+	"Returnes wether the game is a draw (it is so if no player can make any moves that result in a victory)"
 
 	self subclassResponsibility.
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> isValidOrder: aGameOrder [
 
 	"<^self>"
@@ -52,7 +53,7 @@ HfuSpBoardState >> isValidOrder: aGameOrder [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> makePlayerOrderStep [
 
 	"<^self>"
@@ -61,7 +62,7 @@ HfuSpBoardState >> makePlayerOrderStep [
 	self turnOrder: (self turnOrder copyFrom: (self turnOrder second) to: (self turnOrder last)).
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> makeTurnOrderStep [
 
 	"<^self>"
@@ -73,7 +74,7 @@ HfuSpBoardState >> makeTurnOrderStep [
 	self turnOrder: tempOrder.
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> turnOrder [
 
 	"<^iOf OrderedCollection>"
@@ -82,7 +83,7 @@ HfuSpBoardState >> turnOrder [
 	^turnOrder
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpBoardState >> turnOrder: anOrderedCollection [
 
 	"<anOrderedCollection: iOf OrderedCollection, ^self>"

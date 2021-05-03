@@ -23,11 +23,12 @@ HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 	
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'ViewControllerNotifying' }
 HfuSpTurnStateController >> announceVictorToPlayers: aPlayerID [
 
 	"<^self>"
-	"Notifies all players about game end. aPlayerID is the Victors ID 
+	"Notifies all players about the potenital Game end. 
+	 aPlayerID is the Victors ID 
 	 If there is no Victor aPlayerID is -1"
 
 	self playerViewControllers do: [:aController| aController announceVictor: aPlayerID]
@@ -73,16 +74,18 @@ HfuSpTurnStateController >> demandPlayerInput: aPlayerID [
 	self
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'InternalStateHandling' }
 HfuSpTurnStateController >> endGameHandling [
 
 	"<^self>"
-	"Checks if Game has ended "
-
-	self subclassResponsibility
+	"Checks if Game should end and adjusts Game State if it should"
+	self currentBoardState getVictor = -1
+		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor) ].
+	self currentBoardState isGameDraw
+		ifTrue: [self announceVictorToPlayers: -1]
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'InternalStateHandling' }
 HfuSpTurnStateController >> exectueOrder: anOrder [
 
 	"<^self>"
@@ -92,7 +95,7 @@ HfuSpTurnStateController >> exectueOrder: anOrder [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'InternalStateHandling' }
 HfuSpTurnStateController >> initializeState [
 
 	"<^self>"
@@ -124,7 +127,7 @@ HfuSpTurnStateController >> playerViewControllers: anDictionary [
 HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 
 	"<^>"
-	"Receives a Game Order, checks its Validity and executes it"
+	"Receives a Game Order, checks its Validity and executes it if it is  Valid"
 	(self currentBoardState isValidOrder:  aGameOrder)
 		ifFalse:[
 					self demandPlayerInput: (aGameOrder playerID).
@@ -153,21 +156,20 @@ HfuSpTurnStateController >> turnNumber: anInteger [
 	self currentBoardState turnNumber: anInteger
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'InternalStateHandling' }
 HfuSpTurnStateController >> updateBoardState: aGameOrder [
 
 	"<^self>"
-	"Updates Board State Based on aTicTacToeOrder"
+	"Updates Board State Based on aOrder"
 	self subclassResponsibility
 	
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','ViewControllerNotifying'] }
+{ #category : 'ViewControllerNotifying' }
 HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 
-	"<>"
-	"generates  Turn State From Order and distributes it to all players"
+	"<^self>"
+	"distributes it to all players and tells them to display it"
 
 	self playerViewControllers do: [:aController| 
 		aController currentBoardState: (self currentBoardState copy). 
