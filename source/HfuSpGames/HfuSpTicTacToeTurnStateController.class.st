@@ -27,6 +27,31 @@ HfuSpTicTacToeTurnStateController >> exectueOrder: anGameOrder [
 ]
 
 { #category : 'Not categorized' }
+HfuSpTicTacToeTurnStateController >> initializeBoardState [
+
+	"<^self>"
+	"creates the games Board"
+		| myBoardState |
+
+	self playerViewControllers: Dictionary new.
+	
+	myBoardState:= HfuSpTicTacToeBoardState new.
+	myBoardState initializeBoardState.
+	self currentBoardState: myBoardState
+	
+
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeTurnStateController >> initializeState [
+
+	"<^self>"
+	"initializes object state"
+	self playerViewControllers: Dictionary new.
+	self initializeBoardState.
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToeTurnStateController >> updateBoardState: aGameOrder [
 
 	"<^aInteget> aGameOrder playerID if order was Processed else -1 "

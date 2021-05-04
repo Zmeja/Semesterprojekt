@@ -30,12 +30,17 @@ HfuSpGameSessionsManager class >> activeGameSessions: anDictionary [
 ]
 
 { #category : 'API' }
-HfuSpGameSessionsManager class >> addPlayerToSession: anPlayerIdInteger [
+HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGameSessionIdInteger [
 
 	"<^aHfuSpPlayerView>"
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
-
-	self
+	|gameTurnStateController|
+	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
+	gameTurnStateController= nil
+		ifTrue:[^nil].
+	(gameTurnStateController containsPlayer: anPlayerIdInteger = true)
+		ifTrue:[^nil].
+	^gameTurnStateController createPlayer: anPlayerIdInteger
 ]
 
 { #category : 'API' }
@@ -49,13 +54,23 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 		ifTrue: [self activeGameSessions: Dictionary new ].
 	aGameNameString = 'TicTacToe'
 		ifTrue: [
-			newGameSession:= HfuSpTurnStateController new.
+			newGameSession:= HfuSpTicTacToeTurnStateController new.
 			newGameSession initializeState.
 			newGameSessionID:= self getNextGameID.
 			self activeGameSessions add: ( Association new key: newGameSessionID value: newGameSession ).
 			^newGameSessionID
 			].
 
+]
+
+{ #category : 'API' }
+HfuSpGameSessionsManager class >> getGameSessionById: anGameIdInteger [
+
+	"<^aHfuSpTurnStateController>"
+	"Checks if there is a ongoing Game Session with the correct ID.
+	If there is a Game Session its TurnStateController is Returned."
+
+	^self  activeGameSessions at:  anGameIdInteger
 ]
 
 { #category : 'Internal' }
@@ -90,4 +105,22 @@ HfuSpGameSessionsManager class >> iDOfNextGame: anInteger [
 	"Set the IDOfNextGame of the receiver"
 
 	IDOfNextGame := anInteger
+]
+
+{ #category : 'API' }
+HfuSpGameSessionsManager class >> listAllActiveSessions [
+
+	"<^aCollection> "
+	"returns a list of  all active game session Ids "
+
+	^self activeGameSessions keys asOrderedCollection
+]
+
+{ #category : 'API' }
+HfuSpGameSessionsManager class >> removeActiveGameSession: aGameSessionIdInteger [
+
+	"<^selfr>"
+	"removes a HfuSpTurnstateController from the list of  active Sessions."
+
+	self activeGameSessions removeKey: aGameSessionIdInteger.
 ]

@@ -34,6 +34,15 @@ HfuSpTurnStateController >> announceVictorToPlayers: aPlayerID [
 	self playerViewControllers do: [:aController| aController announceVictor: aPlayerID]
 ]
 
+{ #category : 'Not categorized' }
+HfuSpTurnStateController >> containsPlayer: anPlayerIdInteger [
+
+	"<^boolean>"
+	"checks wether a player identified by an Id is already active in this game"
+
+	^self playerViewControllers includesKey: anPlayerIdInteger
+]
+
 { #category : 'Accessing' }
 HfuSpTurnStateController >> createPlayer: anPlayerID [
 
@@ -95,13 +104,23 @@ HfuSpTurnStateController >> exectueOrder: anOrder [
 	self subclassResponsibility
 ]
 
+{ #category : 'Not categorized' }
+HfuSpTurnStateController >> initializeBoardState [
+
+	"<^self>"
+	"creates the games Board"
+
+	self subclassResponsibility
+]
+
 { #category : 'InternalStateHandling' }
 HfuSpTurnStateController >> initializeState [
 
 	"<^self>"
 	"initializes object state"
-	playerViewControllers := Dictionary  new.
-	self
+	self subclassResponsibility.
+	
+
 ]
 
 { #category : 'Accessing' }
