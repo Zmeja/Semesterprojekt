@@ -214,6 +214,6 @@ HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 
 	self playerViewControllers do: [:aController| 
 		aController currentBoardState: (self createPlayerSpecificBoardState:  aController playerID). 	
-		"aController displayCurrentBoardState "
+		aController displayCurrentBoardState
 		]										
 ]
