@@ -191,6 +191,6 @@ HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 	"distributes it to all players and tells them to display it"
 
 	self playerViewControllers do: [:aController| 
-		aController currentBoardState: (self currentBoardState copy). 
-		aController resetViewBoardState ]
+		aController currentBoardState: (self currentBoardState copy). 	"TODO: Baue hier Funktion ein, die basierend auf dem SpieIer"
+		aController resetViewBoardState ]												"einen spezifischen Boardstate Aufbaut"
 ]
