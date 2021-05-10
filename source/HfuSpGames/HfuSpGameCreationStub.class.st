@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'myTurnStateController',
 		'myPlayer1',
-		'myPlayer2'
+		'myPlayer2',
+		'globalViewForTest'
 	],
 	#category : 'HfuSpGames'
 }
@@ -23,16 +24,47 @@ HfuSpGameCreationStub >> createGame [
 	
 	myTurnStateController currentBoardState: myBoardState.
 	
+	globalViewForTest:= HfuSpTicTacToePlayerView new.
+	
 	self myPlayer1: HfuSpTicTacToePlayerViewController new.
 	self myPlayer1 playerID: 1.
+	self myPlayer1 globalView: globalViewForTest.
 	myTurnStateController addPlayer: self myPlayer1 .
 	
 	self myPlayer2: HfuSpTicTacToePlayerViewController new.
 	self myPlayer2 playerID: 2.
+	self myPlayer2 globalView: globalViewForTest.
 	myTurnStateController addPlayer: self myPlayer2.
 	
 	myTurnStateController updateGameStateOfAllPlayers
 	
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameCreationStub >> createGame: curGlobalView [
+
+	"<^self>"
+	"Answer the receiver"
+	| myBoardState |
+	myTurnStateController:= HfuSpTicTacToeTurnStateController new.
+	myTurnStateController initializeState.
+	
+	myBoardState:= HfuSpTicTacToeBoardState new.
+	myBoardState initializeBoardState.
+	
+	myTurnStateController currentBoardState: myBoardState.
+	
+	self myPlayer1: HfuSpTicTacToePlayerViewController new.
+	self myPlayer1 playerID: 1.
+	self myPlayer1 globalView: curGlobalView.
+	myTurnStateController addPlayer: self myPlayer1.
+	
+	self myPlayer2: HfuSpTicTacToePlayerViewController new.
+	self myPlayer2 playerID: 2.
+	self myPlayer2 globalView: curGlobalView.
+	myTurnStateController addPlayer: self myPlayer2.
+	
+	"myTurnStateController updateGameStateOfAllPlayers"
 ]
 
 { #category : 'Not categorized' }
