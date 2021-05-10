@@ -55,6 +55,16 @@ HfuSpTurnStateController >> createPlayer: anPlayerID [
 	^newPlayer
 ]
 
+{ #category : 'InternalStateHandling' }
+HfuSpTurnStateController >> createPlayerSpecificBoardState: anPlayerId [
+
+	"<^self>"
+	"creates a board state that contains only information availible to the player"
+	"When not overriden by a subclass returns entire board State"
+
+	^ self currentBoardState copy
+]
+
 { #category : 'Accessing' }
 HfuSpTurnStateController >> currentBoardState [
 
@@ -191,6 +201,6 @@ HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 	"distributes it to all players and tells them to display it"
 
 	self playerViewControllers do: [:aController| 
-		aController currentBoardState: (self currentBoardState copy). 	"TODO: Baue hier Funktion ein, die basierend auf dem SpieIer"
+		aController currentBoardState: (self createPlayerSpecificBoardState:  aController playerID). 	
 		aController resetViewBoardState ]												"einen spezifischen Boardstate Aufbaut"
 ]
