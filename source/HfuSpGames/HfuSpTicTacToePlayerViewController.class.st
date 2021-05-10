@@ -8,21 +8,13 @@ Class {
 }
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerViewController >> addGlobalView: globalViewToAdd [
-	globalView := globalViewToAdd
-]
+HfuSpTicTacToePlayerViewController >> createPlayerView [
 
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerViewController >> announceVictor: aPlayerID [
-	globalView announceVictor: aPlayerID.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerViewController >> globalView: globalViewToSet [
-	globalView := globalViewToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerViewController >> resetViewBoardState [
-	globalView setGame: (self currentBoardState copy)
+	"<^anPlayerView>"
+	"returns the PlayerView managed by this PlayerViewController"
+	|View|
+	View:= HfuSpTicTacToePlayerView new.
+	View playerViewController: self.
+	self playerView:  View.
+	^self playerView
 ]

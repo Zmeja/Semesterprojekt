@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : 'Not categorized' }
+HfuSpTicTacToeTurnStateController >> createPlayerViewController [
+
+	"<^aPlayerViewController>"
+	"Creates a Player View Controller of games type "
+
+	^HfuSpTicTacToePlayerViewController new
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToeTurnStateController >> endGameHandling [
 
 	"<^self>"
@@ -15,22 +24,22 @@ HfuSpTicTacToeTurnStateController >> endGameHandling [
 		ifTrue: [self announceVictorToPlayers: -1]
 ]
 
-{ #category : 'Not categorized' }
-HfuSpTicTacToeTurnStateController >> exectueOrder: anGameOrder [
+{ #category : 'ViewControllerNotifying' }
+HfuSpTicTacToeTurnStateController >> executeOrder: anGameOrder [
 
 	"<^self>"
 	"executes a order without checking its validity. 
 	 should only be called via receiveGameOrder"
 	
 	self currentBoardState setField: (anGameOrder fieldID) asPlayerOwned: (anGameOrder playerID).
-	^self currentBoardState
+	^ anGameOrder playerID
 ]
 
 { #category : 'Not categorized' }
 HfuSpTicTacToeTurnStateController >> initializeBoardState [
 
 	"<^self>"
-	"creates the games Board"
+	"creates the games Board as it is at game Start."
 		| myBoardState |
 
 	self playerViewControllers: Dictionary new.
@@ -49,16 +58,4 @@ HfuSpTicTacToeTurnStateController >> initializeState [
 	"initializes object state"
 	self playerViewControllers: Dictionary new.
 	self initializeBoardState.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToeTurnStateController >> updateBoardState: aGameOrder [
-
-	"<^aInteget> aGameOrder playerID if order was Processed else -1 "
-	"updates own board state according to a order."
-	|board|
-	self currentBoardState setField: (aGameOrder fieldID) asPlayerOwned: (aGameOrder playerID).
-	^ aGameOrder playerID
-
-	
 ]

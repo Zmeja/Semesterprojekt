@@ -49,7 +49,7 @@ HfuSpTurnStateController >> createPlayer: anPlayerID [
 	"<^PlayerViewController>"
 	"Creates a NewPlayerViewController, ads it to playerViewController list"
 	|newPlayer|
-	newPlayer:= HfuSpPlayerViewController new .
+	newPlayer:= self createPlayerViewController.
 	newPlayer playerID: anPlayerID.
 	self addPlayer: newPlayer.
 	^newPlayer
@@ -63,6 +63,15 @@ HfuSpTurnStateController >> createPlayerSpecificBoardState: anPlayerId [
 	"When not overriden by a subclass returns entire board State"
 
 	^ self currentBoardState copy
+]
+
+{ #category : 'InternalStateHandling' }
+HfuSpTurnStateController >> createPlayerViewController [
+
+	"<^aPlayerViewController>"
+	"Creates a Player View Controller of games type "
+
+	self subclassResponsibility
 ]
 
 { #category : 'Accessing' }
@@ -104,8 +113,8 @@ HfuSpTurnStateController >> endGameHandling [
 		ifTrue: [self announceVictorToPlayers: -1]
 ]
 
-{ #category : 'InternalStateHandling' }
-HfuSpTurnStateController >> exectueOrder: anOrder [
+{ #category : 'Not categorized' }
+HfuSpTurnStateController >> executeOrder: anOrder [
 
 	"<^self>"
 	"executes a order without checking its validity. 
@@ -161,7 +170,7 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 		ifFalse:[
 					self demandPlayerInput: (aGameOrder playerID).
 					^nil].
-	self updateBoardState: aGameOrder.
+	self executeOrder: aGameOrder.
 	self endGameHandling.
 	self currentBoardState makeTurnOrderStep.
 	self updateGameStateOfAllPlayers.
@@ -198,9 +207,13 @@ HfuSpTurnStateController >> updateBoardState: aGameOrder [
 HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 
 	"<^self>"
-	"distributes it to all players and tells them to display it"
+	"hands each player a board state and tells them to display it.
+	 depending on the game a player specific BoardState is Created
+	 (for example a players hand in Poker)"
+	
 
 	self playerViewControllers do: [:aController| 
 		aController currentBoardState: (self createPlayerSpecificBoardState:  aController playerID). 	
-		aController resetViewBoardState ]												"einen spezifischen Boardstate Aufbaut"
+		"aController displayCurrentBoardState "
+		]										
 ]

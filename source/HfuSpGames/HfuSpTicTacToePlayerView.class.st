@@ -1,6 +1,6 @@
 Class {
 	#name : 'HfuSpTicTacToePlayerView',
-	#superclass : 'Me5BaseView',
+	#superclass : 'HfuSpPlayerView',
 	#instVars : [
 		'tic1',
 		'tic2',
@@ -69,7 +69,7 @@ HfuSpTicTacToePlayerView >> createComponents [
 				yourself);
 			yourself);
 		yourself.
-		
+		self  setGame:  (self playerViewController  currentBoardState).
 		stub:=HfuSpGameCreationStub new.
 		stub createGame: self.
 		stub createTicTacToeOrderForPlayer: 1 To: 1 .
@@ -81,6 +81,15 @@ HfuSpTicTacToePlayerView >> createComponents [
 		stub createTicTacToeOrderForPlayer: 1 To: 7 .
 		stub createTicTacToeOrderForPlayer: 2 To: 8 .
 		stub createTicTacToeOrderForPlayer: 1 To: 9 .
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> displayBoardState: anBoardState [
+
+	"<^self>"
+	"displays a board State on Screen"
+
+	self setGame: anBoardState
 ]
 
 { #category : 'Not categorized' }

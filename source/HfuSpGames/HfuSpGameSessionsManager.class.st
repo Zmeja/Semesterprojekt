@@ -34,13 +34,16 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 
 	"<^aHfuSpPlayerView>"
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
-	|gameTurnStateController|
+	|gameTurnStateController playerViewController playerView|
 	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
 	gameTurnStateController= nil
 		ifTrue:[^nil].
 	(gameTurnStateController containsPlayer: anPlayerIdInteger = true)
 		ifTrue:[^nil].
-	^gameTurnStateController createPlayer: anPlayerIdInteger
+	playerViewController := gameTurnStateController createPlayer: anPlayerIdInteger.
+	playerView:= playerViewController getPlayerView.
+	playerView  initialize.
+	^playerView.
 ]
 
 { #category : 'API' }
@@ -48,7 +51,7 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 
 	"<^anInteger> representing the GameSession "
 	"creates a new session of a game with name aGameNameString (TicTacToe for example) 
-	 and adds it to activeGameSessions"
+	 and adds it to activeGameSessions. this game is then identifyable with its id which is returned as integer."
 	|newGameSession newGameSessionID|
 	self activeGameSessions = nil
 		ifTrue: [self activeGameSessions: Dictionary new ].

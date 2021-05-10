@@ -14,7 +14,7 @@ HfuSpBoardState >> addPlayerToTurnOrder: anPlayerID [
 	"Adds a Player to the turnorder of active players
 	 within said list players are identified via playerID"
 
-	self turnOrder addLast: anPlayerID
+	turnOrder addLast: anPlayerID
 ]
 
 { #category : 'API' }
@@ -38,7 +38,7 @@ HfuSpBoardState >> initializeBoardState [
 { #category : 'API' }
 HfuSpBoardState >> isGameDraw [
 
-	"<^self>"
+	"<^Boolean>"
 	"Returnes wether the game is a draw (it is so if no player can make any moves that result in a victory)"
 
 	self subclassResponsibility.
@@ -51,15 +51,6 @@ HfuSpBoardState >> isValidOrder: aGameOrder [
 	"Checks if a order is valid"
 
 	self subclassResponsibility
-]
-
-{ #category : 'API' }
-HfuSpBoardState >> makePlayerOrderStep [
-
-	"<^self>"
-	"Sets new player as Acting Player, adds prevous Acting Player at the lists End"
-
-	self turnOrder: (self turnOrder copyFrom: (self turnOrder second) to: (self turnOrder last)).
 ]
 
 { #category : 'API' }
@@ -89,5 +80,5 @@ HfuSpBoardState >> turnOrder: anOrderedCollection [
 	"<anOrderedCollection: iOf OrderedCollection, ^self>"
 	"Set the playerOrder of the receiver"
 
-	turnOrder := anOrderedCollection
+	turnOrder:= anOrderedCollection
 ]

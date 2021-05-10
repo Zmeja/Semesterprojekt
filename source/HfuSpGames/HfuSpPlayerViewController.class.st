@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'playerID',
 		'currentBoardState',
-		'turnStateController'
+		'turnStateController',
+		'playerView'
 	],
 	#category : 'HfuSpGames'
 }
@@ -16,7 +17,16 @@ HfuSpPlayerViewController >> announceVictor: aPlayerID [
 	"<^self>"
 	"tells the controlled view to display the games vicror"
 
-	self
+		self playerView announceVictor: aPlayerID.
+]
+
+{ #category : 'Not categorized' }
+HfuSpPlayerViewController >> createPlayerView [
+
+	"<^anPlayerView>"
+	"returns the Player View managed by this PlayerViewController"
+
+	self subclassResponsibility.
 ]
 
 { #category : 'Accessing' }
@@ -35,6 +45,24 @@ HfuSpPlayerViewController >> currentBoardState: aHfuSpBoardState [
 	"Set the currentBoardState of the receiver"
 
 	currentBoardState := aHfuSpBoardState
+]
+
+{ #category : 'Not categorized' }
+HfuSpPlayerViewController >> displayCurrentBoardState [
+
+	"tells view to display the Boardstate currently continaed in this PlayerViewController"
+	self playerView setGame: (self currentBoardState copy)
+]
+
+{ #category : 'Accessing' }
+HfuSpPlayerViewController >> getPlayerView [
+
+	"<^anPlayerView>"
+	"returns the Player View managed by this PlayerViewController"
+
+	self playerView = nil
+		ifTrue:[self createPlayerView].
+	^self playerView.
 ]
 
 { #category : 'Accessing' }
@@ -68,14 +96,22 @@ HfuSpPlayerViewController >> playerID: anInteger [
 	playerID := anInteger
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','ViewNotifying'] }
-HfuSpPlayerViewController >> resetViewBoardState [
+{ #category : 'Accessing' }
+HfuSpPlayerViewController >> playerView [
 
-	"<^self>"
-	"Answer the receiver"
+	"<^iOf aPlayerView>"
+	"Answer the playerView of the receiver"
 
-	self
+	^playerView
+]
+
+{ #category : 'Accessing' }
+HfuSpPlayerViewController >> playerView: anaPlayerView [
+
+	"<anaPlayerView: iOf aPlayerView, ^self>"
+	"Set the playerView of the receiver"
+
+	playerView := anaPlayerView
 ]
 
 { #category : 'Accessing',
