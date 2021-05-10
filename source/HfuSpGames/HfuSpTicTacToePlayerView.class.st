@@ -146,7 +146,6 @@ HfuSpTicTacToePlayerView >> setTicToPlayer: ticSelected asPlayerOwned: playerSel
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> startUp [
-Private - comment"
 	| theHttpServer |
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9004' serverApplicationClass: HfuSpTicTacToePlayerView).
 	theHttpServer addViewClass: HfuSpTicTacToePlayerView;
