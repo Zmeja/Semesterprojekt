@@ -108,9 +108,13 @@ HfuSpTurnStateController >> endGameHandling [
 	"<^self>"
 	"Checks if Game should end and adjusts Game State if it should"
 	self currentBoardState getVictor = -1
-		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor) ].
+		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor).
+					self playerViewControllers: (Dictionary new)].
 	self currentBoardState isGameDraw
-		ifTrue: [self announceVictorToPlayers: -1]
+		ifTrue: [
+					self announceVictorToPlayers: -99.
+					self playerViewControllers: (Dictionary new)
+		]
 ]
 
 { #category : 'Not categorized' }

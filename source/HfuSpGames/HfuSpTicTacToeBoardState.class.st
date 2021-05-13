@@ -99,7 +99,7 @@ HfuSpTicTacToeBoardState >> getVictor [
 				ifTrue: [^ (self getDiagonal: 2) first].
 		
 			
-	^-99		
+	^-1		
 	
 ]
 
