@@ -42,7 +42,28 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 		ifTrue:[^nil].
 	playerViewController := gameTurnStateController createPlayer: anPlayerIdInteger.
 	playerView:= playerViewController getPlayerView.
-	playerView  initialize.
+	playerViewController playerView: playerViewController.
+	playerView  initializeView.
+	^playerView.
+]
+
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','API','Internal'] }
+HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGameSessionIdInteger currentView: aView [
+
+	"<^aHfuSpPlayerView>"
+	"ads a Player to a currently ongoing Game and returns the view of newly added player"
+	|gameTurnStateController playerViewController playerView|
+	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
+	gameTurnStateController= nil
+		ifTrue:[^nil].
+	(gameTurnStateController containsPlayer: anPlayerIdInteger = true)
+		ifTrue:[^nil].
+	playerViewController := gameTurnStateController createPlayer: anPlayerIdInteger.
+	playerView:= aView.
+	playerView playerViewController: playerViewController.
+	playerViewController playerView: playerView.
+	playerView  initializeView.
 	^playerView.
 ]
 
@@ -115,8 +136,9 @@ HfuSpGameSessionsManager class >> listAllActiveSessions [
 
 	"<^aCollection> "
 	"returns a list of  all active game session Ids "
-
-	^self activeGameSessions keys asOrderedCollection
+	self activeGameSessions = nil
+	ifTrue:[Dictionary new]
+	ifFalse:[^self activeGameSessions keys asOrderedCollection].
 ]
 
 { #category : 'API' }

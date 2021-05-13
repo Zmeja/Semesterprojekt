@@ -16,11 +16,8 @@ HfuSpPlayerView >> displayBoardState: anBoardState [
 	self subclassResponsibility
 ]
 
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> initialize [
-
-	"<^self>"
-	"initializes a view"
+{ #category : 'Accessing' }
+HfuSpPlayerView >> initializeView [
 
 	^self
 ]

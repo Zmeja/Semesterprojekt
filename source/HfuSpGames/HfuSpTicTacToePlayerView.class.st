@@ -2,6 +2,8 @@ Class {
 	#name : 'HfuSpTicTacToePlayerView',
 	#superclass : 'HfuSpPlayerView',
 	#instVars : [
+		'viewHolder',
+		'tics',
 		'tic1',
 		'tic2',
 		'tic3',
@@ -10,10 +12,81 @@ Class {
 		'tic6',
 		'tic7',
 		'tic8',
-		'tic9'
+		'tic9',
+		'createGameView',
+		'addGameButton',
+		'closeGamesButton',
+		'addPlayerButton',
+		'gameView',
+		'playerID',
+		'playerView'
+	],
+	#classVars : [
+		'IsPlayer1Set',
+		'CurrentSession',
+		'IsPlayer2Set'
 	],
 	#category : 'HfuSpGames'
 }
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> addGameButton [
+
+	^addGameButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> addGameButton: aMeButton [
+
+	addGameButton := aMeButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> addGameButtonClicked [
+
+	self addGameButton hide.
+	self closeGamesButton show.
+	self addPlayerButton show.
+	self IsPlayer1Set: false.
+	self IsPlayer2Set: false.
+	self CurrentSession: (HfuSpGameSessionsManager createGameSession: 'TicTacToe').
+	"self addOrRemoveViewHolderViaAjaxViewHolder holdingView: Me5MetronicExampleAView new"
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> addPlayerButton [
+
+	^addPlayerButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> addPlayerButton: aMeButton [
+
+	addPlayerButton := aMeButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> addPlayerButtonClicked [
+
+	self addPlayerButton hide.
+	self IsPlayer1Set
+	ifTrue:[
+		self IsPlayer2Set
+			ifTrue:[
+			^self
+			]
+			ifFalse:[
+			self playerID: 2.
+			self IsPlayer2Set: true.
+			]
+		]
+	ifFalse:[
+	self playerID: 1.
+	self IsPlayer1Set: true.
+	].
+	HfuSpGameSessionsManager addPlayer: self playerID ToSession: self CurrentSession currentView: self.
+	self gameView show.
+]
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> announceVictor: aPlayerID [
@@ -27,60 +100,131 @@ HfuSpTicTacToePlayerView >> announceVictor: aPlayerID [
 ]
 
 { #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> closeGamesButton [
+
+	^closeGamesButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> closeGamesButton: aMeButton [
+
+	closeGamesButton := aMeButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> closeGamesClicked [
+
+	HfuSpGameSessionsManager activeGameSessions: nil.
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> createComponents [
 
-	| stub |
+	"HfuSpGameSessionsManager activeGameSessions: nil."
 
+	tics := #('' '' '' '' '' '' '' '' '') asOrderedCollection.
+	"tics at: 1 put: 1."
+	
 	self
-		addChild: (Me5Portlet new
+		addChild: (addGameButton := Me5Button newAirSecondary
+					text: 'Create Game';
+					addClickEventSelector: #addGameButtonClicked;
+					yourself);
+		addChild: (addPlayerButton := Me5Button newAirSecondary
+					text: 'Join as Player 1';
+					addClickEventSelector: #addPlayerButtonClicked;
+					hide;
+					yourself);
+		
+		addChild: (gameView := Me5Portlet new
 			addChildToBody: (Me5Div new
 				addChild: (Me5H5 newWithText: 'Tic Tac Toe');
-				addChild: (tic1 := Me5Button newAirSecondary
+				addChild: (tics at: 1 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
-				addChild: (tic2 := Me5Button newAirSecondary
+					addClickEventSelector: #tic1Clicked;
+					yourself));
+				addChild: (tics at: 2 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
-				addChild: (tic3 := Me5Button newAirSecondary
+					addClickEventSelector: #tic2Clicked;
+					yourself));
+				addChild: (tics at: 3 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
+					addClickEventSelector: #tic3Clicked;
+					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
-				addChild: (tic4 := Me5Button newAirSecondary
+				addChild: (tics at: 4 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
-				addChild: (tic5 := Me5Button newAirSecondary
+					addClickEventSelector: #tic4Clicked;
+					yourself));
+				addChild: (tics at: 5 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
-				addChild: (tic6 := Me5Button newAirSecondary
+					addClickEventSelector: #tic5Clicked;
+					yourself));
+				addChild: (tics at: 6 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
+					addClickEventSelector: #tic6Clicked;
+					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
-				addChild: (tic7 := Me5Button newAirSecondary
+				addChild: (tics at: 7 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
-				addChild: (tic8 := Me5Button newAirSecondary
+					addClickEventSelector: #tic7Clicked;
+					yourself));
+				addChild: (tics at: 8 put: (Me5Button newAirSecondary
 					text: '';
-					yourself);
-				addChild: (tic9 := Me5Button newAirSecondary
+					addClickEventSelector: #tic8Clicked;
+					yourself));
+				addChild: (tics at: 9 put: (Me5Button newAirSecondary
 					text: '';
+					addClickEventSelector: #tic9Clicked;
+					yourself));
+				yourself);
+				addChildToBody: (Me5Div new
+				addChild: (Me5Button newAirSecondary
+					text: 'Refresh';
+					addClickEventSelector: #refreshClicked;
 					yourself);
 				yourself);
+				hide;
 			yourself);
+			
+			addChild: (closeGamesButton := Me5Button newAirSecondary
+					text: 'Force Close all Games';
+					addClickEventSelector: #closeGamesClicked;
+					hide;
+					yourself);
 		yourself.
-		self  setGame:  (self playerViewController  currentBoardState).
-		stub:=HfuSpGameCreationStub new.
-		stub createGame: self.
-		stub createTicTacToeOrderForPlayer: 1 To: 1 .
-		stub createTicTacToeOrderForPlayer: 2 To: 2 .
-		stub createTicTacToeOrderForPlayer: 1 To: 3 .
-		stub createTicTacToeOrderForPlayer: 2 To: 4 .
-		stub createTicTacToeOrderForPlayer: 1 To: 5 .
-		stub createTicTacToeOrderForPlayer: 2 To: 6 .
-		stub createTicTacToeOrderForPlayer: 1 To: 7 .
-		stub createTicTacToeOrderForPlayer: 2 To: 8 .
-		stub createTicTacToeOrderForPlayer: 1 To: 9 .
+		
+		
+		HfuSpGameSessionsManager listAllActiveSessions size >= 1
+		ifTrue: [
+		self addGameButton hide.
+		self closeGamesButton show.
+		self addPlayerButton show.
+		self addPlayerButton text: 'Join as Player 2'.
+		]
+		ifFalse: [].
+		
+		self playerID = nil
+		ifTrue: [
+		]
+		ifFalse: [
+		self addGameButton hide.
+		self gameView show.
+		].
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> CurrentSession [
+
+	^CurrentSession
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> CurrentSession: sessionToSet [
+
+	CurrentSession := sessionToSet
 ]
 
 { #category : 'Not categorized' }
@@ -89,67 +233,85 @@ HfuSpTicTacToePlayerView >> displayBoardState: anBoardState [
 	"<^self>"
 	"displays a board State on Screen"
 
-	self setGame: anBoardState
+	self setGame: anBoardState.
+	self refreshClicked.
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> gameView [
+
+	^gameView
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> gameView: gameViewToSet [
+	gameView := gameViewToSet
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> IsPlayer1Set [
+
+	^IsPlayer1Set
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> IsPlayer1Set: booleanToSet [
+	IsPlayer1Set := booleanToSet
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> IsPlayer2Set [
+
+	^IsPlayer2Set
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> IsPlayer2Set: booleanToSet [
+	IsPlayer2Set := booleanToSet
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> playerID [
+	^playerID
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> playerID: playerIDToSet [
+	playerID := playerIDToSet
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> refreshClicked [
+
+	"^self gameView"
+	self setGame: self playerViewController currentBoardState.
 ]
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> resetGame [
-	self tic1 text: ' '.
-	self tic2 text: ' '.
-	self tic3 text: ' '.
-	self tic4 text: ' '.
-	self tic5 text: ' '.
-	self tic6 text: ' '.
-	self tic7 text: ' '.
-	self tic8 text: ' '.
-	self tic9 text: ' '.
+	| counter |
+	
+	counter := 1.
+	tics do: [
+		:eachIndex |
+		counter := counter + 1.
+		eachIndex text: ' '.
+	].
 	^true
 ]
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> setGame: boardState [
-	| textToSet |
-	textToSet:= boardState boardTiles at: 1.
-	self tic1 text: textToSet.
-	textToSet:= boardState boardTiles at: 2.
-	self tic2 text: textToSet.
-	textToSet:= boardState boardTiles at: 3.
-	self tic3 text: textToSet.
-	textToSet:= boardState boardTiles at: 4.
-	self tic4 text: textToSet.
-	textToSet:= boardState boardTiles at: 5.
-	self tic5 text: textToSet.
-	textToSet:= boardState boardTiles at: 6.
-	self tic6 text: textToSet.
-	textToSet:= boardState boardTiles at: 7.
-	self tic7 text: textToSet.
-	textToSet:= boardState boardTiles at: 8.
-	self tic8 text: textToSet.
-	textToSet:= boardState boardTiles at: 9.
-	self tic9 text: textToSet.
-	^true
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> setTicToPlayer: ticSelected asPlayerOwned: playerSelected [
-	ticSelected = 1
-		ifTrue: [tic1 text: playerSelected].
-	ticSelected = 2
-		ifTrue: [tic2 text: playerSelected].
-	ticSelected = 3
-		ifTrue: [tic4 text: playerSelected].
-	ticSelected = 4
-		ifTrue: [tic5 text: playerSelected].
-	ticSelected = 5
-		ifTrue: [tic6 text: playerSelected].
-	ticSelected = 6
-		ifTrue: [tic7 text: playerSelected].
-	ticSelected = 7
-		ifTrue: [tic8 text: playerSelected].
-	ticSelected = 8
-		ifTrue: [tic9 text: playerSelected].
-	ticSelected = 9
-		ifTrue: [tic3 text: playerSelected].
+	| textToSet counter |
+	
+	counter := 1.
+	tics do: [
+		:eachIndex |
+		textToSet:= boardState boardTiles at: counter.
+		counter := counter + 1.
+		eachIndex text: textToSet.
+	].
+	
 	^true
 ]
 
@@ -162,91 +324,100 @@ HfuSpTicTacToePlayerView >> startUp [
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic1 [
-	^tic1
+HfuSpTicTacToePlayerView >> tic1Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 1.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic1: playerIDToSet [
-	tic1 := playerIDToSet
+HfuSpTicTacToePlayerView >> tic2Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 2.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic2 [
-	^tic2
+HfuSpTicTacToePlayerView >> tic3Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 3.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic2: playerIDToSet [
-	tic2 := playerIDToSet
+HfuSpTicTacToePlayerView >> tic4Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 4.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic3 [
-	^tic3
+HfuSpTicTacToePlayerView >> tic5Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 5.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic3: playerIDToSet [
-	tic3 := playerIDToSet
+HfuSpTicTacToePlayerView >> tic6Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 6.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic4 [
-	^tic4
+HfuSpTicTacToePlayerView >> tic7Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 7.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic4: playerIDToSet [
-	tic4 := playerIDToSet
+HfuSpTicTacToePlayerView >> tic8Clicked [
+
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 8.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic5 [
-	^tic5
-]
+HfuSpTicTacToePlayerView >> tic9Clicked [
 
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic5: playerIDToSet [
-	tic5 := playerIDToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic6 [
-	^tic6
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic6: playerIDToSet [
-	tic6 := playerIDToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic7 [
-	^tic7
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic7: playerIDToSet [
-	tic7 := playerIDToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic8 [
-	^tic8
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic8: playerIDToSet [
-	tic8 := playerIDToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic9 [
-	^tic9
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic9: playerIDToSet [
-	tic9 := playerIDToSet
+	| gameOrder |
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self playerID.
+	gameOrder fieldID: 9.
+	
+	self playerViewController transmitOrder: gameOrder.
 ]
