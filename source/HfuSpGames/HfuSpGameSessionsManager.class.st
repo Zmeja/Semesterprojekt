@@ -30,7 +30,7 @@ HfuSpGameSessionsManager class >> activeGameSessions: anDictionary [
 ]
 
 { #category : 'API' }
-HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGameSessionIdInteger [
+HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionIdInteger [
 
 	"<^aHfuSpPlayerView>"
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
@@ -38,9 +38,9 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
 	gameTurnStateController= nil
 		ifTrue:[^nil].
-	(gameTurnStateController containsPlayer: anPlayerIdInteger = true)
+	(gameTurnStateController containsPlayer: anPlayer= true)
 		ifTrue:[^nil].
-	playerViewController := gameTurnStateController createPlayer: anPlayerIdInteger.
+	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer makePlayer: 'Player').																							
 	playerView:= playerViewController getPlayerView.
 	playerViewController playerView: playerViewController.
 	playerView  initializeView.
@@ -49,7 +49,7 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 
 { #category : 'Accessing',
  #vaCategories : ['Accessing','API','Internal'] }
-HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGameSessionIdInteger currentView: aView [
+HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionIdInteger currentView: aView [
 
 	"<^aHfuSpPlayerView>"
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
@@ -57,9 +57,9 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
 	gameTurnStateController= nil
 		ifTrue:[^nil].
-	(gameTurnStateController containsPlayer: anPlayerIdInteger = true)
+	(gameTurnStateController containsPlayer: anPlayer = true)
 		ifTrue:[^nil].
-	playerViewController := gameTurnStateController createPlayer: anPlayerIdInteger.
+	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer makePlayer: 'Player').
 	playerView:= aView.
 	playerView playerViewController: playerViewController.
 	playerViewController playerView: playerView.

@@ -2,7 +2,7 @@ Class {
 	#name : 'HfuSpPlayerViewController',
 	#superclass : 'Object',
 	#instVars : [
-		'playerID',
+		'player',
 		'currentBoardState',
 		'turnStateController',
 		'playerView'
@@ -12,12 +12,12 @@ Class {
 
 { #category : 'Accessing',
  #vaCategories : ['Accessing','ViewNotifying'] }
-HfuSpPlayerViewController >> announceVictor: aPlayerID [
+HfuSpPlayerViewController >> announceVictor: aPlayer [
 
 	"<^self>"
 	"tells the controlled view to display the games vicror"
 
-		self playerView announceVictor: aPlayerID.
+		self playerView announceVictor: aPlayer.
 ]
 
 { #category : 'Not categorized' }
@@ -72,28 +72,22 @@ HfuSpPlayerViewController >> isActingPlayer [
 	"Answer the isActingPlayer of the receiver"
 
 	self currentBoardState = nil 
-	ifFalse: [^(self currentBoardState turnOrder first )= (self playerID) ].
+	ifFalse: [^(self currentBoardState turnOrder first )= (self player) ].
 	^true
 	
 	
 ]
 
 { #category : 'Accessing' }
-HfuSpPlayerViewController >> playerID [
+HfuSpPlayerViewController >> player [
 
-	"<^iOf Integer>"
-	"Answer the playerID of the receiver"
-
-	^playerID
+	^player
 ]
 
 { #category : 'Accessing' }
-HfuSpPlayerViewController >> playerID: anInteger [
+HfuSpPlayerViewController >> player: anPlayer [
 
-	"<anInteger: iOf Integer, ^self>"
-	"Set the playerID of the receiver"
-
-	playerID := anInteger
+	player := anPlayer
 ]
 
 { #category : 'Accessing' }

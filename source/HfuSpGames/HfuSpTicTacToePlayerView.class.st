@@ -141,43 +141,52 @@ HfuSpTicTacToePlayerView >> createComponents [
 				addChild: (Me5H5 newWithText: 'Tic Tac Toe');
 				addChild: (tics at: 1 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic1Clicked;
+					name:'1';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				addChild: (tics at: 2 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic2Clicked;
+					name:'2';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				addChild: (tics at: 3 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic3Clicked;
+					name:'3';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
 				addChild: (tics at: 4 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic4Clicked;
+					name:'4';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				addChild: (tics at: 5 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic5Clicked;
+					name:'5';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				addChild: (tics at: 6 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic6Clicked;
+					name:'6';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
 				addChild: (tics at: 7 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic7Clicked;
+					name:'7';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				addChild: (tics at: 8 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic8Clicked;
+					name:'8';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				addChild: (tics at: 9 put: (Me5Button newAirSecondary
 					text: '';
-					addClickEventSelector: #tic9Clicked;
+					name:'9';
+					addClickEventSelector: #ticClicked:;
 					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
@@ -317,107 +326,21 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> startUp [
+	
 	| theHttpServer |
+	HfuSpPlayer startUp.
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9004' serverApplicationClass: HfuSpTicTacToePlayerView).
 	theHttpServer addViewClass: HfuSpTicTacToePlayerView;
 	yourself
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic1Clicked [
-
-	| gameOrder |
+HfuSpTicTacToePlayerView >> ticClicked: anEventFromTic [
+	|gameOrder|
+	
 	gameOrder := HfuSpTicTacToeOrder new.
 	gameOrder playerID: self playerID.
-	gameOrder fieldID: 1.
+	gameOrder fieldID: anEventFromTic component name asInteger.
 	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic2Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 2.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic3Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 3.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic4Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 4.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic5Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 5.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic6Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 6.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic7Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 7.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic8Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 8.
-	
-	self playerViewController transmitOrder: gameOrder.
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> tic9Clicked [
-
-	| gameOrder |
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: 9.
-	
-	self playerViewController transmitOrder: gameOrder.
+	self playerViewController transmitOrder: gameOrder
 ]
