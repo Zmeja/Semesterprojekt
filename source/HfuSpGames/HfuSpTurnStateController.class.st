@@ -170,6 +170,8 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 
 	"<^>"
 	"Receives a Game Order, checks its Validity and executes it if it is  Valid"
+	self currentBoardState turnOrder first id = (aGameOrder playerID)
+		ifFalse:[^nil].
 	(self currentBoardState isValidOrder:  aGameOrder)
 		ifFalse:[
 					self demandPlayerInput: (aGameOrder playerID).
