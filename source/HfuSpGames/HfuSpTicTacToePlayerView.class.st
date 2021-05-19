@@ -4,27 +4,11 @@ Class {
 	#instVars : [
 		'viewHolder',
 		'tics',
-		'tic1',
-		'tic2',
-		'tic3',
-		'tic4',
-		'tic5',
-		'tic6',
-		'tic7',
-		'tic8',
-		'tic9',
 		'createGameView',
 		'addGameButton',
 		'closeGamesButton',
-		'addPlayerButton',
 		'gameView',
-		'playerID',
 		'playerView'
-	],
-	#classVars : [
-		'IsPlayer1Set',
-		'CurrentSession',
-		'IsPlayer2Set'
 	],
 	#category : 'HfuSpGames'
 }
@@ -43,48 +27,23 @@ HfuSpTicTacToePlayerView >> addGameButton: aMeButton [
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> addGameButtonClicked [
-
-	self addGameButton hide.
+	|tempButton createdGameSession|
 	self closeGamesButton show.
-	self addPlayerButton show.
-	self IsPlayer1Set: false.
-	self IsPlayer2Set: false.
-	self CurrentSession: (HfuSpGameSessionsManager createGameSession: 'TicTacToe').
+	createdGameSession := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.
+	tempButton := Me5Button newAirSecondary.
+	tempButton text: ('Join TicTacToe ', (createdGameSession asString)).
+	tempButton name: createdGameSession asString.
+	tempButton addClickEventSelector: #addPlayerButtonClicked:.
+	self sessionHolder addChildToBody:tempButton.
 	"self addOrRemoveViewHolderViaAjaxViewHolder holdingView: Me5MetronicExampleAView new"
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addPlayerButton [
+HfuSpTicTacToePlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 
-	^addPlayerButton
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addPlayerButton: aMeButton [
-
-	addPlayerButton := aMeButton
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addPlayerButtonClicked [
-
-	self addPlayerButton hide.
-	self IsPlayer1Set
-	ifTrue:[
-		self IsPlayer2Set
-			ifTrue:[
-			^self
-			]
-			ifFalse:[
-			self playerID: 2.
-			self IsPlayer2Set: true.
-			]
-		]
-	ifFalse:[
-	self playerID: 1.
-	self IsPlayer1Set: true.
-	].
-	HfuSpGameSessionsManager addPlayer: self playerID ToSession: self CurrentSession currentView: self.
+	self playerViewController join: anPlayerAddEvent component name asInteger.
+	self addGameButton hide.
+	self sessionHolder hide.
 	self gameView show.
 ]
 
@@ -121,19 +80,26 @@ HfuSpTicTacToePlayerView >> closeGamesClicked [
 HfuSpTicTacToePlayerView >> createComponents [
 
 	"HfuSpGameSessionsManager activeGameSessions: nil."
-
+	self playerViewController: HfuSpTicTacToePlayerViewController new.
+	self playerViewController setPlayerView: self.
+	self sessionHolder: Me5Portlet new.
+	self addChild: self sessionHolder.
 	tics := #('' '' '' '' '' '' '' '' '') asOrderedCollection.
 	"tics at: 1 put: 1."
-	
+	HfuSpGameSessionsManager listAllActiveSessions size >= 1
+		ifTrue: [
+		self playerViewController getAllActiveSessions do:[:eachSession| | tempButton |
+				    tempButton := Me5Button newAirSecondary.
+					tempButton text: ('Join TicTacToe ', (eachSession asString)).
+					tempButton name: eachSession.
+					tempButton addClickEventSelector: #addPlayerButtonClicked:.
+					self sessionHolder addChildToBody: tempButton.
+		]]
+		ifFalse: [].
 	self
 		addChild: (addGameButton := Me5Button newAirSecondary
 					text: 'Create Game';
 					addClickEventSelector: #addGameButtonClicked;
-					yourself);
-		addChild: (addPlayerButton := Me5Button newAirSecondary
-					text: 'Join as Player 1';
-					addClickEventSelector: #addPlayerButtonClicked;
-					hide;
 					yourself);
 		
 		addChild: (gameView := Me5Portlet new
@@ -204,36 +170,6 @@ HfuSpTicTacToePlayerView >> createComponents [
 					hide;
 					yourself);
 		yourself.
-		
-		
-		HfuSpGameSessionsManager listAllActiveSessions size >= 1
-		ifTrue: [
-		self addGameButton hide.
-		self closeGamesButton show.
-		self addPlayerButton show.
-		self addPlayerButton text: 'Join as Player 2'.
-		]
-		ifFalse: [].
-		
-		self playerID = nil
-		ifTrue: [
-		]
-		ifFalse: [
-		self addGameButton hide.
-		self gameView show.
-		].
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> CurrentSession [
-
-	^CurrentSession
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> CurrentSession: sessionToSet [
-
-	CurrentSession := sessionToSet
 ]
 
 { #category : 'Not categorized' }
@@ -255,38 +191,6 @@ HfuSpTicTacToePlayerView >> gameView [
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> gameView: gameViewToSet [
 	gameView := gameViewToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> IsPlayer1Set [
-
-	^IsPlayer1Set
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> IsPlayer1Set: booleanToSet [
-	IsPlayer1Set := booleanToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> IsPlayer2Set [
-
-	^IsPlayer2Set
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> IsPlayer2Set: booleanToSet [
-	IsPlayer2Set := booleanToSet
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> playerID [
-	^playerID
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> playerID: playerIDToSet [
-	playerID := playerIDToSet
 ]
 
 { #category : 'Not categorized' }
@@ -336,11 +240,6 @@ HfuSpTicTacToePlayerView >> startUp [
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> ticClicked: anEventFromTic [
-	|gameOrder|
 	
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self playerID.
-	gameOrder fieldID: anEventFromTic component name asInteger.
-	
-	self playerViewController transmitOrder: gameOrder
+	self playerViewController transmitOrder: anEventFromTic component name asInteger.
 ]

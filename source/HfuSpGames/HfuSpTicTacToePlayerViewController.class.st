@@ -13,8 +13,18 @@ HfuSpTicTacToePlayerViewController >> createPlayerView [
 	"<^anPlayerView>"
 	"returns the PlayerView managed by this PlayerViewController"
 	|View|
+	self player: (HfuSpPlayer makePlayer: 'Player').
 	View:= HfuSpTicTacToePlayerView new.
 	View playerViewController: self.
 	self playerView:  View.
 	^self playerView
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerViewController >> setPlayerView: aView [
+
+	"<^anPlayerView>"
+	"returns the PlayerView managed by this PlayerViewController"
+	self player: (HfuSpPlayer makePlayer: 'Player').
+	self playerView:  aView.
 ]

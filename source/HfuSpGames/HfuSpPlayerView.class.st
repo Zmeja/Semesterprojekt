@@ -2,7 +2,8 @@ Class {
 	#name : 'HfuSpPlayerView',
 	#superclass : 'Me5BaseView',
 	#instVars : [
-		'playerViewController'
+		'playerViewController',
+		'sessionHolder'
 	],
 	#category : 'HfuSpGames'
 }
@@ -38,4 +39,16 @@ HfuSpPlayerView >> playerViewController: anaPlayerViewController [
 	"Set the playerViewController of the receiver"
 
 	playerViewController := anaPlayerViewController
+]
+
+{ #category : 'Accessing' }
+HfuSpPlayerView >> sessionHolder [
+
+	^sessionHolder
+]
+
+{ #category : 'Accessing' }
+HfuSpPlayerView >> sessionHolder: anObject [
+
+	sessionHolder := anObject
 ]

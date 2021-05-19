@@ -103,14 +103,11 @@ HfuSpGameSessionsManager class >> getNextGameID [
 	"<^anInteger>"
 	"returns id which identifies the next game that will be started
 	 and increments IDOFNextGame"
-	|currentID|
-	currentID:= self iDOfNextGame.
-	(currentID = nil)
+	self iDOfNextGame = nil
 		ifTrue: [
-		self iDOfNextGame: 0.
-		^0].
-	self iDOfNextGame:  (currentID+1).
-	^currentID
+		IDOfNextGame:=-1.].
+	IDOfNextGame := IDOfNextGame + 1.
+	^self iDOfNextGame.
 ]
 
 { #category : 'Accessing' }
@@ -120,15 +117,6 @@ HfuSpGameSessionsManager class >> iDOfNextGame [
 	"Answer the IDOfNextGame of the receiver"
 
 	^IDOfNextGame
-]
-
-{ #category : 'Accessing' }
-HfuSpGameSessionsManager class >> iDOfNextGame: anInteger [
-
-	"<anInteger: iOf Integer, ^self>"
-	"Set the IDOfNextGame of the receiver"
-
-	IDOfNextGame := anInteger
 ]
 
 { #category : 'API' }
@@ -148,4 +136,15 @@ HfuSpGameSessionsManager class >> removeActiveGameSession: aGameSessionIdInteger
 	"removes a HfuSpTurnstateController from the list of  active Sessions."
 
 	self activeGameSessions removeKey: aGameSessionIdInteger.
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameSessionsManager class >> testaddPlayer: anPlayerViewController ToSession: aGameSessionId [
+
+	"<^aHfuSpPlayerView>"
+	"ads a Player to a currently ongoing Game and returns the view of newly added player"
+	|gameSession|
+	gameSession := self activeGameSessions at: aGameSessionId ifAbsent: [^false].
+	gameSession addPlayer: anPlayerViewController.
+	^gameSession.
 ]

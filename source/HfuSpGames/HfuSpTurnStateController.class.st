@@ -19,7 +19,7 @@ HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 		ifTrue: [self initializeState].
 	self currentBoardState addPlayerToTurnOrder: (anPlayerViewController player).
 	anPlayerViewController turnStateController: self.
-	self playerViewControllers add: (Association new key: (anPlayerViewController player id) value: anPlayerViewController )
+	self playerViewControllers add: (Association new key: (anPlayerViewController player) value: anPlayerViewController )
 	
 ]
 

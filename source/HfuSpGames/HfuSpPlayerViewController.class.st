@@ -54,6 +54,12 @@ HfuSpPlayerViewController >> displayCurrentBoardState [
 	self playerView setGame: (self currentBoardState copy)
 ]
 
+{ #category : 'Not categorized' }
+HfuSpPlayerViewController >> getAllActiveSessions [
+
+	^HfuSpGameSessionsManager listAllActiveSessions
+]
+
 { #category : 'Accessing' }
 HfuSpPlayerViewController >> getPlayerView [
 
@@ -76,6 +82,12 @@ HfuSpPlayerViewController >> isActingPlayer [
 	^true
 	
 	
+]
+
+{ #category : 'Not categorized' }
+HfuSpPlayerViewController >> join: aIdOfGame [
+	
+	self turnStateController: (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame)
 ]
 
 { #category : 'Accessing' }
@@ -110,13 +122,17 @@ HfuSpPlayerViewController >> playerView: anaPlayerView [
 
 { #category : 'Accessing',
  #vaCategories : ['Accessing','TurnStateControllerNotifying'] }
-HfuSpPlayerViewController >> transmitOrder: aGameOrder [
+HfuSpPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
 	"Answer the receiver"
+	|gameOrder|
+	gameOrder := HfuSpTicTacToeOrder new.
+	gameOrder playerID: self player id.
+	gameOrder fieldID: aField.
 	self isActingPlayer = true 
 		ifFalse:[^nil].
-	self turnStateController receiveGameOrder:  aGameOrder
+	self turnStateController receiveGameOrder:  gameOrder
 ]
 
 { #category : 'Accessing' }

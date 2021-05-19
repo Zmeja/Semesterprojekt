@@ -44,7 +44,7 @@ HfuSpPlayer class >> players: aListOfPlayers [
 { #category : 'Not categorized' }
 HfuSpPlayer class >> startUp [
 	nextID := 0.
-	players := Collection new.
+	players := Dictionary new.
 ]
 
 { #category : 'Accessing' }
