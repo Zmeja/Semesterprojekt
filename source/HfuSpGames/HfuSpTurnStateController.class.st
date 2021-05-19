@@ -17,40 +17,40 @@ HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 
 	self playerViewControllers = nil 
 		ifTrue: [self initializeState].
-	self currentBoardState addPlayerToTurnOrder: (anPlayerViewController playerID).
+	self currentBoardState addPlayerToTurnOrder: (anPlayerViewController player).
 	anPlayerViewController turnStateController: self.
-	self playerViewControllers add: (Association new key: (anPlayerViewController playerID) value: anPlayerViewController )
+	self playerViewControllers add: (Association new key: (anPlayerViewController player id) value: anPlayerViewController )
 	
 ]
 
 { #category : 'ViewControllerNotifying' }
-HfuSpTurnStateController >> announceVictorToPlayers: aPlayerID [
+HfuSpTurnStateController >> announceVictorToPlayers: aPlayer [
 
 	"<^self>"
 	"Notifies all players about the potenital Game end. 
 	 aPlayerID is the Victors ID 
 	 If there is no Victor aPlayerID is -1"
 
-	self playerViewControllers do: [:aController| aController announceVictor: aPlayerID]
+	self playerViewControllers do: [:aController| aController announceVictor: aPlayer]
 ]
 
 { #category : 'Not categorized' }
-HfuSpTurnStateController >> containsPlayer: anPlayerIdInteger [
+HfuSpTurnStateController >> containsPlayer: anPlayer [
 
 	"<^boolean>"
 	"checks wether a player identified by an Id is already active in this game"
 
-	^self playerViewControllers includesKey: anPlayerIdInteger
+	^self playerViewControllers includesKey: anPlayer
 ]
 
 { #category : 'Accessing' }
-HfuSpTurnStateController >> createPlayer: anPlayerID [
+HfuSpTurnStateController >> createPlayer: anPlayer [
 
 	"<^PlayerViewController>"
 	"Creates a NewPlayerViewController, ads it to playerViewController list"
 	|newPlayer|
 	newPlayer:= self createPlayerViewController.
-	newPlayer playerID: anPlayerID.
+	newPlayer player: anPlayer.
 	self addPlayer: newPlayer.
 	^newPlayer
 ]
@@ -217,7 +217,7 @@ HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 	
 
 	self playerViewControllers do: [:aController| 
-		aController currentBoardState: (self createPlayerSpecificBoardState:  aController playerID). 	
+		aController currentBoardState: (self createPlayerSpecificBoardState:  aController player). 	
 		aController displayCurrentBoardState
 		]										
 ]
