@@ -1,4 +1,4 @@
 Package {
 	#name : 'HfuSpGames',
-	#vaPrerequisites : ['Me5MetronicApp']
+	#vaPrerequisites : ['Kernel','Me5MetronicApp']
 }
