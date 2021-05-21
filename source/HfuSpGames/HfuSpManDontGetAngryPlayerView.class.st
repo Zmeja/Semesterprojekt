@@ -29,7 +29,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 	1 to: 11 do: [:eachNumber | boardRowElements at: eachNumber put: OrderedCollection new].
 	self 
 		addChild: (Me5Label new
-			text: 'Mensch Ärgere dich nicht';
+			text: 'Mensch Ã„rgere dich nicht';
 			yourself);
 		addChild: (boardPortlet := Me5Portlet new).
 		1 to: 11 do: [:eachNumber | boardPortlet addChildToBody: (boardRows add: (Me5Div new))].

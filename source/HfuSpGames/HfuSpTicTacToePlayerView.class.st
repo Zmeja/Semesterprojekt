@@ -86,6 +86,12 @@ HfuSpTicTacToePlayerView >> addPlayerButtonClicked [
 	].
 	HfuSpGameSessionsManager addPlayer: self playerID ToSession: self CurrentSession currentView: self.
 	self gameView show.
+	
+	"startet speil sobald der 2. Spieler beitrit"
+	self playerID = 2
+		ifTrue: [
+		self playerViewController startGame.
+			]
 ]
 
 { #category : 'Not categorized' }
