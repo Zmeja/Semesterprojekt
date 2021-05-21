@@ -36,7 +36,7 @@ HfuSpChatView >> createComponents [
 				addChildToBody:  Me5SectionSeparator new;
 				
 				addChildToBody: (Me5Badge new
-					text: 'Hier ein container fÃƒÆ’Ã‚Â¼r Chatnachrichten?';
+					text: 'Hier ein container fÃƒÂ¼r Chatnachrichten?';
 					yourself);
 				
 				addChildToBody:  Me5SectionSeparator new;

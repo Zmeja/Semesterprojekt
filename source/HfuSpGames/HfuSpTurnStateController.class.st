@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'turnNumber',
 		'currentBoardState',
-		'playerViewControllers'
+		'playerViewControllers',
+		'gameOngoing'
 	],
 	#category : 'HfuSpGames'
 }
@@ -107,13 +108,16 @@ HfuSpTurnStateController >> endGameHandling [
 
 	"<^self>"
 	"Checks if Game should end and adjusts Game State if it should"
+	"!!This is de default behaviour. certain games may implement this method differently"
 	self currentBoardState getVictor = -1
 		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor).
-					self playerViewControllers: (Dictionary new)].
+					self playerViewControllers: (Dictionary new).
+					self gameOngoing:1].
 	self currentBoardState isGameDraw
 		ifTrue: [
 					self announceVictorToPlayers: -99.
-					self playerViewControllers: (Dictionary new)
+					self playerViewControllers: (Dictionary new).
+					self gameOngoing: 1.
 		]
 ]
 
@@ -125,6 +129,27 @@ HfuSpTurnStateController >> executeOrder: anOrder [
 	 should only be called ba receiveGameOrder"
 	
 	self subclassResponsibility
+]
+
+{ #category : 'Accessing' }
+HfuSpTurnStateController >> gameOngoing [
+
+	"<^iOf Integer>"
+	"Answer the gameOngoing of the receiver"
+
+	^gameOngoing
+]
+
+{ #category : 'Accessing' }
+HfuSpTurnStateController >> gameOngoing: anInteger [
+
+	"<anInteger: iOf Integer, ^self>"
+	"Set the gameOngoing of the receiver"
+	"anInteger<0 means game didnt start yet
+	 anInteger >0 means the game is already over 
+	 anInteger=0 means the game is ongoing"
+
+	gameOngoing := anInteger
 ]
 
 { #category : 'Not categorized' }
@@ -170,6 +195,9 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 
 	"<^>"
 	"Receives a Game Order, checks its Validity and executes it if it is  Valid"
+	
+	self gameOngoing =0 
+		ifFalse: [^nil].
 	self currentBoardState turnOrder first id = (aGameOrder playerID)
 		ifFalse:[^nil].
 	(self currentBoardState isValidOrder:  aGameOrder)
@@ -180,6 +208,14 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 	self endGameHandling.
 	self currentBoardState makeTurnOrderStep.
 	self updateGameStateOfAllPlayers.
+]
+
+{ #category : 'InternalStateHandling' }
+HfuSpTurnStateController >> startGame [
+
+	"^self"
+	"sets the game as active"
+	self gameOngoing: 0
 ]
 
 { #category : 'Accessing' }
