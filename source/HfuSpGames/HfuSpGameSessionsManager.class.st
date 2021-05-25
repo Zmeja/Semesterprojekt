@@ -40,9 +40,11 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionId
 		ifTrue:[^nil].
 	(gameTurnStateController containsPlayer: anPlayer= true)
 		ifTrue:[^nil].
+	(gameTurnStateController gameOngoing = -1)
+		ifFalse:[^nil].
 	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer makePlayer: 'Player' withId: anPlayer).																				
 	playerView:= playerViewController getPlayerView.
-	playerViewController playerView: playerViewController.
+	playerViewController playerView: playerView.
 	playerView  initializeView.
 	^playerView.
 ]
@@ -59,6 +61,8 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionId
 		ifTrue:[^nil].
 	(gameTurnStateController containsPlayer: anPlayer = true)
 		ifTrue:[^nil].
+	(gameTurnStateController gameOngoing = -1)
+		ifFalse:[^nil].
 	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer makePlayer: 'Player' withId: anPlayer).
 	playerView:= aView.
 	playerView playerViewController: playerViewController.
@@ -79,6 +83,14 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 	aGameNameString = 'TicTacToe'
 		ifTrue: [
 			newGameSession:= HfuSpTicTacToeTurnStateController new.
+			newGameSession initializeState.
+			newGameSessionID:= self getNextGameID.
+			self activeGameSessions add: ( Association new key: newGameSessionID value: newGameSession ).
+			^newGameSessionID
+			].
+		aGameNameString = 'ConnectFour'
+		ifTrue: [
+			newGameSession:= HfuSpConnectFourTurnStateController new.
 			newGameSession initializeState.
 			newGameSessionID:= self getNextGameID.
 			self activeGameSessions add: ( Association new key: newGameSessionID value: newGameSession ).

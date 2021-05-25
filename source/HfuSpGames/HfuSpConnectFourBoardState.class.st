@@ -104,6 +104,19 @@ HfuSpConnectFourBoardState >> getDiagonalAscendingBoardLine: aInteger [
 ]
 
 { #category : 'Accessing' }
+HfuSpConnectFourBoardState >> getFirstEmptyFieldInColumn: anInteger [
+
+	"<^anInteger>"
+	"returns the first field in a column, which is not occupied by a player"
+	|column result|
+	((1 to: (self boardWidth)) includes: anInteger)
+		ifFalse: [^nil].
+	column:= self board at: anInteger.
+	result :=column indexOf: -1 ifAbsent: [^-1].
+	^result
+]
+
+{ #category : 'Accessing' }
 HfuSpConnectFourBoardState >> getHorizontalBoardLine: aInteger [
 
 	"<^aOrderedCollection>"
@@ -141,6 +154,8 @@ HfuSpConnectFourBoardState >> initializeBoardState [
 	"<^self>"
 	"Creates the boardstate of  a unstarted game"
 	|Column|
+	self turnOrder:  OrderedCollection new.
+
 	self boardWidth:7.
 	self boardHeight: 6.
 	self board: OrderedCollection new.
