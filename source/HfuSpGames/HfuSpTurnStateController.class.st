@@ -111,11 +111,13 @@ HfuSpTurnStateController >> endGameHandling [
 	"!!This is de default behaviour. certain games may implement this method differently"
 	self currentBoardState getVictor = -1
 		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor).
-					self gameOngoing:1].
+					self gameOngoing:1.
+					^nil].
 	self currentBoardState isGameDraw
 		ifTrue: [
 					self announceVictorToPlayers: -99.
 					self gameOngoing: 1.
+					^nil.
 		]
 ]
 
