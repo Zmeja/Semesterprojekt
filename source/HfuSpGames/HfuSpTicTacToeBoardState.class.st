@@ -113,7 +113,7 @@ HfuSpTicTacToeBoardState >> getVictor [
 HfuSpTicTacToeBoardState >> initializeBoardState [
 
 	"Initiates empty board "
-	turnOrder:= OrderedCollection new.
+	self turnOrder:  OrderedCollection new.
 	self boardTiles: #(-1 -1 -1 -1 -1 -1 -1 -1 -1) asOrderedCollection
 ]
 
