@@ -51,7 +51,9 @@ HfuSpPlayerViewController >> currentBoardState: aHfuSpBoardState [
 HfuSpPlayerViewController >> displayCurrentBoardState [
 
 	"tells view to display the Boardstate currently continaed in this PlayerViewController"
-	self playerView setGame: (self currentBoardState copy)
+	self currentBoardState = nil
+		ifTrue: [self currentBoardState: self turnStateController currentBoardState].
+	self playerView setGame: (self currentBoardState)
 ]
 
 { #category : 'Not categorized' }
@@ -88,6 +90,7 @@ HfuSpPlayerViewController >> isActingPlayer [
 HfuSpPlayerViewController >> join: aIdOfGame [
 	
 	self turnStateController: (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame)
+
 ]
 
 { #category : 'Accessing' }
@@ -118,6 +121,15 @@ HfuSpPlayerViewController >> playerView: anaPlayerView [
 	"Set the playerView of the receiver"
 
 	playerView := anaPlayerView
+]
+
+{ #category : 'Not categorized' }
+HfuSpPlayerViewController >> setPlayerView: aView [
+
+	"<^anPlayerView>"
+	"returns the PlayerView managed by this PlayerViewController"
+	self player: (HfuSpPlayer makePlayer: 'Player').
+	self playerView:  aView.
 ]
 
 { #category : 'NotifyTurnStateController' }

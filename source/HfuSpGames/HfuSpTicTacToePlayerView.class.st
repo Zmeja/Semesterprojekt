@@ -5,53 +5,12 @@ Class {
 		'viewHolder',
 		'tics',
 		'createGameView',
-		'addGameButton',
-		'closeGamesButton',
 		'gameView',
-		'playerView'
+		'playerView',
+		'startGameButton'
 	],
 	#category : 'HfuSpGames'
 }
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addGameButton [
-
-	^addGameButton
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addGameButton: aMeButton [
-
-	addGameButton := aMeButton
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addGameButtonClicked [
-	|tempButton createdGameSession|
-	self closeGamesButton show.
-	createdGameSession := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.
-	tempButton := Me5Button newAirSecondary.
-	tempButton text: ('Join TicTacToe ', (createdGameSession asString)).
-	tempButton name: createdGameSession asString.
-	tempButton addClickEventSelector: #addPlayerButtonClicked:.
-	self sessionHolder addChildToBody:tempButton.
-	"self addOrRemoveViewHolderViaAjaxViewHolder holdingView: Me5MetronicExampleAView new"
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
-
-	self playerViewController join: anPlayerAddEvent component name asInteger.
-	self addGameButton hide.
-	self sessionHolder hide.
-	self gameView show.
-	
-	"startet speil sobald der 2. Spieler beitrit"
-	self playerID = 2
-		ifTrue: [
-		self playerViewController startGame.
-			]
-]
 
 { #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> announceVictor: aPlayerID [
@@ -65,97 +24,58 @@ HfuSpTicTacToePlayerView >> announceVictor: aPlayerID [
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> closeGamesButton [
-
-	^closeGamesButton
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> closeGamesButton: aMeButton [
-
-	closeGamesButton := aMeButton
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> closeGamesClicked [
-
-	HfuSpGameSessionsManager activeGameSessions: nil.
-]
-
-{ #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> createComponents [
 
 	"HfuSpGameSessionsManager activeGameSessions: nil."
-	self playerViewController: HfuSpTicTacToePlayerViewController new.
-	self playerViewController setPlayerView: self.
-	self sessionHolder: Me5Portlet new.
-	self addChild: self sessionHolder.
-	tics := #('' '' '' '' '' '' '' '' '') asOrderedCollection.
-	"tics at: 1 put: 1."
-	HfuSpGameSessionsManager listAllActiveSessions size >= 1
-		ifTrue: [
-		self playerViewController getAllActiveSessions do:[:eachSession| | tempButton |
-				    tempButton := Me5Button newAirSecondary.
-					tempButton text: ('Join TicTacToe ', (eachSession asString)).
-					tempButton name: eachSession.
-					tempButton addClickEventSelector: #addPlayerButtonClicked:.
-					self sessionHolder addChildToBody: tempButton.
-		]]
-		ifFalse: [].
-	self
-		addChild: (addGameButton := Me5Button newAirSecondary
-					text: 'Create Game';
-					addClickEventSelector: #addGameButtonClicked;
-					yourself);
-		
-		addChild: (gameView := Me5Portlet new
+	self tics: #('' '' '' '' '' '' '' '' '') asOrderedCollection.
+		self addChild: (gameView := Me5Portlet new
 			addChildToBody: (Me5Div new
 				addChild: (Me5H5 newWithText: 'Tic Tac Toe');
-				addChild: (tics at: 1 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 1 put: (Me5Button newAirSecondary
 					text: '';
 					name:'1';
 					addClickEventSelector: #ticClicked:;
 					yourself));
-				addChild: (tics at: 2 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 2 put: (Me5Button newAirSecondary
 					text: '';
 					name:'2';
 					addClickEventSelector: #ticClicked:;
 					yourself));
-				addChild: (tics at: 3 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 3 put: (Me5Button newAirSecondary
 					text: '';
 					name:'3';
 					addClickEventSelector: #ticClicked:;
 					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
-				addChild: (tics at: 4 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 4 put: (Me5Button newAirSecondary
 					text: '';
 					name:'4';
 					addClickEventSelector: #ticClicked:;
 					yourself));
-				addChild: (tics at: 5 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 5 put: (Me5Button newAirSecondary
 					text: '';
 					name:'5';
 					addClickEventSelector: #ticClicked:;
 					yourself));
-				addChild: (tics at: 6 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 6 put: (Me5Button newAirSecondary
 					text: '';
 					name:'6';
 					addClickEventSelector: #ticClicked:;
 					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
-				addChild: (tics at: 7 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 7 put: (Me5Button newAirSecondary
 					text: '';
 					name:'7';
 					addClickEventSelector: #ticClicked:;
 					yourself));
-				addChild: (tics at: 8 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 8 put: (Me5Button newAirSecondary
 					text: '';
 					name:'8';
 					addClickEventSelector: #ticClicked:;
 					yourself));
-				addChild: (tics at: 9 put: (Me5Button newAirSecondary
+				addChild: (self tics at: 9 put: (Me5Button newAirSecondary
 					text: '';
 					name:'9';
 					addClickEventSelector: #ticClicked:;
@@ -169,13 +89,14 @@ HfuSpTicTacToePlayerView >> createComponents [
 				yourself);
 				hide;
 			yourself);
-			
-			addChild: (closeGamesButton := Me5Button newAirSecondary
-					text: 'Force Close all Games';
-					addClickEventSelector: #closeGamesClicked;
-					hide;
-					yourself);
 		yourself.
+		self addChild: (startGameButton:= (Me5Button newAirSecondary
+					text: 'Start Game';
+					addClickEventSelector: #startGameClicked;
+					yourself)).
+		self gameView show.
+		self playerViewController displayCurrentBoardState.
+		self addChild: (Me5Timeout new addIntervalSeconds: 1 selector:#updateSite:; activate ;yourself).
 ]
 
 { #category : 'Not categorized' }
@@ -185,7 +106,6 @@ HfuSpTicTacToePlayerView >> displayBoardState: anBoardState [
 	"displays a board State on Screen"
 
 	self setGame: anBoardState.
-	self refreshClicked.
 ]
 
 { #category : 'Not categorized' }
@@ -235,7 +155,43 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 ]
 
 { #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> startGameButton [
+
+	^startGameButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> startGameButton: anObject [
+
+	startGameButton := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> startGameClicked [
+	
+	self playerViewController startGame.
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> ticClicked: anEventFromTic [
 	
 	self playerViewController transmitOrder: anEventFromTic component name asInteger.
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> tics [
+
+	^tics
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> tics: anObject [
+
+	tics := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> updateSite: updateSiteEvent [
+
+	self playerViewController displayCurrentBoardState.
 ]

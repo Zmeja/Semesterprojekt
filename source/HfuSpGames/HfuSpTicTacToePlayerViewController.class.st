@@ -19,12 +19,3 @@ HfuSpTicTacToePlayerViewController >> createPlayerView [
 	self playerView:  View.
 	^self playerView
 ]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerViewController >> setPlayerView: aView [
-
-	"<^anPlayerView>"
-	"returns the PlayerView managed by this PlayerViewController"
-	self player: (HfuSpPlayer makePlayer: 'Player').
-	self playerView:  aView.
-]
