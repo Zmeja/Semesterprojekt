@@ -331,16 +331,6 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 ]
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> startUp [
-	
-	| theHttpServer |
-	HfuSpPlayer startUp.
-	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9004' serverApplicationClass: HfuSpTicTacToePlayerView).
-	theHttpServer addViewClass: HfuSpTicTacToePlayerView;
-	yourself
-]
-
-{ #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> ticClicked: anEventFromTic [
 	|gameOrder|
 	
