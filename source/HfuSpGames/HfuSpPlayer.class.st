@@ -24,6 +24,15 @@ HfuSpPlayer class >> makePlayer: aName [
 ]
 
 { #category : 'Not categorized' }
+HfuSpPlayer class >> makePlayer: aName withId: aInteger [
+
+	|tempPlayer|
+	tempPlayer := HfuSpPlayer new.
+	tempPlayer id: aInteger.
+	^tempPlayer
+]
+
+{ #category : 'Not categorized' }
 HfuSpPlayer class >> nextID [
 	
 	nextID:= nextID+1.

@@ -41,6 +41,17 @@ HfuSpPlayerView >> playerViewController: anaPlayerViewController [
 	playerViewController := anaPlayerViewController
 ]
 
+{ #category : 'Not categorized' }
+HfuSpPlayerView >> startUp [
+	
+	| theHttpServer |
+	HfuSpPlayer startUp.
+	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9004' serverApplicationClass: HfuSpPlayerView).
+	theHttpServer addViewClass: HfuSpTicTacToePlayerView.
+	theHttpServer addViewClass: HfuSpManDontGetAngryPlayerView;
+	yourself
+]
+
 { #category : 'Accessing' }
 HfuSpPlayerView >> sessionHolder [
 

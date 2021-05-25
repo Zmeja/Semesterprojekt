@@ -86,20 +86,26 @@ HfuSpTicTacToeBoardState >> getVictor [
 
 	"<^aInteger>"
 	"returns player if there is a winner else returns -1"
+	|currentRow currentCol|
 	
-	#(1 2 3) do:[:eachLine|
-			((self getBoardCol: eachLine) count:[:aField| aField= ((self getBoardCol: eachLine) first) ] )=3
-				ifTrue: [^ (self getBoardCol: eachLine) first].
-			((self getBoardRow: eachLine) count:[:aField| aField= ((self getBoardRow: eachLine) first) ] )=3
-				ifTrue: [^ (self getBoardRow: eachLine) first].
-		].
-		((self getDiagonal:  1) count:[:aField| aField= ((self getDiagonal: 1) first) ] )=3
+	#(1 2 3) do:[:eachRowIndex|
+						currentRow:= self getBoardRow: eachRowIndex.
+						((currentRow count:[:aField| aField= currentRow first ]) = 3) &  ((currentRow first = -1) not)
+							ifTrue: [^currentRow first].
+							
+						currentCol:= self getBoardCol: eachRowIndex.
+						((currentCol count: [:aField| aField= currentCol first ])= 3) &  ((currentCol first = -1) not)
+							ifTrue: [^currentCol first].
+					].
+	
+			((self getDiagonal:  1) count:[:aField| aField= ((self getDiagonal: 1) first) ] )=3
 				ifTrue: [^ (self getDiagonal: 1) first].
 		((self getDiagonal:  2) count:[:aField| aField= ((self getDiagonal: 2) first) ] )=3
 				ifTrue: [^ (self getDiagonal: 2) first].
-		
+		^-1
+	
 			
-	^-99		
+
 	
 ]
 

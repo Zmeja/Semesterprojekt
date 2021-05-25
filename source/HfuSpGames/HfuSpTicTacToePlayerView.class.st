@@ -45,6 +45,12 @@ HfuSpTicTacToePlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 	self addGameButton hide.
 	self sessionHolder hide.
 	self gameView show.
+	
+	"startet speil sobald der 2. Spieler beitrit"
+	self playerID = 2
+		ifTrue: [
+		self playerViewController startGame.
+			]
 ]
 
 { #category : 'Not categorized' }
@@ -226,16 +232,6 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 	].
 	
 	^true
-]
-
-{ #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> startUp [
-	
-	| theHttpServer |
-	HfuSpPlayer startUp.
-	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9004' serverApplicationClass: HfuSpTicTacToePlayerView).
-	theHttpServer addViewClass: HfuSpTicTacToePlayerView;
-	yourself
 ]
 
 { #category : 'Not categorized' }

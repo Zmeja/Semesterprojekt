@@ -21,7 +21,7 @@ HfuSpTicTacToeTurnStateController >> endGameHandling [
 	self currentBoardState getVictor = -1
 		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor) ].
 	self currentBoardState isGameDraw
-		ifTrue: [self announceVictorToPlayers: -1]
+		ifTrue: [self announceVictorToPlayers: -99]
 ]
 
 { #category : 'ViewControllerNotifying' }
@@ -58,4 +58,5 @@ HfuSpTicTacToeTurnStateController >> initializeState [
 	"initializes object state"
 	self playerViewControllers: Dictionary new.
 	self initializeBoardState.
+	self gameOngoing: -1.
 ]

@@ -120,6 +120,15 @@ HfuSpPlayerViewController >> playerView: anaPlayerView [
 	playerView := anaPlayerView
 ]
 
+{ #category : 'NotifyTurnStateController' }
+HfuSpPlayerViewController >> startGame [
+
+	"<^self>"
+	"tells the controlled view to display the games vicror"
+
+		self turnStateController startGame
+]
+
 { #category : 'Accessing',
  #vaCategories : ['Accessing','TurnStateControllerNotifying'] }
 HfuSpPlayerViewController >> transmitOrder: aField [
