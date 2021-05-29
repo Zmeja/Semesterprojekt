@@ -96,6 +96,16 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 			self activeGameSessions add: ( Association new key: newGameSessionID value: newGameSession ).
 			^newGameSessionID
 			].
+			
+			aGameNameString = 'ManDontGetAngry'
+		ifTrue: [
+			newGameSession:= HfuSpManDontGetAngryTurnStateController new.
+			newGameSession initializeState.
+			newGameSessionID:= self getNextGameID.
+			self activeGameSessions add: ( Association new key: newGameSessionID value: newGameSession ).
+			^newGameSessionID
+			].
+
 
 ]
 

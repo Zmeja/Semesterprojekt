@@ -44,7 +44,7 @@ HfuSpChatView >> createComponents [
 					addChild: (textarea := Me5TextArea new
 					addCssClassCol12;
 					addCssClassCol6;
-					"text: 'Chat Area';"
+					text: 'Chat Area';
 					helpText: 'Start here to chat with all your lovely coworkers.';
 					yourself);
 				yourself);
