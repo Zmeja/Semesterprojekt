@@ -7,6 +7,7 @@ Class {
 		'closeGamesButton',
 		'sessionHolder',
 		'tictactoeButton',
+		'tictactoeViewButton',
 		'manDontGetAngryButton',
 		'connectFourButton'
 	],
@@ -81,6 +82,13 @@ HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 
 { #category : 'Not categorized' }
 HfuSpPlayerView >> addTicTacToeButtonClicked [
+	
+"	self
+			addChild: (Me5ViewHolder new
+			holdingView: HfuSpGameSessionLobbyRepresentationView new;
+			yourself);
+		yourself"
+	
 	|tempButton createdGameSession|
 	createdGameSession := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.
 	tempButton := Me5Button newAirSecondary.
@@ -102,6 +110,15 @@ HfuSpPlayerView >> addTicTacToeButtonClicked: anPlayerAddEvent [
 ]
 
 { #category : 'Not categorized' }
+HfuSpPlayerView >> addTicTacToeViewClicked [
+	self
+			addChild: (Me5ViewHolder new
+			holdingView: HfuSpGameSessionLobbyRepresentationView new;
+			yourself);
+		yourself
+]
+
+{ #category : 'Not categorized' }
 HfuSpPlayerView >> closeGamesClicked [
 
 	HfuSpGameSessionsManager activeGameSessions: nil.
@@ -119,6 +136,12 @@ HfuSpPlayerView >> createComponents [
 					text: 'Create TicTacToe';
 					addClickEventSelector: #addTicTacToeButtonClicked;
 					yourself).
+					
+		self addChild: (tictactoeViewButton := Me5Button newAirSecondary
+					text: 'Create TicTacToeViewTestButton';
+					addClickEventSelector: #addTicTacToeViewClicked;
+					yourself).
+					
 		self addChild: (manDontGetAngryButton := Me5Button newAirSecondary
 					text: 'Create ManDontGetAngry';
 					addClickEventSelector: #addManDontGetAngryButtonClicked;

@@ -25,6 +25,15 @@ HfuSpLobbyView >> createComponents [
 						
 				addChild:  Me5SectionSeparator new;
 				
+			"	addChild: (Me5ViewHolder new
+					holdingView: (HfuSpGameSessionLobbyRepresentationView new
+						gameID: '3013101';
+						gameType: 'TicTacToe';
+						yourself);
+					yourself);"
+					
+				addChild:  Me5SectionSeparator new;
+				
 				addChild: (Me5ViewHolder new
 					holdingView: (HfuSpChatView new
 						yourself);
@@ -83,9 +92,10 @@ HfuSpLobbyView >> sessionHolder: anObject [
 HfuSpLobbyView >> startUp [
 	
 	| theHttpServer |
-	HfuSpPlayer startUp.
+	"HfuSpPlayer startUp."
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9009' serverApplicationClass: HfuSpLobbyView).
 	theHttpServer addViewClass: HfuSpLobbyView.
+	theHttpServer addViewClass: HfuSpGameSessionLobbyRepresentationView.
 	theHttpServer addViewClass: HfuSpPlayerView.
 	theHttpServer addViewClass: HfuSpChatView;
 	yourself
