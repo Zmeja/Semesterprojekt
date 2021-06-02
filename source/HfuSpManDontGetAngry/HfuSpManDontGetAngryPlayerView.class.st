@@ -4,7 +4,11 @@ Class {
 	#instVars : [
 		'boardPortlet',
 		'boardRows',
-		'boardIndexBadgeMap'
+		'boardIndexBadgeMap',
+		'player1WinDictionary',
+		'player2WinDictionary',
+		'player3WinDictionary',
+		'player4WinDictionary'
 	],
 	#category : 'HfuSpManDontGetAngry'
 }
@@ -64,7 +68,7 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
-	boardRows := OrderedCollection  new.
+boardRows := OrderedCollection  new.
 	self 
 		addChild: (Me5Label new
 			text: 'Man, dont be angry';
@@ -172,7 +176,37 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 				yourself)].
 			].
 		self initializeBoardIndexMap.
-		"self colorBadgeAtIndex: 40 toPlayerNumber: 3"
+		self initializePlayerWinDictionaries.
+		"Add the out of game figures"
+		(self getFieldByRow: 1 Column: 10) addCssClassMBadgeInfo.
+		(self getFieldByRow: 1 Column: 11) addCssClassMBadgeInfo.
+		(self getFieldByRow: 2 Column: 10) addCssClassMBadgeInfo.
+		(self getFieldByRow: 2 Column: 11) addCssClassMBadgeInfo.
+		
+		(self getFieldByRow: 10 Column: 10) addCssClassMBadgeDanger.
+		(self getFieldByRow: 10 Column: 11) addCssClassMBadgeDanger.
+		(self getFieldByRow: 11 Column: 10) addCssClassMBadgeDanger.
+		(self getFieldByRow: 11 Column: 11) addCssClassMBadgeDanger.
+		
+		(self getFieldByRow: 10 Column: 1) addCssClassMBadgeSuccess.
+		(self getFieldByRow: 10 Column: 2) addCssClassMBadgeSuccess.
+		(self getFieldByRow: 11 Column: 1) addCssClassMBadgeSuccess.
+		(self getFieldByRow: 11 Column: 2) addCssClassMBadgeSuccess.
+		
+		(self getFieldByRow: 1 Column: 1) addCssClassMBadgeWarning.
+		(self getFieldByRow: 1 Column: 2) addCssClassMBadgeWarning.
+		(self getFieldByRow: 2 Column: 1) addCssClassMBadgeWarning.
+		(self getFieldByRow: 2 Column: 2) addCssClassMBadgeWarning.
+		"(self boardIndexBadgeMap at: 3) addClickEventSelector: #exEvent:."
+
+		
+]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerView >> exEvent: event [
+
+	event component text: (self getIndexbyBadge: event component).
+	(self player1WinDictionary at: 1) addCssClassMBadgeDanger.
 ]
 
 { #category : 'Internal' }
@@ -183,6 +217,13 @@ HfuSpManDontGetAngryPlayerView >> getFieldByRow: aRow Column: aColumn [
 ]
 
 { #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerView >> getIndexbyBadge: aBadge [
+
+	self boardIndexBadgeMap keysAndValuesDo: [:eachKey :eachValue |
+		(eachValue = aBadge) ifTrue: [^eachKey]].
+]
+
+{ #category : 'Initial events' }
 HfuSpManDontGetAngryPlayerView >> initializeBoardIndexMap [
 
 "Initializes the boardIndexMap Dictionary to map the indizies to the corresponding badge."
@@ -226,6 +267,88 @@ HfuSpManDontGetAngryPlayerView >> initializeBoardIndexMap [
 	theMap at: theIndex put: (self getFieldByRow: 1 Column: 6).
 
 	self boardIndexBadgeMap: theMap.
+]
+
+{ #category : 'Initial events' }
+HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
+
+	| tempDictionary |
+	"Initialize Player1WinDictionary"
+	tempDictionary := Dictionary new.
+	tempDictionary at: 1 put: (self getFieldByRow: 2 Column: 6).
+	tempDictionary at: 2 put: (self getFieldByRow: 3 Column: 6).
+	tempDictionary at: 3 put: (self getFieldByRow: 4 Column: 6).
+	tempDictionary at: 4 put: (self getFieldByRow: 5 Column: 6).
+	self player1WinDictionary: tempDictionary.
+	"Initialize Player2WinDictionary"
+	tempDictionary := Dictionary new.
+	tempDictionary at: 1 put: (self getFieldByRow: 6 Column: 10).
+	tempDictionary at: 2 put: (self getFieldByRow: 6 Column: 9).
+	tempDictionary at: 3 put: (self getFieldByRow: 6 Column: 8).
+	tempDictionary at: 4 put: (self getFieldByRow: 6 Column: 7).
+	self player2WinDictionary: tempDictionary.
+	"Initialize Player3WinDictionary"
+	tempDictionary := Dictionary new.
+	tempDictionary at: 1 put: (self getFieldByRow: 7 Column: 6).
+	tempDictionary at: 2 put: (self getFieldByRow: 8 Column: 6).
+	tempDictionary at: 3 put: (self getFieldByRow: 9 Column: 6).
+	tempDictionary at: 4 put: (self getFieldByRow: 10 Column: 6).
+	self player3WinDictionary: tempDictionary.
+	"Initialize Player4WinDictionary"
+	tempDictionary := Dictionary new.
+	tempDictionary at: 1 put: (self getFieldByRow: 6 Column: 5).
+	tempDictionary at: 2 put: (self getFieldByRow: 6 Column: 4).
+	tempDictionary at: 3 put: (self getFieldByRow: 6 Column: 3).
+	tempDictionary at: 4 put: (self getFieldByRow: 6 Column: 2).
+	self player3WinDictionary: tempDictionary.
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player1WinDictionary [
+
+	^player1WinDictionary
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player1WinDictionary: anObject [
+
+	player1WinDictionary := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player2WinDictionary [
+
+	^player2WinDictionary
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player2WinDictionary: anObject [
+
+	player2WinDictionary := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player3WinDictionary [
+
+	^player3WinDictionary
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player3WinDictionary: anObject [
+
+	player3WinDictionary := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player4WinDictionary [
+
+	^player4WinDictionary
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player4WinDictionary: anObject [
+
+	player4WinDictionary := anObject
 ]
 
 { #category : 'Internal' }
