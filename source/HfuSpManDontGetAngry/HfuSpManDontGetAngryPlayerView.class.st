@@ -68,6 +68,7 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
+ | state |
 boardRows := OrderedCollection  new.
 	self 
 		addChild: (Me5Label new
@@ -232,10 +233,29 @@ boardRows := OrderedCollection  new.
 		(self getFieldByRow: 1 Column: 2) addCssClassMBadgeWarning.
 		(self getFieldByRow: 2 Column: 1) addCssClassMBadgeWarning.
 		(self getFieldByRow: 2 Column: 2) addCssClassMBadgeWarning.
-		self playerViewController displayCurrentBoardState.
+		"self playerViewController displayCurrentBoardState."
 		"(self boardIndexBadgeMap at: 3) addClickEventSelector: #exEvent:."
-
 		
+		"testing area"
+		state := HfuSpManDontGetAngryBoardState  new.
+		state initializeBoardState.
+		state putNewFigureOnBoard: 1.
+		state putNewFigureOnBoard: 3.
+		state board at: 6 put: 4.
+		state lastFields at: 5 put: true.
+		self setGame: state.
+		"((boardRows at: 5) children at: 1 put: (Me5Badge newPrimary
+			text: ' ';
+			yourself))."
+		
+
+]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerView >> displayBoardState: anBoardState [
+
+	"displays the BoardState on the screen"
+	self setGame: anBoardState
 ]
 
 { #category : 'Not categorized' }
@@ -339,7 +359,7 @@ HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
 	tempDictionary at: 2 put: (self getFieldByRow: 6 Column: 4).
 	tempDictionary at: 3 put: (self getFieldByRow: 6 Column: 3).
 	tempDictionary at: 4 put: (self getFieldByRow: 6 Column: 2).
-	self player3WinDictionary: tempDictionary.
+	self player4WinDictionary: tempDictionary.
 ]
 
 { #category : 'Accessing' }
@@ -391,9 +411,24 @@ HfuSpManDontGetAngryPlayerView >> player4WinDictionary: anObject [
 ]
 
 { #category : 'Internal' }
-HfuSpManDontGetAngryPlayerView >> setGame: aBoard [
+HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 
-	^true.
+	"displays the given BoardState"
+	| index |
+	index := 1.
+	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
+		index := index + 1.].
+	1 to: 4 do: [:eachNumber | self setPlayerNumber: 1 WinFieldAt: eachNumber To: (aBoardState lastFields at: eachNumber)].
+	1 to: 4 do: [:eachNumber | self setPlayerNumber: 2 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 4))].
+	1 to: 4 do: [:eachNumber | self setPlayerNumber: 3 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 8))].
+	1 to: 4 do: [:eachNumber | self setPlayerNumber: 4 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 12))].
+]
 
-	
+{ #category : 'Internal' }
+HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinFieldAt: anInteger To: aBoolean [
+
+	(aPlayerNumberInteger = 1 and: [aBoolean]) ifTrue: [(self player1WinDictionary at: anInteger) addCssClassMBadgeRounded.].
+	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) addCssClassMBadgeRounded.].
+	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) addCssClassMBadgeRounded.].
+	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger) addCssClassMBadgeRounded.].
 ]
