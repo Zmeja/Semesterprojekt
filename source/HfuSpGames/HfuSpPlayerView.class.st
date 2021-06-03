@@ -6,116 +6,71 @@ Class {
 		'addGameButton',
 		'closeGamesButton',
 		'sessionHolder',
-		'tictactoeButton',
-		'tictactoeViewButton',
-		'manDontGetAngryButton',
-		'connectFourButton'
+		'createGameButton',
+		'lobbyRepresentation'
 	],
 	#category : 'HfuSpGames'
 }
 
 { #category : 'Not categorized' }
-HfuSpPlayerView >> addConnectFourButtonClicked [
-	|tempButton createdGameSession|
-	createdGameSession := HfuSpGameSessionsManager createGameSession: 'ConnectFour'.
-	tempButton := Me5Button newAirSecondary.
-	tempButton text: ('Join ConnectFour', (createdGameSession asString)).
-	tempButton name: createdGameSession asString.
-	tempButton addClickEventSelector: #addConnectFourButtonClicked:.
-	self sessionHolder addChildToBody:tempButton.
+HfuSpPlayerView >> activateCreateGameView [
+
+	self lobbyRepresentation: (HfuSpGameSessionLobbyRepresentationView new createGameForm;yourself).
+	self
+			addChild: (Me5ViewHolder new
+			holdingView: (self lobbyRepresentation);
+			yourself);
+		yourself
 ]
 
 { #category : 'Not categorized' }
-HfuSpPlayerView >> addConnectFourButtonClicked: anPlayerAddEvent [
-	|aGameView|
-	aGameView := (HfuSpConnectFourPlayerViewController new createPlayerView).
-	aGameView playerViewController player: self playerViewController player.
-	aGameView playerViewController playerView: aGameView.
-	aGameView playerViewController join: anPlayerAddEvent component name asInteger.
-	self replaceView: aGameView.
+HfuSpPlayerView >> activateJoinGameView: anEvent [
 	
+	self lobbyRepresentation: (HfuSpGameSessionLobbyRepresentationView new 
+									createSessionForm: anEvent component name asInteger;yourself).
+	self
+			addChild: (Me5ViewHolder new
+			holdingView: (self lobbyRepresentation);
+			yourself);
+		yourself
 ]
 
 { #category : 'Not categorized' }
-HfuSpPlayerView >> addGameButtonClicked [
-	|tempButton createdGameSession|
-	createdGameSession := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.
-	tempButton := Me5Button newAirSecondary.
-	tempButton text: ('Join TicTacToe ', (createdGameSession asString)).
-	tempButton name: createdGameSession asString.
-	tempButton addClickEventSelector: #addPlayerButtonClicked:.
-	self sessionHolder addChildToBody:tempButton.
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> addManDontGetAngryButtonClicked [
-	|tempButton createdGameSession|
-	createdGameSession := HfuSpGameSessionsManager createGameSession: 'ManDontGetAngry'.
-	tempButton := Me5Button newAirSecondary.
-	tempButton text: ('Join ManDontGetAngry ', (createdGameSession asString)).
-	tempButton name: createdGameSession asString.
-	tempButton addClickEventSelector: #addManDontGetAngryButtonClicked:.
-	self sessionHolder addChildToBody:tempButton.
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> addManDontGetAngryButtonClicked: anPlayerAddEvent [
-	|aGameView|
-	aGameView := (HfuSpManDontGetAngryPlayerViewController new createPlayerView).
-	aGameView playerViewController player: self playerViewController player.
-	aGameView playerViewController playerView: aGameView.
-	aGameView playerViewController join: anPlayerAddEvent component name asInteger.
-	self replaceView: aGameView.
+HfuSpPlayerView >> addGameButtonClicked: aForm [
+	|tempID createdGameSession children|
+	children := aForm portletBody.
+	children firstChild value= 'TicTacToe'
+		ifTrue: [tempID := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.].
+	children firstChild value = 'Man Dont Get Angry'
+		ifTrue: [tempID := HfuSpGameSessionsManager createGameSession: 'ManDontGetAngry'.].
+	children firstChild value = 'Connect Four'
+		ifTrue: [tempID := HfuSpGameSessionsManager createGameSession: 'ConnectFour'.].
+	createdGameSession := HfuSpGameSessionsManager getGameSessionById: tempID.
+	createdGameSession name: ((children children at: 2) value).
+	createdGameSession type: children firstChild value.
+	self lobbyRepresentation gameType: children firstChild value.
+	self updateSite.
+	^tempID.
 	
 ]
 
 { #category : 'Not categorized' }
 HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
-	|aGameView|
-	aGameView := (HfuSpTicTacToePlayerViewController new createPlayerView).
+	|aGameView gameType|
+	gameType := self lobbyRepresentation gameType.
+	gameType = 'TicTacToe'
+		ifTrue: [aGameView := (HfuSpTicTacToePlayerViewController new createPlayerView).].
+	gameType = 'Man Dont Get Angry'
+		ifTrue: [aGameView := (HfuSpManDontGetAngryPlayerViewController new createPlayerView).].
+	gameType = 'Connect Four'
+		ifTrue: [aGameView := (HfuSpConnectFourPlayerViewController new createPlayerView).].
 	aGameView playerViewController player: self playerViewController player.
 	aGameView playerViewController playerView: aGameView.
-	aGameView playerViewController join: anPlayerAddEvent component name asInteger.
+	aGameView playerViewController join: anPlayerAddEvent.
 	self replaceView: aGameView.
 	
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> addTicTacToeButtonClicked [
 	
-"	self
-			addChild: (Me5ViewHolder new
-			holdingView: HfuSpGameSessionLobbyRepresentationView new;
-			yourself);
-		yourself"
 	
-	|tempButton createdGameSession|
-	createdGameSession := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.
-	tempButton := Me5Button newAirSecondary.
-	tempButton text: ('Join TicTacToe ', (createdGameSession asString)).
-	tempButton name: createdGameSession asString.
-	tempButton addClickEventSelector: #addPlayerButtonClicked:.
-	self sessionHolder addChildToBody:tempButton.
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> addTicTacToeButtonClicked: anPlayerAddEvent [
-	|aGameView|
-	aGameView := (HfuSpTicTacToePlayerViewController new createPlayerView).
-	aGameView playerViewController player: self playerViewController player.
-	aGameView playerViewController playerView: aGameView.
-	aGameView playerViewController join: anPlayerAddEvent component name asInteger.
-	self replaceView: aGameView.
-	
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> addTicTacToeViewClicked [
-	self
-			addChild: (Me5ViewHolder new
-			holdingView: HfuSpGameSessionLobbyRepresentationView new;
-			yourself);
-		yourself
 ]
 
 { #category : 'Not categorized' }
@@ -132,19 +87,9 @@ HfuSpPlayerView >> createComponents [
 	self sessionHolder: Me5Portlet new.
 	self addChild: self sessionHolder.
 	self updateSite.
-	self addChild: (tictactoeButton := Me5Button newAirSecondary
-					text: 'Create TicTacToe';
-					addClickEventSelector: #addTicTacToeButtonClicked;
-					yourself).
-					
-		self addChild: (tictactoeViewButton := Me5Button newAirSecondary
-					text: 'Create TicTacToeViewTestButton';
-					addClickEventSelector: #addTicTacToeViewClicked;
-					yourself).
-					
-		self addChild: (manDontGetAngryButton := Me5Button newAirSecondary
-					text: 'Create ManDontGetAngry';
-					addClickEventSelector: #addManDontGetAngryButtonClicked;
+		self addChild: (createGameButton := Me5Button newAirSecondary
+					text: 'Create Game';
+					addClickEventSelector: #activateCreateGameView;
 					yourself).
 	self addChild: (closeGamesButton := Me5Button newAirSecondary
 					text: 'Force Close all Games';
@@ -167,6 +112,18 @@ HfuSpPlayerView >> displayBoardState: anBoardState [
 HfuSpPlayerView >> initializeView [
 
 	^self
+]
+
+{ #category : 'Accessing' }
+HfuSpPlayerView >> lobbyRepresentation [
+
+	^lobbyRepresentation
+]
+
+{ #category : 'Accessing' }
+HfuSpPlayerView >> lobbyRepresentation: anObject [
+
+	lobbyRepresentation := anObject
 ]
 
 { #category : 'Accessing' }
@@ -211,7 +168,7 @@ HfuSpPlayerView >> startUp [
 	yourself
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Not categorized' }
 HfuSpPlayerView >> updateSite [
 		
 		self aboutToReplaceView.
@@ -222,21 +179,17 @@ HfuSpPlayerView >> updateSite [
 					| tempButton |
 				    tempButton := Me5Button newAirSecondary.	
 					(HfuSpGameSessionsManager getGameSessionById: eachSession) class = HfuSpTicTacToeTurnStateController 
-					ifTrue:[tempButton text: ('Join TicTacToe ', (eachSession asString)).
-							tempButton addClickEventSelector: #addTicTacToeButtonClicked:.].
+					ifTrue:[tempButton text: ((HfuSpGameSessionsManager getGameSessionById: eachSession) name).
+							tempButton addClickEventSelector: #activateJoinGameView:.].
 							
 					(HfuSpGameSessionsManager getGameSessionById: eachSession) class = HfuSpManDontGetAngryTurnStateController 
-					ifTrue:[tempButton text: ('Join ManDontGetAngry ', (eachSession asString)).
-							tempButton addClickEventSelector: #addManDontGetAngryButtonClicked:.].
+					ifTrue:[tempButton text: ((HfuSpGameSessionsManager getGameSessionById: eachSession) name).
+							tempButton addClickEventSelector: #activateJoinGameView:.].
 							
 					(HfuSpGameSessionsManager getGameSessionById: eachSession) class = HfuSpConnectFourTurnStateController  
-					ifTrue:[tempButton text: ('Join ConnectFour ', (eachSession asString)).
-							tempButton addClickEventSelector: #addConnectFourButtonClicked:.].
-							
-							
-					
+					ifTrue:[tempButton text: ((HfuSpGameSessionsManager getGameSessionById: eachSession) name).
+							tempButton addClickEventSelector: #activateJoinGameView:.].
 					tempButton name: eachSession.
-					
 					self sessionHolder addChildToBody: tempButton.
 		]]
 		ifFalse: [].

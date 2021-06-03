@@ -2,6 +2,8 @@ Class {
 	#name : 'HfuSpTurnStateController',
 	#superclass : 'Object',
 	#instVars : [
+		'type',
+		'name',
 		'turnNumber',
 		'currentBoardState',
 		'playerViewControllers',
@@ -172,6 +174,19 @@ HfuSpTurnStateController >> initializeState [
 ]
 
 { #category : 'Accessing' }
+HfuSpTurnStateController >> name [
+
+	^name
+	
+]
+
+{ #category : 'Accessing' }
+HfuSpTurnStateController >> name: anObject [
+
+	name := anObject
+]
+
+{ #category : 'Accessing' }
 HfuSpTurnStateController >> playerViewControllers [
 
 	"<^iOf Object>"
@@ -234,6 +249,18 @@ HfuSpTurnStateController >> turnNumber: anInteger [
 	"Set the turnNumber of the receiver"
 
 	self currentBoardState turnNumber: anInteger
+]
+
+{ #category : 'Accessing' }
+HfuSpTurnStateController >> type [
+
+	^type
+]
+
+{ #category : 'Accessing' }
+HfuSpTurnStateController >> type: anObject [
+
+	type := anObject
 ]
 
 { #category : 'InternalStateHandling' }

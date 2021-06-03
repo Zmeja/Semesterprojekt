@@ -2,36 +2,28 @@ Class {
 	#name : 'HfuSpGameSessionLobbyRepresentationView',
 	#superclass : 'Me5BaseView',
 	#instVars : [
-		'gameID',
 		'gameType',
+		'textField',
+		'form',
+		'selectBox',
 		'gameView',
-		'tempButton',
+		'button',
 		'playerViewController',
 		'sessionHolder'
 	],
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
-HfuSpGameSessionLobbyRepresentationView >> addTicTacToeButtonClicked [
-	|createdGameSession|
-	createdGameSession := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.
-	
-	tempButton := Me5Button newAirSecondary.
-	tempButton text: ('Join TicTacToe ', (createdGameSession asString)).
-	tempButton name: createdGameSession asString.
-	tempButton addClickEventSelector: #addPlayerButtonClicked:.
-	self sessionHolder addChildToBody:tempButton.
+{ #category : 'Accessing' }
+HfuSpGameSessionLobbyRepresentationView >> button [
+
+	^button
 ]
 
-{ #category : 'Not categorized' }
-HfuSpGameSessionLobbyRepresentationView >> addTicTacToeButtonClicked: anPlayerAddEvent [
-	|aGameView|
-	aGameView := (HfuSpTicTacToePlayerViewController new createPlayerView).
-	aGameView playerViewController player: self playerViewController player.
-	aGameView playerViewController playerView: aGameView.
-	aGameView playerViewController join: anPlayerAddEvent component name asInteger.
-	self replaceView: aGameView.
+{ #category : 'Accessing' }
+HfuSpGameSessionLobbyRepresentationView >> button: anObject [
+
+	button := anObject
 ]
 
 { #category : 'Not categorized' }
@@ -42,61 +34,68 @@ HfuSpGameSessionLobbyRepresentationView >> closeThisGameClicked [
 { #category : 'Not categorized' }
 HfuSpGameSessionLobbyRepresentationView >> createComponents [
 
-self
-	addChild:(Me5Portlet new	
-		title: 'gameID: ',  gameID;
-		addChildToBody: (Me5Section new
-			title: 'gameType: ',   gameType;	
-			
-			addChild:(Me5Button newAirSecondary
-			text: 'Join This Game';
-			addClickEventSelector: #closeThisGameClicked;
-			yourself);	
-			
-			addChild:(Me5Button newAirSecondary
-			text: 'Close This Game';
-			addClickEventSelector: #closeThisGameClicked;
-			yourself);
+	self addChild: self form.
+]
 
-			yourself);
-		yourself);
-	yourself
+{ #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> createGameClicked [
+	|createdGameSession|
+	createdGameSession := self parentView addGameButtonClicked: self form.
+	self parentView addPlayerButtonClicked: createdGameSession.
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> createGameForm [
+
+	self form: Me5FormPortlet new.
+	self selectBox: (Me5SelectBox new addObjects: #('TicTacToe' 'Man Dont Get Angry' 'Connect Four'); yourself).
+	self textField: (Me5TextField new text: 'Name';helpText:'Enter a name for your Session'; yourself).
+	self button: Me5Button newPrimary.
+	self button text:'Create Game'.
+	self button addClickEventSelector: #createGameClicked.
+	self form addChildToBody: self selectBox.
+	self form addChildToBody: self textField.
+	self form addChildToBody: self button.
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> createSessionForm: aGameID [
+
+	|gameSession|
+	gameSession := HfuSpGameSessionsManager getGameSessionById: aGameID.
+	self gameType: gameSession type.
+	self form: Me5FormPortlet new.
+	self form text: ('ID: ', (aGameID asString), String cr, 'Name: ', gameSession name, String cr, 'Players: ', ((gameSession playerViewControllers size) asString)).
+	self button: Me5Button newPrimary.
+	self button text:'Join Game'.
+	self button name: aGameID asString.
+	self button addClickEventSelector: #joinGameClicked:.
+	self gameType: gameSession type.
+	self form addChildToBody: self button.
 ]
 
 { #category : 'Accessing' }
-HfuSpGameSessionLobbyRepresentationView >> gameID [
+HfuSpGameSessionLobbyRepresentationView >> form [
 
-	"<^iOf Integer>"
-	"Answer the gameID of the receiver"
-
-	^gameID
+	^form
 ]
 
 { #category : 'Accessing' }
-HfuSpGameSessionLobbyRepresentationView >> gameID: anInteger [
+HfuSpGameSessionLobbyRepresentationView >> form: anObject [
 
-	"<anInteger: iOf Integer, ^self>"
-	"Set the gameID of the receiver"
-
-	gameID := anInteger
+	form := anObject
 ]
 
 { #category : 'Accessing' }
 HfuSpGameSessionLobbyRepresentationView >> gameType [
 
-	"<^iOf String>"
-	"Answer the gameType of the receiver"
-
 	^gameType
 ]
 
 { #category : 'Accessing' }
-HfuSpGameSessionLobbyRepresentationView >> gameType: aString [
+HfuSpGameSessionLobbyRepresentationView >> gameType: anObject [
 
-	"<aString: iOf String, ^self>"
-	"Set the gameType of the receiver"
-
-	gameType := aString
+	gameType := anObject
 ]
 
 { #category : 'Accessing' }
@@ -118,6 +117,12 @@ HfuSpGameSessionLobbyRepresentationView >> gameView: aView [
 ]
 
 { #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> joinGameClicked: anEvent [
+
+	self parentView addPlayerButtonClicked: (anEvent component name) asInteger.
+]
+
+{ #category : 'Accessing' }
 HfuSpGameSessionLobbyRepresentationView >> playerViewController [
 
 	"<^iOf aPlayerViewController>"
@@ -126,13 +131,25 @@ HfuSpGameSessionLobbyRepresentationView >> playerViewController [
 	^playerViewController
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpGameSessionLobbyRepresentationView >> playerViewController: anaPlayerViewController [
 
 	"<anaPlayerViewController: iOf aPlayerViewController, ^self>"
 	"Set the playerViewController of the receiver"
 
 	playerViewController := anaPlayerViewController
+]
+
+{ #category : 'Accessing' }
+HfuSpGameSessionLobbyRepresentationView >> selectBox [
+
+	^selectBox
+]
+
+{ #category : 'Accessing' }
+HfuSpGameSessionLobbyRepresentationView >> selectBox: anObject [
+
+	selectBox := anObject
 ]
 
 { #category : 'Not categorized' }
@@ -154,4 +171,16 @@ HfuSpGameSessionLobbyRepresentationView >> startUp [
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9099' serverApplicationClass: HfuSpGameSessionLobbyRepresentationView).
 	theHttpServer addViewClass: HfuSpGameSessionLobbyRepresentationView;
 	yourself
+]
+
+{ #category : 'Accessing' }
+HfuSpGameSessionLobbyRepresentationView >> textField [
+
+	^textField
+]
+
+{ #category : 'Accessing' }
+HfuSpGameSessionLobbyRepresentationView >> textField: anObject [
+
+	textField := anObject
 ]
