@@ -115,7 +115,7 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 			self rolledNumber: 6.
 			self checkRolledDice
 				ifTrue: [self turnStateController updateGameStateOfAllPlayers. ^self rolledNumber]
-				ifFalse: [self turnStateController currentBoardState makeTurnOrderStep. ^'roll not 6']
+				ifFalse: [self turnStateController currentBoardState makeTurnOrderStep. ^nil]
 			].
 	self isActingPlayer = true 
 		ifFalse:[^nil].

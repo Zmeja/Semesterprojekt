@@ -109,7 +109,33 @@ HfuSpManDontGetAngryBoardState >> isPlayerOnField: aField [
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryBoardState >> isValidOrder: anOrder [
 
+	"|playerViewController |
+	playerViewController := (HfuSpManDontGetAngryTurnStateController playerViewControllers at: (HfuSpPlayer players at: anOrder playerID))."
 	
+	(anOrder fieldID = -1)
+		ifTrue: [
+			(((anOrder number = 6) 
+				and: (anOrder hasFigures)) 
+					and: (((self isOwnPlayer: anOrder offset onField: (self getStartfieldWithOffset: anOrder offset))) = false))
+						ifTrue: [
+							^true
+							]
+		].
+	(anOrder fieldID between: 1 and: 40)    
+		ifTrue: [
+			|nextField over|
+			nextField := (anOrder fieldID) + (anOrder number).
+			nextField > 40
+				ifTrue: [nextField := nextField - 40].
+			over :=(self isField: (anOrder fieldID) overLastField: nextField withOffset: (anOrder offset)).
+			over = 0
+				ifFalse: [(self lastFields at:(over+(anOrder offset*4)))
+								ifFalse: [^true]
+				].
+			(self isOwnPlayer: (anOrder offset) onField: nextField)
+				ifFalse: [^true].
+			].
+	^false
 	
 		
 ]

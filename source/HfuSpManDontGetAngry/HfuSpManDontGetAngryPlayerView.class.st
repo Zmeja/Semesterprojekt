@@ -79,104 +79,139 @@ boardRows := OrderedCollection  new.
 		1 to: 11 do: [:eachColumn | eachColumn < 5 
 			ifTrue: [(boardRows at: 1) addChild: (Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself)].
 			(eachColumn between: 5 and: 7) 
 			ifTrue: [(boardRows at: 1) addChild:(Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself)].
 			eachColumn > 7 
 			ifTrue: [(boardRows at:1) addChild: (Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself)].
 			].
 		"Initialize row 2 - 4"
 		2 to: 4 do: [:eachRow | 
 			1 to: 4 do: [:eachColumn | (boardRows at: eachRow) addChild:(Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).].
 			(boardRows at: eachRow) addChild: (Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 			(boardRows at: eachRow) addChild: (Me5Badge newInfo
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 			(boardRows at: eachRow) addChild: (Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 			1 to: 4 do: [:eachColumn | (boardRows at: eachRow) addChild:(Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).].
 		].
 		"Initialize row 5"
 		1 to: 5 do: [:eachColumn | (boardRows at: 5) addChild: (Me5Badge newPrimary
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).].
 		(boardRows at: 5) addChild: (Me5Badge newInfo
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).
 		7 to: 11 do: [:eachColumn | (boardRows at: 5) addChild: (Me5Badge newPrimary
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).].
 		"Initialize row 6"
 		(boardRows at: 6) addChild: (Me5Badge newPrimary
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).
 		2 to: 5 do: [:eachColumn | (boardRows at: 6) addChild: (Me5Badge newWarning
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself)]. 
 		(boardRows at: 6) addChild: (Me5Badge new
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).
 		7 to: 10 do: [:eachColumn | (boardRows at: 6) addChild: (Me5Badge newDanger
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself)].
 		(boardRows at: 6) addChild: (Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 		"Initialize row 7"
 		1 to: 5 do: [:eachColumn | (boardRows at: 7) addChild: (Me5Badge newPrimary
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).].
 		(boardRows at: 7) addChild: (Me5Badge newSuccess
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).
 		7 to: 11 do: [:eachColumn | (boardRows at: 7) addChild: (Me5Badge newPrimary
 			text: ' ';
+			addClickEventSelector:#exEvent: ;
 			yourself).].
 		"Initialize rows 8 to 10"
 		8 to: 10 do: [:eachRow | 
 			1 to: 4 do: [:eachColumn | (boardRows at: eachRow) addChild:(Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).].
 			(boardRows at: eachRow) addChild: (Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 			(boardRows at: eachRow) addChild: (Me5Badge newSuccess
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 			(boardRows at: eachRow) addChild: (Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).
 			1 to: 4 do: [:eachColumn | (boardRows at: eachRow) addChild:(Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself).].
 		].
 		"Initialize row 11"
 		1 to: 11 do: [:eachColumn | eachColumn < 5 
 			ifTrue: [(boardRows at: 11) addChild: (Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself)].
 			(eachColumn between: 5 and: 7) 
 			ifTrue: [(boardRows at: 11) addChild:(Me5Badge newPrimary
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself)].
 			eachColumn > 7 
 			ifTrue: [(boardRows at:11) addChild: (Me5Badge new
 				text: ' ';
+				addClickEventSelector:#exEvent: ;
 				yourself)].
 			].
 		self initializeBoardIndexMap.
 		self initializePlayerWinDictionaries.
+		self addChild: (Me5Button newAirSecondary
+					text: 'Roll';
+					addClickEventSelector: #exEvent:;
+					yourself).
+		self addChild: (Me5Button newAirSecondary
+					text: 'Figure';
+					addClickEventSelector: #exEvent:;
+					yourself).
 		"Add the out of game figures"
 		(self getFieldByRow: 1 Column: 10) addCssClassMBadgeInfo.
 		(self getFieldByRow: 1 Column: 11) addCssClassMBadgeInfo.
@@ -197,6 +232,7 @@ boardRows := OrderedCollection  new.
 		(self getFieldByRow: 1 Column: 2) addCssClassMBadgeWarning.
 		(self getFieldByRow: 2 Column: 1) addCssClassMBadgeWarning.
 		(self getFieldByRow: 2 Column: 2) addCssClassMBadgeWarning.
+		self playerViewController displayCurrentBoardState.
 		"(self boardIndexBadgeMap at: 3) addClickEventSelector: #exEvent:."
 
 		
@@ -205,7 +241,10 @@ boardRows := OrderedCollection  new.
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> exEvent: event [
 
-	event component text: (self getIndexbyBadge: event component).
+	"event component text: (self getIndexbyBadge: event component)."
+	event component text = 'Roll'
+		ifTrue: [self playerViewController transmitOrder: 0]
+		ifFalse: [self playerViewController transmitOrder: (self getIndexbyBadge: event component)].
 	(self player1WinDictionary at: 1) addCssClassMBadgeDanger.
 ]
 
