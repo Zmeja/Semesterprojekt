@@ -144,6 +144,30 @@ HfuSpPlayerView >> playerViewController: anaPlayerViewController [
 	playerViewController := anaPlayerViewController
 ]
 
+{ #category : 'Not categorized' }
+HfuSpPlayerView >> removePlayerButtonClicked: anPlayerAddEvent [
+	|aGameView gameType|
+
+	HfuSpGameSessionsManager  removeActiveGameSession:  anPlayerAddEvent.
+	self resetView.
+
+
+
+	
+	
+]
+
+{ #category : 'Not categorized' }
+HfuSpPlayerView >> resetView [
+
+	"<^self>"
+	"rebuilds view as if side was just opened.
+	 ->removes GameSessionReresentationViews"
+
+	"!!!Diese Methode muss implementierd werden!!!"
+	
+]
+
 { #category : 'Accessing' }
 HfuSpPlayerView >> sessionHolder [
 

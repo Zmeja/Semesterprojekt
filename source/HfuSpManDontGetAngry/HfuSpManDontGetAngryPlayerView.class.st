@@ -2,6 +2,7 @@ Class {
 	#name : 'HfuSpManDontGetAngryPlayerView',
 	#superclass : 'HfuSpPlayerView',
 	#instVars : [
+		'startGameButton',
 		'boardPortlet',
 		'boardRows',
 		'boardIndexBadgeMap',
@@ -76,6 +77,10 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 			text: 'Man, dont be angry';
 			yourself).
 	self renderBaseGameState.
+			self addChild: (startGameButton:= (Me5Button newAirSecondary
+					text: 'Start Game';
+					addClickEventSelector: #startGameClicked;
+					yourself)).
 		"self playerViewController displayCurrentBoardState."
 		"testing area"
 		"state := HfuSpManDontGetAngryBoardState  new.
@@ -446,4 +451,10 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) addCssClassMBadgeRounded.].
 	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) addCssClassMBadgeRounded.].
 	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger) addCssClassMBadgeRounded.].
+]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerView >> startGameClicked [
+	
+	self playerViewController startGame.
 ]

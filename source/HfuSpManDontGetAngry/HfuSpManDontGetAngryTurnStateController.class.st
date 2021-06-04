@@ -83,3 +83,12 @@ HfuSpManDontGetAngryTurnStateController >> kickFigure: aColorOfPlayer [
 	
 	
 ]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryTurnStateController >> startGame [
+
+	"^self"
+	"sets the game as active"
+	self updateGameStateOfAllPlayers.
+	self gameOngoing: 0
+]

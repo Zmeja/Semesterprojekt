@@ -22,8 +22,8 @@ HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 		ifTrue: [self initializeState].
 	self currentBoardState addPlayerToTurnOrder: (anPlayerViewController player).
 	anPlayerViewController turnStateController: self.
-	self playerViewControllers add: (Association new key: (anPlayerViewController player) value: anPlayerViewController )
-	
+	self playerViewControllers add: (Association new key: (anPlayerViewController player) value: anPlayerViewController ).
+
 ]
 
 { #category : 'ViewControllerNotifying' }
@@ -230,7 +230,8 @@ HfuSpTurnStateController >> startGame [
 
 	"^self"
 	"sets the game as active"
-	self gameOngoing: 0
+	self gameOngoing: 0.
+	self updateGameStateOfAllPlayers.
 ]
 
 { #category : 'Accessing' }

@@ -8,6 +8,7 @@ Class {
 		'selectBox',
 		'gameView',
 		'button',
+		'removeButton',
 		'playerViewController',
 		'sessionHolder'
 	],
@@ -53,6 +54,7 @@ HfuSpGameSessionLobbyRepresentationView >> createGameForm [
 	self button: Me5Button newPrimary.
 	self button text:'Create Game'.
 	self button addClickEventSelector: #createGameClicked.
+	
 	self form addChildToBody: self selectBox.
 	self form addChildToBody: self textField.
 	self form addChildToBody: self button.
@@ -70,8 +72,15 @@ HfuSpGameSessionLobbyRepresentationView >> createSessionForm: aGameID [
 	self button text:'Join Game'.
 	self button name: aGameID asString.
 	self button addClickEventSelector: #joinGameClicked:.
+	
+	self removeButton: Me5Button newPrimary.
+	self removeButton text:'Remove Game'.
+	self removeButton name:  aGameID asString..
+	self removeButton addClickEventSelector: #removeGameClicked:.
+	
 	self gameType: gameSession type.
 	self form addChildToBody: self button.
+		self form addChildToBody: self removeButton.
 ]
 
 { #category : 'Accessing' }
@@ -138,6 +147,24 @@ HfuSpGameSessionLobbyRepresentationView >> playerViewController: anaPlayerViewCo
 	"Set the playerViewController of the receiver"
 
 	playerViewController := anaPlayerViewController
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> removeButton [
+
+	^removeButton
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> removeButton: anObject [
+
+	removeButton := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpGameSessionLobbyRepresentationView >> removeGameClicked: anEvent [
+
+	self parentView removePlayerButtonClicked: (anEvent component name) asInteger.
 ]
 
 { #category : 'Accessing' }
