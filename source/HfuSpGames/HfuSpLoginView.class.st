@@ -25,8 +25,8 @@ HfuSpLoginView class >> createGoogleOAuth2UserAccess [
 HfuSpLoginView class >> getViewUrl [
 	
 	^(System isRuntime
-		ifTrue: ['http://localhost:9001/HfuSpLoginView%1'] 
-		ifFalse: ['http://localhost:9001/%1'])
+		ifTrue: ['http://localhost:9009/%1' ] 
+		ifFalse: ['http://localhost:9009/HfuSpLobbyView'])
 			bindWith: self viewPath
 ]
 
@@ -40,8 +40,9 @@ HfuSpLoginView class >> sessionClass [
 HfuSpLoginView class >> startUp [
 
 	| theHttpServer |
-	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9001' serverApplicationClass: HfuSpLoginView).
+	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9009' serverApplicationClass: HfuSpLoginView).
 	theHttpServer addViewClass: HfuSpLoginView;
+	addViewClass: HfuSpLobbyView;
 		yourself
 ]
 
