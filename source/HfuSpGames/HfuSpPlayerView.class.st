@@ -58,15 +58,8 @@ HfuSpPlayerView >> addGameButtonClicked: aForm [
 HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 	|aGameView gameType|
 	gameType := self lobbyRepresentation gameType.
-	gameType = 'TicTacToe'
-		ifTrue: [aGameView := (HfuSpTicTacToePlayerViewController new createPlayerView).].
-	gameType = 'Man Dont Get Angry'
-		ifTrue: [aGameView := (HfuSpManDontGetAngryPlayerViewController new createPlayerView).].
-	gameType = 'Connect Four'
-		ifTrue: [aGameView := (HfuSpConnectFourPlayerViewController new createPlayerView).].
-	aGameView playerViewController player: self playerViewController player.
-	aGameView playerViewController playerView: aGameView.
-	aGameView playerViewController join: anPlayerAddEvent.
+	gameType = 'TicTacToe'.
+	aGameView:=HfuSpGameSessionsManager addPlayer: (self player id) ToSession:anPlayerAddEvent .
 	self replaceView: aGameView.
 	
 	
@@ -124,6 +117,12 @@ HfuSpPlayerView >> lobbyRepresentation [
 HfuSpPlayerView >> lobbyRepresentation: anObject [
 
 	lobbyRepresentation := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpPlayerView >> player [
+
+	^self playerViewController player
 ]
 
 { #category : 'Accessing' }

@@ -16,7 +16,7 @@ Class {
 HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 
 	"<^PlayerViewController>"
-	"Adds Plyer ViewController to playerViewController list"
+	"Adds Player ViewController to playerViewController list"
 
 	self playerViewControllers = nil 
 		ifTrue: [self initializeState].

@@ -80,7 +80,7 @@ HfuSpPlayerViewController >> isActingPlayer [
 	"Answer the isActingPlayer of the receiver"
 
 	self currentBoardState = nil 
-	ifFalse: [^(self currentBoardState turnOrder first )= (self player) ].
+	ifFalse: [^(self currentBoardState turnOrder first id )= (self player id) ].
 	^true
 	
 	
@@ -147,13 +147,7 @@ HfuSpPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
 	"Answer the receiver"
-	|gameOrder|
-	gameOrder := HfuSpTicTacToeOrder new.
-	gameOrder playerID: self player id.
-	gameOrder fieldID: aField.
-	self isActingPlayer = true 
-		ifFalse:[^nil].
-	self turnStateController receiveGameOrder:  gameOrder
+	self subclassResponsibility
 ]
 
 { #category : 'Accessing' }
