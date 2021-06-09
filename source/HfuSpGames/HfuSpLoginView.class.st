@@ -25,8 +25,8 @@ HfuSpLoginView class >> createGoogleOAuth2UserAccess [
 HfuSpLoginView class >> getViewUrl [
 	
 	^(System isRuntime
-		ifTrue: ['http://localhost:9009/%1' ] 
-		ifFalse: ['http://localhost:9009/HfuSpLobbyView'])
+		ifTrue: ['http://localhost:9009/HfuSpLoginView%1'] 
+		ifFalse: ['http://localhost:9009/%1'])
 			bindWith: self viewPath
 ]
 
@@ -61,36 +61,6 @@ HfuSpLoginView >> createComponents [
 			text: 'Login with Google';
 			addClickEventSelector: #redirect;
 			yourself).
-		self userDataDictionary notNil
-		ifTrue: [self
-			addChild: (Me5Portlet new
-				text: 'Your Personal Data';
-				addChildToBody: (Me5Row new
-					addChild: (Me5Div new
-						addCssClassCol12;
-						addCssClassColLg9;
-						addChild: (theTable:= Me5Table new
-							addCssClassTableBordered;
-							addChildToHead: (Me5TableRow new
-								addTableHeaderWithText: 'Attribute';
-								addTableHeaderWithText: 'Value';
-								yourself);
-							yourself);
-						yourself);
-					addChild: (Me5Div new
-						addCssClassCol12;
-						addCssClassColLg3;
-						addChild: (Me5Img newImgResponsive
-							src: (self userDataDictionary at: 'picture');
-							yourself);
-						yourself);
-					yourself);
-				yourself).
-			self userDataDictionary keysAndValuesDo: [ :eachKey :eachValue |
-				theTable addChildToBody: (Me5TableRow new 
-					addTableDataWithText: eachKey;
-					addTableDataWithText: eachValue;
-					yourself)]]
 ]
 
 { #category : 'Not categorized' }
@@ -143,8 +113,14 @@ HfuSpLoginView >> getUserData [
 { #category : 'Not categorized' }
 HfuSpLoginView >> redirect [
 	
+		self userDataDictionary notNil
+		ifTrue: [ self replaceRootViewAndScrollToTop: (HfuSpLobbyView new 
+			userDataDictionary: self userDataDictionary;
+			yourself)].
+	self userDataDictionary isNil
+	ifTrue: [
 	self setUserAccessFromSession: self class createGoogleOAuth2UserAccess.
-	self redirectUrl: self getUserAccessFromSession authenticationUrl
+	self redirectUrl: self getUserAccessFromSession authenticationUrl].
 ]
 
 { #category : 'Not categorized' }

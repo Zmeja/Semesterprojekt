@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'lobbyViewController',
 		'sessionHolder',
-		'holdingView'
+		'holdingView',
+		'userDataDictionary'
 	],
 	#category : 'HfuSpGames'
 }
@@ -12,6 +13,7 @@ Class {
 { #category : 'Not categorized' }
 HfuSpLobbyView >> createComponents [
 
+	|theTable|
 	self
 	addChild:(Me5Portlet new
 	title: 'Lobby';		
@@ -41,9 +43,39 @@ HfuSpLobbyView >> createComponents [
 				yourself);
 			yourself);
 		yourself);
-			
-yourself
 		
+			
+yourself.
+self userDataDictionary notNil
+			ifTrue: [self
+			addChild: (Me5Portlet new
+				text: 'Your Personal Data';
+				addChildToBody: (Me5Row new
+					addChild: (Me5Div new
+						addCssClassCol12;
+						addCssClassColLg9;
+						addChild: (theTable:= Me5Table new
+							addCssClassTableBordered;
+							addChildToHead: (Me5TableRow new
+								addTableHeaderWithText: 'Attribute';
+								addTableHeaderWithText: 'Value';
+								yourself);
+							yourself);
+						yourself);
+					addChild: (Me5Div new
+						addCssClassCol12;
+						addCssClassColLg3;
+						addChild: (Me5Img newImgResponsive
+							src: (self userDataDictionary at: 'picture');
+							yourself);
+						yourself);
+					yourself);
+				yourself).
+			self userDataDictionary keysAndValuesDo: [ :eachKey :eachValue |
+				theTable addChildToBody: (Me5TableRow new 
+					addTableDataWithText: eachKey;
+					addTableDataWithText: eachValue;
+					yourself)]]
 		
 
 
@@ -99,4 +131,16 @@ HfuSpLobbyView >> startUp [
 	theHttpServer addViewClass: HfuSpPlayerView.
 	theHttpServer addViewClass: HfuSpChatView;
 	yourself
+]
+
+{ #category : 'Not categorized' }
+HfuSpLobbyView >> userDataDictionary [
+
+	^userDataDictionary
+]
+
+{ #category : 'Not categorized' }
+HfuSpLobbyView >> userDataDictionary: anObject [
+
+	userDataDictionary := anObject
 ]
