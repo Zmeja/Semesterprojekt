@@ -7,36 +7,18 @@ Class {
 		'color'
 	],
 	#classInstVars : [
-		'players',
-		'nextID'
+		'players'
 	],
 	#category : 'HfuSpGames'
 }
 
 { #category : 'Not categorized' }
-HfuSpPlayer class >> makePlayer: aName [
+HfuSpPlayer class >> addPlayerIfAbsent: ID [
 
-	|tempPlayer|
-	tempPlayer := HfuSpPlayer new.
-	tempPlayer id: nextID.
-	nextID := nextID+1.
-	^tempPlayer
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayer class >> makePlayer: aName withId: aInteger [
-
-	|tempPlayer|
-	tempPlayer := HfuSpPlayer new.
-	tempPlayer id: aInteger.
-	^tempPlayer
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayer class >> nextID [
+	self players at: ID ifAbsentPut: [HfuSpPlayer new id:ID; yourself].
 	
-	nextID:= nextID+1.
-	^nextID
+	^self players at: ID.
+	
 ]
 
 { #category : 'Not categorized' }
@@ -52,7 +34,6 @@ HfuSpPlayer class >> players: aListOfPlayers [
 
 { #category : 'Not categorized' }
 HfuSpPlayer class >> startUp [
-	nextID := 0.
 	players := Dictionary new.
 ]
 

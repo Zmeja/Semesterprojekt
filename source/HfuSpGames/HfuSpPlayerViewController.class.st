@@ -128,7 +128,6 @@ HfuSpPlayerViewController >> setPlayerView: aView [
 
 	"<^anPlayerView>"
 	"returns the PlayerView managed by this PlayerViewController"
-	self player: (HfuSpPlayer makePlayer: 'Player').
 	self playerView:  aView.
 ]
 

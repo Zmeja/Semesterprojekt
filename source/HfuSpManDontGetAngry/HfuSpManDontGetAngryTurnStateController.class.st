@@ -47,7 +47,7 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 							].
 			].
 		
-	self currentBoardState setPlayerat: anOrder fieldID withcolor: anOrder color.
+	self currentBoardState setPlayerat: anOrder fieldID withcolor: anOrder offset.
 	
 	
 	
@@ -89,6 +89,5 @@ HfuSpManDontGetAngryTurnStateController >> startGame [
 
 	"^self"
 	"sets the game as active"
-	self updateGameStateOfAllPlayers.
 	self gameOngoing: 0
 ]

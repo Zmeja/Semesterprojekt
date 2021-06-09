@@ -54,6 +54,17 @@ HfuSpManDontGetAngryPlayerViewController >> createPlayerView [
 ]
 
 { #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerViewController >> displayCurrentBoardState [
+
+	"tells view to display the Boardstate currently continaed in this PlayerViewController"
+	self currentBoardState = nil
+		ifTrue: [self currentBoardState: self turnStateController currentBoardState].
+	self playerView removeChild: self playerView boardPortlet.
+	self playerView removeChild: self playerView boardRows.
+	self playerView setGame: (self currentBoardState)
+]
+
+{ #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerViewController >> figures [
 
 	^figures
@@ -114,7 +125,6 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 		ifTrue: [
 			self rolledNumber: 6.
 			self checkRolledDice
-				ifTrue: [self turnStateController updateGameStateOfAllPlayers. ^self rolledNumber]
 				ifFalse: [self turnStateController currentBoardState makeTurnOrderStep. ^nil]
 			].
 	self isActingPlayer = true 

@@ -40,9 +40,16 @@ HfuSpLoginView class >> sessionClass [
 HfuSpLoginView class >> startUp [
 
 	| theHttpServer |
+	HfuSpPlayer startUp.
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9009' serverApplicationClass: HfuSpLoginView).
 	theHttpServer addViewClass: HfuSpLoginView;
 	addViewClass: HfuSpLobbyView;
+	addViewClass: HfuSpPlayerView;
+	addViewClass: HfuSpTicTacToePlayerView;
+	addViewClass: HfuSpManDontGetAngryPlayerView;
+	addViewClass: HfuSpGameSessionLobbyRepresentationView;
+	addViewClass: HfuSpPlayerView;
+	addViewClass: HfuSpChatView;
 		yourself
 ]
 
