@@ -76,15 +76,15 @@ HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 	3 = green
 	4 = yellow"
 	anInteger = 0
-		ifTrue: [aBadge addCssClassMBadgePrimary].
+		ifTrue: [aBadge text: ' '].
 	anInteger = 1
-		ifTrue: [aBadge addCssClassMBadgeInfo].
+		ifTrue: [aBadge text: '1'].
 	anInteger = 2
-		ifTrue: [aBadge addCssClassMBadgeDanger].
+		ifTrue: [aBadge text: '2'].
 	anInteger = 3
-		ifTrue: [aBadge addCssClassMBadgeSuccess].
+		ifTrue: [aBadge text: '3'].
 	anInteger = 4
-		ifTrue: [aBadge addCssClassMBadgeWarning]
+		ifTrue: [aBadge text: '4']
 ]
 
 { #category : 'Not categorized' }
@@ -289,7 +289,7 @@ HfuSpManDontGetAngryPlayerView >> player4WinDictionary: anObject [
 HfuSpManDontGetAngryPlayerView >> renderBaseGameState [
 
 	"Renders the game state with an empty board state"
-		boardRows := OrderedCollection new.
+		"boardRows := OrderedCollection new."
 		self
 		addChild: (boardPortlet := Me5Portlet new).
 		1 to: 11 do: [:eachNumber | boardPortlet addChildToBody: (boardRows add: (Me5Div new))].
@@ -452,9 +452,9 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 	| index |
 	oldRows := self boardRows.
 	oldPortlet := self boardPortlet.
-	self removeChild: boardRows.
+	"self removeChild: boardRows.
 	self removeChild: boardPortlet.
-	self renderBaseGameState.
+	self renderBaseGameState."
 	index := 1.
 	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
 		index := index + 1.].
@@ -467,10 +467,10 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 { #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinFieldAt: anInteger To: aBoolean [
 
-	(aPlayerNumberInteger = 1 and: [aBoolean]) ifTrue: [(self player1WinDictionary at: anInteger) addCssClassMBadgeRounded.].
-	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) addCssClassMBadgeRounded.].
-	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) addCssClassMBadgeRounded.].
-	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger) addCssClassMBadgeRounded.].
+	(aPlayerNumberInteger = 1 and: [aBoolean]) ifTrue: [(self player1WinDictionary at: anInteger) text: '1'.].
+	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) text: '2'.].
+	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) text: '3'.].
+	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger) text: '4'.].
 ]
 
 { #category : 'Not categorized' }
@@ -482,7 +482,7 @@ HfuSpManDontGetAngryPlayerView >> startGameClicked [
 { #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> updateSite: updateSiteEvent [
 
-	self removeChild: oldRows.
-	self removeChild: oldPortlet.
-	"self playerViewController displayCurrentBoardState."
+	"self removeChild: oldRows.
+	self removeChild: oldPortlet."
+	self playerViewController displayCurrentBoardState.
 ]

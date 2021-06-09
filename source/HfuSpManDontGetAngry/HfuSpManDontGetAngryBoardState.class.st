@@ -112,14 +112,17 @@ HfuSpManDontGetAngryBoardState >> isValidOrder: anOrder [
 	"|playerViewController |
 	playerViewController := (HfuSpManDontGetAngryTurnStateController playerViewControllers at: (HfuSpPlayer players at: anOrder playerID))."
 	
-	(anOrder fieldID = -1)
+	(anOrder number = -1)
+		ifTrue: [^false].
+	(anOrder number = 6)
 		ifTrue: [
-			(((anOrder number = 6) 
-				and: (anOrder hasFigures)) 
-					and: (((self isOwnPlayer: anOrder offset onField: (self getStartfieldWithOffset: anOrder offset))) = false))
-						ifTrue: [
-							^true
-							]
+			(anOrder hasFigures)
+				ifTrue: [
+					((anOrder fieldID = -1) and: ((self isOwnPlayer: anOrder offset onField: (self getStartfieldWithOffset: anOrder offset)) = false))
+						ifTrue: [^true].
+					((anOrder fieldID between:1 and:40) and: ((self isOwnPlayer: anOrder offset onField: (self getStartfieldWithOffset: anOrder offset)) = false))
+						ifTrue:[^false].
+				]
 		].
 	(anOrder fieldID between: 1 and: 40)    
 		ifTrue: [

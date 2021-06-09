@@ -81,7 +81,7 @@ HfuSpPlayerViewController >> isActingPlayer [
 
 	self currentBoardState = nil 
 	ifFalse: [^(self currentBoardState turnOrder first id )= (self player id) ].
-	^true
+	^(self currentBoardState turnOrder first id) = self player id.
 	
 	
 ]

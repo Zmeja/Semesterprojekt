@@ -15,6 +15,7 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 
 	|playerViewController kickedPlayer |
 	playerViewController := (self playerViewControllers at: (HfuSpPlayer players at: anOrder playerID)).
+	playerViewController rolledNumber: 0.
 	(anOrder fieldID = -1)
 		ifTrue: [
 			(((anOrder number = 6) 
@@ -28,7 +29,7 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 							].
 			^true.
 		].
-	(anOrder fieldID between: 1 and: 6)	
+	(anOrder fieldID between: 1 and: 40)	
 		ifTrue: [
 			|nextField over|
 			nextField := (anOrder fieldID) + (anOrder number).
@@ -42,12 +43,11 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 			(self currentBoardState isOwnPlayer: (playerViewController offset) onField: nextField)
 				ifFalse: [
 					kickedPlayer := self currentBoardState setPlayerat: nextField withcolor: playerViewController offset.
+					self currentBoardState removePlayerFromField: anOrder fieldID.
 					kickedPlayer = 0
 								ifFalse: [self kickFigure: kickedPlayer].
 							].
 			].
-		
-	self currentBoardState setPlayerat: anOrder fieldID withcolor: anOrder offset.
 	
 	
 	
