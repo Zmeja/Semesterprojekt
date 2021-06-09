@@ -7,6 +7,15 @@ Class {
 	#category : 'HfuSpTicTacToe'
 }
 
+{ #category : 'Not categorized' }
+HfuSpTicTacToeOrder class >> createOrderForField: aFieldInteger ofPlayer: aPlayerInteger [
+
+	"<^self>"
+	"Answer the receiver"
+
+	^HfuSpTicTacToeOrder new playerID: aPlayerInteger; fieldID: aFieldInteger;yourself.
+]
+
 { #category : 'Accessing' }
 HfuSpTicTacToeOrder >> fieldID [
 

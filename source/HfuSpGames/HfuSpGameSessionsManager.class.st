@@ -38,7 +38,7 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionId
 	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
 	gameTurnStateController= nil
 		ifTrue:[^nil].
-	(gameTurnStateController containsPlayer: anPlayer= true)
+	(gameTurnStateController containsPlayer: anPlayer)= true
 		ifTrue:[^nil].
 	(gameTurnStateController gameOngoing = -1)
 		ifFalse:[^nil].

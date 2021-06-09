@@ -42,8 +42,17 @@ HfuSpTurnStateController >> containsPlayer: anPlayer [
 
 	"<^boolean>"
 	"checks wether a player identified by an Id is already active in this game"
+	|found|
+	^self   containsPlayerWithIdInSession: anPlayer
+]
 
-	^self playerViewControllers includesKey: anPlayer
+{ #category : 'Not categorized' }
+HfuSpTurnStateController >> containsPlayerWithIdInSession: aInteger [
+
+	"<^self>"
+	"Answer the receiver"
+	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player  id = aInteger ifTrue: [^true]].
+	^false
 ]
 
 { #category : 'Accessing' }
@@ -131,6 +140,25 @@ HfuSpTurnStateController >> executeOrder: anOrder [
 	 should only be called ba receiveGameOrder"
 	
 	self subclassResponsibility
+]
+
+{ #category : 'Not categorized' }
+HfuSpTurnStateController >> existsPlayerWithIdInSession: aInteger [
+
+	"<^self>"
+	"Answer the receiver"
+	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player  id = aInteger ifTrue: [^true]].
+	^false
+]
+
+{ #category : 'InternalStateHandling' }
+HfuSpTurnStateController >> findPlayerInSessionById: aInteger [
+
+	"<^self>"
+	"Answer the receiver"
+	|player|
+	self playerViewControllers do:[:eachPlayer| eachPlayer id = aInteger ifTrue: [^eachPlayer]].
+	^nil
 ]
 
 { #category : 'Accessing' }
