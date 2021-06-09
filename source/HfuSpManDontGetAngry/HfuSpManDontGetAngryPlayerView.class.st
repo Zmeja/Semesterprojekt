@@ -2,6 +2,8 @@ Class {
 	#name : 'HfuSpManDontGetAngryPlayerView',
 	#superclass : 'HfuSpPlayerView',
 	#instVars : [
+		'oldPortlet',
+		'oldRows',
 		'startGameButton',
 		'boardPortlet',
 		'boardRows',
@@ -40,6 +42,30 @@ HfuSpManDontGetAngryPlayerView >> boardIndexBadgeMap: anObject [
 	boardIndexBadgeMap := anObject
 ]
 
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> boardPortlet [
+
+	^boardPortlet
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> boardPortlet: anObject [
+
+	boardPortlet := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> boardRows [
+
+	^boardRows
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> boardRows: anObject [
+
+	boardRows := anObject
+]
+
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 
@@ -72,6 +98,9 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
  | state |
+	boardRows := OrderedCollection new.
+	boardPortlet := Me5Portlet new.
+	
 	self 
 		addChild: (Me5Label new
 			text: 'Man, dont be angry';
@@ -81,20 +110,16 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Start Game';
 					addClickEventSelector: #startGameClicked;
 					yourself)).
-		"self playerViewController displayCurrentBoardState."
-		"testing area"
-		"state := HfuSpManDontGetAngryBoardState  new.
-		state initializeBoardState.
-		state putNewFigureOnBoard: 1.
-		state putNewFigureOnBoard: 3.
-		state board at: 8 put: 2.
-		state lastFields at: 5 put: true.
-		self setGame: state."
-		
-		"((boardRows at: 5) children at: 1 put: (Me5Badge newPrimary
-			text: ' ';
-			yourself)).
-			might be relevant at some point"
+	self addChild: (rollButton := Me5Button newAirSecondary
+					text: 'Roll';
+					addClickEventSelector: #exEvent:;
+					yourself).
+		self addChild: (figureButton := Me5Button newAirSecondary
+					text: 'Figure';
+					addClickEventSelector: #exEvent:;
+					yourself).
+	self playerViewController displayCurrentBoardState.
+	self addChild: (Me5Timeout new addIntervalSeconds: 3 selector:#updateSite:; activate ;yourself).
 		
 
 ]
@@ -111,9 +136,11 @@ HfuSpManDontGetAngryPlayerView >> exEvent: event [
 
 	"event component text: (self getIndexbyBadge: event component)."
 	event component text = 'Roll'
-		ifTrue: [self playerViewController transmitOrder: 0]
-		ifFalse: [self playerViewController transmitOrder: (self getIndexbyBadge: event component)].
-	(self player1WinDictionary at: 1) addCssClassMBadgeDanger.
+		ifTrue: [self playerViewController transmitOrder: 0.^nil].
+	event component text = 'Figure'
+		ifTrue:[self playerViewController transmitOrder: -1. ^nil].
+	self playerViewController transmitOrder: (self getIndexbyBadge: event component).
+	
 ]
 
 { #category : 'Internal' }
@@ -263,9 +290,6 @@ HfuSpManDontGetAngryPlayerView >> renderBaseGameState [
 
 	"Renders the game state with an empty board state"
 		boardRows := OrderedCollection new.
-		self removeChild: boardPortlet.
-		self removeChild: rollButton;
-				removeChild: figureButton.
 		self
 		addChild: (boardPortlet := Me5Portlet new).
 		1 to: 11 do: [:eachNumber | boardPortlet addChildToBody: (boardRows add: (Me5Div new))].
@@ -417,14 +441,6 @@ HfuSpManDontGetAngryPlayerView >> renderBaseGameState [
 		(self getFieldByRow: 1 Column: 2) addCssClassMBadgeWarning.
 		(self getFieldByRow: 2 Column: 1) addCssClassMBadgeWarning.
 		(self getFieldByRow: 2 Column: 2) addCssClassMBadgeWarning.
-		self addChild: (rollButton := Me5Button newAirSecondary
-					text: 'Roll';
-					addClickEventSelector: #exEvent:;
-					yourself).
-		self addChild: (figureButton := Me5Button newAirSecondary
-					text: 'Figure';
-					addClickEventSelector: #exEvent:;
-					yourself).
 		self initializeBoardIndexMap.
 		self initializePlayerWinDictionaries.
 ]
@@ -434,6 +450,10 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 
 	"displays the given BoardState"
 	| index |
+	oldRows := self boardRows.
+	oldPortlet := self boardPortlet.
+	self removeChild: boardRows.
+	self removeChild: boardPortlet.
 	self renderBaseGameState.
 	index := 1.
 	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
@@ -457,4 +477,12 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
 	
 	self playerViewController startGame.
+]
+
+{ #category : 'Internal' }
+HfuSpManDontGetAngryPlayerView >> updateSite: updateSiteEvent [
+
+	self removeChild: oldRows.
+	self removeChild: oldPortlet.
+	"self playerViewController displayCurrentBoardState."
 ]

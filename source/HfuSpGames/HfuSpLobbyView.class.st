@@ -13,16 +13,20 @@ Class {
 { #category : 'Not categorized' }
 HfuSpLobbyView >> createComponents [
 
-	|theTable|
+	|theTable thePlayer|
+	thePlayer := HfuSpPlayer addPlayerIfAbsent: (self userDataDictionary at: 'id') asInteger.
 	self
 	addChild:(Me5Portlet new
 	title: 'Lobby';		
 		addChildToBody: (Me5Section new
 			title: 'Games:';
-			
+			"self playerViewController: HfuSpPlayerViewController new.
+	self playerViewController setPlayerView: self."
 			addChildToBody:(Me5Row new
 				addChild: (Me5ViewHolder new
-					holdingView: HfuSpPlayerView new;
+					holdingView: (HfuSpPlayerView new playerViewController: 
+											(HfuSpPlayerViewController new player: thePlayer ; yourself)
+											;yourself)
 					yourself);
 						
 				addChild:  Me5SectionSeparator new;

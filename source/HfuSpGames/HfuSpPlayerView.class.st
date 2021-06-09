@@ -58,8 +58,15 @@ HfuSpPlayerView >> addGameButtonClicked: aForm [
 HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 	|aGameView gameType|
 	gameType := self lobbyRepresentation gameType.
-	gameType = 'TicTacToe'.
-	aGameView:=HfuSpGameSessionsManager addPlayer: (self player id) ToSession:anPlayerAddEvent .
+	gameType = 'TicTacToe'
+		ifTrue: [aGameView := (HfuSpTicTacToePlayerViewController new createPlayerView).].
+	gameType = 'Man Dont Get Angry'
+		ifTrue: [aGameView := (HfuSpManDontGetAngryPlayerViewController new createPlayerView).].
+	gameType = 'Connect Four'
+		ifTrue: [aGameView := (HfuSpConnectFourPlayerViewController new createPlayerView).].
+	aGameView playerViewController player: self playerViewController player.
+	aGameView playerViewController playerView: aGameView.
+	aGameView playerViewController join: anPlayerAddEvent.
 	self replaceView: aGameView.
 	
 	
@@ -75,7 +82,6 @@ HfuSpPlayerView >> closeGamesClicked [
 { #category : 'Not categorized' }
 HfuSpPlayerView >> createComponents [
 
-	self playerViewController: HfuSpPlayerViewController new.
 	self playerViewController setPlayerView: self.
 	self sessionHolder: Me5Portlet new.
 	self addChild: self sessionHolder.
