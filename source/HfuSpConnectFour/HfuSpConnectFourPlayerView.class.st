@@ -13,10 +13,17 @@ HfuSpConnectFourPlayerView >> createComponents [
 
 	 connectRows:= OrderedCollection new.
 	
+	self	renderBaseGameState.
+	self playerViewController displayCurrentBoardState.
+	self addChild: (Me5Timeout new addIntervalSeconds: 3 selector:#updateSite:; activate ;yourself).
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> renderBaseGameState [
+
 	self
-		
 		addChild: (connectFormPortlet := Me5FormPortlet new
-			title:'ConnectFour!';			
+			title:'ConnectFour!';
 			yourself);
 					
 	yourself.
@@ -25,9 +32,9 @@ HfuSpConnectFourPlayerView >> createComponents [
 			Me5Section new.
 			
 			1 to: 8 do: [:eachColumn | eachColumn < 8 
-					ifTrue: [(connectRows at: 1) addChild: (Me5A newAirButton
-						text: '|';
-						"name:'1';"
+					ifTrue: [(connectRows at: 1) addChild: (Me5Button newAirButton
+						text: eachColumn asString;
+						name: eachColumn asString;
 						addClickEventSelector: #rowClicked:;
 						yourself)].
 					].
@@ -36,7 +43,7 @@ HfuSpConnectFourPlayerView >> createComponents [
 			2 to: 8 do: [:eachRow | 
 					1 to: 8 do: [:eachColumn | eachColumn < 8 
 					ifTrue: [(connectRows at: eachRow) addChild: (Me5Badge new
-						text: ':';
+						text: eachColumn asString;
 						yourself)].		
 				].
 			].
@@ -44,6 +51,7 @@ HfuSpConnectFourPlayerView >> createComponents [
 
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> rowClicked: anEventFromCon [
+	self showInfoNotificationWithMessage:  'row was clicked'.
 	self playerViewController transmitOrder: anEventFromCon component name asInteger.
 ]
 
@@ -54,4 +62,12 @@ HfuSpConnectFourPlayerView >> setGame: boardState [
 	"Answer the receiver"
 
 	self
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> updateSite: updateSiteEvent [
+	"
+	todo
+	self removeChild: connectRows.
+	self removeChild: connectFormPortlet."
 ]
