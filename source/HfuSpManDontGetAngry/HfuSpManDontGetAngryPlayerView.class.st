@@ -493,6 +493,11 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) text: '2'.].
 	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) text: '3'.].
 	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger) text: '4'.].
+	
+	(aPlayerNumberInteger = 1 and: [aBoolean not]) ifTrue: [(self player1WinDictionary at: anInteger) text: ' '.].
+	(aPlayerNumberInteger = 2 and: [aBoolean not]) ifTrue: [(self player2WinDictionary at: anInteger) text: ' '.].
+	(aPlayerNumberInteger = 3 and: [aBoolean not]) ifTrue: [(self player3WinDictionary at: anInteger) text: ' '.].
+	(aPlayerNumberInteger = 4 and: [aBoolean not]) ifTrue: [(self player4WinDictionary at: anInteger) text: ' '.].
 ]
 
 { #category : 'Not categorized' }
