@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'rolledNumber',
 		'figures',
-		'offset'
+		'offset',
+		'numberOfTimesRolled'
 	],
 	#category : 'HfuSpManDontGetAngry'
 }
@@ -32,6 +33,7 @@ HfuSpManDontGetAngryPlayerViewController >> createPlayerView [
 	|View|
 	self figures: #(true true true true) asOrderedCollection.
 	self rolledNumber: 0.
+	self numberOfTimesRolled: 0.
 	View:= HfuSpManDontGetAngryPlayerView new.
 	View playerViewController: self.
 	self playerView:  View.
@@ -68,6 +70,18 @@ HfuSpManDontGetAngryPlayerViewController >> join: aIdOfGame [
 	gameSession := (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame).
 	self turnStateController: gameSession.
 	self offset: gameSession playerViewControllers size - 1.
+]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerViewController >> numberOfTimesRolled [
+
+	^numberOfTimesRolled
+]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryPlayerViewController >> numberOfTimesRolled: anObject [
+
+	numberOfTimesRolled := anObject
 ]
 
 { #category : 'Not categorized' }
@@ -116,11 +130,18 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 		ifTrue: [
 			self rolledNumber: (EsRandom new nextInt: 6).
 			gameOrder number: self rolledNumber.
+			self numberOfTimesRolled: (self numberOfTimesRolled +1).
 			(self checkRolledDice: gameOrder)
-				ifTrue:[self playerView showInfoNotificationWithMessage: 'You rolled a ' , self rolledNumber asString.^nil]
+				ifTrue:[
+					self playerView showInfoNotificationWithMessage: 'You rolled a ' , self rolledNumber asString.
+					self numberOfTimesRolled: 0.
+					^nil]
 				ifFalse: [
 					self playerView showInfoNotificationWithMessage: 'You rolled a ' , self rolledNumber asString, '. But cannot make a Step'. 
-					self turnStateController currentBoardState makeTurnOrderStep.
+					self numberOfTimesRolled = 3
+						ifTrue: [
+							self turnStateController currentBoardState makeTurnOrderStep.
+							self numberOfTimesRolled: 0].
 					self turnStateController updateGameStateOfAllPlayers.
 					self rolledNumber: 0.^nil].
 			].

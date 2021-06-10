@@ -70,7 +70,7 @@ HfuSpManDontGetAngryBoardState >> isField: currentField overLastField: aNextFiel
 	(nextField<currentField)
 		ifTrue: [
 			nextField:= nextField + 40. 
-			lastField:= lastField+40].
+			lastField:= lastField+ 40].
 	(lastField between: currentField and: nextField)
 		ifTrue:[^nextField-lastField].
 	^0
@@ -92,8 +92,19 @@ HfuSpManDontGetAngryBoardState >> isGameDraw [
 { #category : 'Accessing' }
 HfuSpManDontGetAngryBoardState >> isOwnPlayer: aOffset onField: aField [
 
+	|aLastField|
 	aField > 40
-		ifTrue: [^self lastFields at: aField-40].
+		ifTrue: [
+			aLastField := aField - 40.
+			(aField between:41 and: 44)
+				ifTrue:[^((self lastFields at:aLastField) and: (aOffset = 0))].
+			(aField between:45 and: 48)
+				ifTrue:[^((self lastFields at:aLastField) and: (aOffset = 1))].
+			(aField between:49 and: 52)
+				ifTrue:[^((self lastFields at:aLastField) and: (aOffset = 2))].
+			(aField between:53 and: 56)
+				ifTrue:[^((self lastFields at:aLastField) and: (aOffset = 3))].
+		].
 	^((self board at: aField) = (aOffset + 1))
 
 	
@@ -117,6 +128,8 @@ HfuSpManDontGetAngryBoardState >> isValidOrder: anOrder [
 	"|playerViewController |
 	playerViewController := (HfuSpManDontGetAngryTurnStateController playerViewControllers at: (HfuSpPlayer players at: anOrder playerID))."
 	
+	(anOrder fieldID = false)
+		ifTrue: [^false].
 	(anOrder hasFigures)
 		ifTrue: [
 			(anOrder number = 6)
