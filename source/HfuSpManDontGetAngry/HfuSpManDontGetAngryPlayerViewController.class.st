@@ -10,29 +10,15 @@ Class {
 }
 
 { #category : 'Not categorized' }
-HfuSpManDontGetAngryPlayerViewController >> checkRolledDice [
+HfuSpManDontGetAngryPlayerViewController >> checkRolledDice: anOrder [
 
-	(self rolledNumber between: 1 and: 6)
-		ifFalse: [^false].
-	(((self rolledNumber = 6) 
-		and: (self figures size > 0)) 
-			and: ((self currentBoardState isOwnPlayer: (self offset) onField: (self currentBoardState getStartfieldWithOffset: self offset))) = false)
+	anOrder fieldID: -1.
+	(self currentBoardState isValidOrder: anOrder)
+		ifTrue:[^true].
+	1 to: 56 do: [:eachField|
+		anOrder fieldID: eachField.
+		(self currentBoardState isValidOrder: anOrder)
 			ifTrue: [^true].
-	1 to: 40 do: [:eachField|
-		|nextField over|
-		(eachField + self rolledNumber)>40
-				ifTrue: [nextField :=(eachField+ self rolledNumber) - 40]
-				ifFalse: [nextField := (eachField + self rolledNumber)].
-		(self currentBoardState isOwnPlayer: (self offset) onField: eachField)
-			ifTrue: [
-			over :=(self currentBoardState isField: eachField overLastField: nextField withOffset: (self offset)).
-			over = 0
-				ifFalse: [(self currentBoardState lastFields at:(over+(self offset*4)))
-								ifFalse: [^true]
-				].
-			(self currentBoardState isOwnPlayer: (self offset) onField: nextField)
-				ifFalse: [^true]
-			].
 		].
 	^false
 
@@ -122,19 +108,21 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 	gameOrder hasFigures: (self figures size > 0).
 	self turnStateController gameOngoing = -1
 		ifTrue: [self playerView showInfoNotificationWithMessage: 'Game has not started yet'.^nil].
-	self isActingPlayer = true 
+	self isActingPlayer 
 		ifFalse:[self playerView showInfoNotificationWithMessage: 'It is not your turn'. ^nil].
 	(((gameOrder fieldID = 0) not) and: (self rolledNumber = 0))
 		ifTrue:[self playerView showInfoNotificationWithMessage: 'Please Roll'. ^nil].
 	((gameOrder fieldID = 0) and: (self rolledNumber = 0))
 		ifTrue: [
 			self rolledNumber: (EsRandom new nextInt: 6).
-			self checkRolledDice
+			gameOrder number: self rolledNumber.
+			(self checkRolledDice: gameOrder)
 				ifTrue:[self playerView showInfoNotificationWithMessage: 'You rolled a ' , self rolledNumber asString.^nil]
-				ifFalse: [self playerView showInfoNotificationWithMessage: 'You rolled a ' , self rolledNumber asString, '. But cannot make a Step'. 
-							self turnStateController currentBoardState makeTurnOrderStep.
-							self turnStateController updateGameStateOfAllPlayers.
-							self rolledNumber: 0.^nil].
+				ifFalse: [
+					self playerView showInfoNotificationWithMessage: 'You rolled a ' , self rolledNumber asString, '. But cannot make a Step'. 
+					self turnStateController currentBoardState makeTurnOrderStep.
+					self turnStateController updateGameStateOfAllPlayers.
+					self rolledNumber: 0.^nil].
 			].
 	self turnStateController receiveGameOrder:  gameOrder
 ]

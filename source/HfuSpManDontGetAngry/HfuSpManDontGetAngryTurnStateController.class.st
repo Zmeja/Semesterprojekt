@@ -38,7 +38,8 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 			over :=(self currentBoardState isField: (anOrder fieldID) overLastField: nextField withOffset: (playerViewController offset)).
 			over = 0
 				ifFalse: [(self currentBoardState lastFields at:(over+(playerViewController offset*4)))
-								ifFalse: [self currentBoardState lastFields at:(over +(playerViewController offset*4)) put:true]
+								ifFalse: [self currentBoardState lastFields at:(over +(playerViewController offset*4)) put:true.
+											self currentBoardState removePlayerFromField: anOrder fieldID. ^true]
 				].
 			(self currentBoardState isOwnPlayer: (playerViewController offset) onField: nextField)
 				ifFalse: [
@@ -48,6 +49,13 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 								ifFalse: [self kickFigure: kickedPlayer].
 							].
 			].
+		(anOrder fieldID between: 41 and: 56)
+			ifTrue: [
+				|nextField|
+				nextField:= (anOrder fieldID) + (anOrder number).
+				self currentBoardState lastFields at: nextField-40 put: true.
+				self currentBoardState lastFields at: (anOrder fieldID - 40) put: false.
+			]
 	
 	
 	

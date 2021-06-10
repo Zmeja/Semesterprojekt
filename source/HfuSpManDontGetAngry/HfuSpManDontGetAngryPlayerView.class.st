@@ -30,6 +30,19 @@ HfuSpManDontGetAngryPlayerView class >> startUp [
 		yourself
 ]
 
+{ #category : 'Accessing',
+ #vaCategories : ['Accessing','Initial events','Internal'] }
+HfuSpManDontGetAngryPlayerView >> announceVictor: aColorString [
+
+	"<^self>"
+	"Answer the receiver"
+
+	| winnerString |
+
+	winnerString := 'Player ', aColorString, ' won!'.
+	self showInfoNotificationWithMessage: winnerString.
+]
+
 { #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerView >> boardIndexBadgeMap [
 
@@ -97,7 +110,6 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
- | state |
 	boardRows := OrderedCollection new.
 	boardPortlet := Me5Portlet new.
 	
@@ -119,7 +131,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					addClickEventSelector: #exEvent:;
 					yourself).
 	self playerViewController displayCurrentBoardState.
-	self addChild: (Me5Timeout new addIntervalSeconds: 3 selector:#updateSite:; activate ;yourself).
+	self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
 		
 
 ]
@@ -139,6 +151,7 @@ HfuSpManDontGetAngryPlayerView >> exEvent: event [
 		ifTrue: [self playerViewController transmitOrder: 0.^nil].
 	event component text = 'Figure'
 		ifTrue:[self playerViewController transmitOrder: -1. ^nil].
+	event component .
 	self playerViewController transmitOrder: (self getIndexbyBadge: event component).
 	
 ]
@@ -155,6 +168,15 @@ HfuSpManDontGetAngryPlayerView >> getIndexbyBadge: aBadge [
 
 	self boardIndexBadgeMap keysAndValuesDo: [:eachKey :eachValue |
 		(eachValue = aBadge) ifTrue: [^eachKey]].
+	self player1WinDictionary keysAndValuesDo: [:eachKey :eachValue |
+		(eachValue = aBadge) ifTrue: [^eachKey+40]].
+	self player2WinDictionary keysAndValuesDo: [:eachKey :eachValue |
+		(eachValue = aBadge) ifTrue: [^eachKey+44]].
+	self player3WinDictionary keysAndValuesDo: [:eachKey :eachValue |
+		(eachValue = aBadge) ifTrue: [^eachKey+48]].
+	self player4WinDictionary keysAndValuesDo: [:eachKey :eachValue |
+		(eachValue = aBadge) ifTrue: [^eachKey+52]].
+	^false
 ]
 
 { #category : 'Initial events' }

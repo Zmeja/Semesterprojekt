@@ -38,13 +38,13 @@ HfuSpManDontGetAngryBoardState >> getStartfieldWithOffset: aOffset [
 HfuSpManDontGetAngryBoardState >> getVictor [
 
 	((self lastFields copyFrom: 1 to: 4) = #( true true true true) asOrderedCollection)
-		ifTrue:[^'Green'].
-	((self lastFields copyFrom: 5 to: 8) = #( true true true true) asOrderedCollection)
-		ifTrue:[^'Yellow'].
-	((self lastFields copyFrom: 9 to: 12) = #( true true true true) asOrderedCollection)
 		ifTrue:[^'Blue'].
-	((self lastFields copyFrom: 13 to: 16) = #( true true true true) asOrderedCollection)
+	((self lastFields copyFrom: 5 to: 8) = #( true true true true) asOrderedCollection)
 		ifTrue:[^'Red'].
+	((self lastFields copyFrom: 9 to: 12) = #( true true true true) asOrderedCollection)
+		ifTrue:[^'Green'].
+	((self lastFields copyFrom: 13 to: 16) = #( true true true true) asOrderedCollection)
+		ifTrue:[^'Yellow'].
 	^-1
 ]
 
@@ -68,10 +68,13 @@ HfuSpManDontGetAngryBoardState >> isField: currentField overLastField: aNextFiel
 	nextField := aNextField.
 	lastField := aOffset*10.
 	(nextField<currentField)
-		ifTrue: [nextField:= nextField + 40].
-	((currentField<lastField) and: (lastField<nextField))
-		ifTrue: [^(nextField-currentField)]
-		ifFalse: [^0].
+		ifTrue: [
+			nextField:= nextField + 40. 
+			lastField:= lastField+40].
+	(lastField between: currentField and: nextField)
+		ifTrue:[^nextField-lastField].
+	^0
+	
 	
 
 
@@ -89,6 +92,8 @@ HfuSpManDontGetAngryBoardState >> isGameDraw [
 { #category : 'Accessing' }
 HfuSpManDontGetAngryBoardState >> isOwnPlayer: aOffset onField: aField [
 
+	aField > 40
+		ifTrue: [^self lastFields at: aField-40].
 	^((self board at: aField) = (aOffset + 1))
 
 	
@@ -112,11 +117,9 @@ HfuSpManDontGetAngryBoardState >> isValidOrder: anOrder [
 	"|playerViewController |
 	playerViewController := (HfuSpManDontGetAngryTurnStateController playerViewControllers at: (HfuSpPlayer players at: anOrder playerID))."
 	
-	(anOrder number = -1)
-		ifTrue: [^false].
-	(anOrder number = 6)
+	(anOrder hasFigures)
 		ifTrue: [
-			(anOrder hasFigures)
+			(anOrder number = 6)
 				ifTrue: [
 					((anOrder fieldID = -1) and: ((self isOwnPlayer: anOrder offset onField: (self getStartfieldWithOffset: anOrder offset)) = false))
 						ifTrue: [^true].
@@ -126,18 +129,34 @@ HfuSpManDontGetAngryBoardState >> isValidOrder: anOrder [
 		].
 	(anOrder fieldID between: 1 and: 40)    
 		ifTrue: [
-			|nextField over|
+			|nextField overStartField|
+			(self isOwnPlayer: (anOrder offset) onField: (anOrder fieldID))
+				ifFalse: [^false].
 			nextField := (anOrder fieldID) + (anOrder number).
 			nextField > 40
 				ifTrue: [nextField := nextField - 40].
-			over :=(self isField: (anOrder fieldID) overLastField: nextField withOffset: (anOrder offset)).
-			over = 0
-				ifFalse: [(self lastFields at:(over+(anOrder offset*4)))
+			overStartField :=(self isField: (anOrder fieldID) overLastField: nextField withOffset: (anOrder offset)).
+			overStartField>4
+				ifTrue: [^false].
+			overStartField = 0
+				ifFalse: [(self lastFields at:(overStartField+(anOrder offset*4)))
 								ifFalse: [^true]
 				].
 			(self isOwnPlayer: (anOrder offset) onField: nextField)
 				ifFalse: [^true].
 			].
+	(anOrder fieldID between: 41 and: 56)
+		ifTrue: [
+			|nextField|
+			(self isOwnPlayer: (anOrder offset) onField: (anOrder fieldID))
+				ifFalse: [^false].
+			nextField := (anOrder number + anOrder fieldID).
+			(nextField between: 41 and: (((anOrder offset+1)*4+40)))
+				ifTrue: [
+					(self isOwnPlayer: anOrder offset onField: nextField)
+						ifFalse: [^true].
+				].
+		].
 	^false
 	
 		
