@@ -2,7 +2,9 @@ Class {
 	#name : 'HfuSpTicTacToeBoardState',
 	#superclass : 'HfuSpBoardState',
 	#instVars : [
-		'boardTiles'
+		'boardTiles',
+		'firstPlayer',
+		'secondPlayer'
 	],
 	#category : 'HfuSpTicTacToe'
 }
@@ -35,6 +37,24 @@ HfuSpTicTacToeBoardState >> boardTiles: aCollection [
 	 7 8 9"
 
 	boardTiles:=aCollection
+]
+
+{ #category : 'Accessing' }
+HfuSpTicTacToeBoardState >> firstPlayer [
+
+	"<^iOf aInteger>"
+	"Answer the firstPlayer of the receiver"
+
+	^firstPlayer
+]
+
+{ #category : 'Accessing' }
+HfuSpTicTacToeBoardState >> firstPlayer: anaInteger [
+
+	"<anaInteger: iOf aInteger, ^self>"
+	"Set the firstPlayer of the receiver"
+
+	firstPlayer := anaInteger
 ]
 
 { #category : 'Internal' }
@@ -152,13 +172,41 @@ HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
 
 ]
 
+{ #category : 'Accessing' }
+HfuSpTicTacToeBoardState >> secondPlayer [
+
+	"<^iOf Integer>"
+	"Answer the secondPlayer of the receiver"
+
+	^secondPlayer
+]
+
+{ #category : 'Accessing' }
+HfuSpTicTacToeBoardState >> secondPlayer: anInteger [
+
+	"<anInteger: iOf Integer, ^self>"
+	"Set the secondPlayer of the receiver"
+
+	secondPlayer := anInteger
+]
+
 { #category : 'API' }
 HfuSpTicTacToeBoardState >> setField: aFieldInteger asPlayerOwned: aPlayerInteger [
 
 	"Changes Ownership of a board tile to a Player"
-	|tempBoardTiles|
+	|tempBoardTiles playerNumber|
+	
+	self firstPlayer= nil
+		ifTrue: [self firstPlayer:aPlayerInteger]
+		ifFalse: [ self secondPlayer = nil & (self firstPlayer = aPlayerInteger)not 
+							ifTrue: [self secondPlayer:aPlayerInteger]].
+	
+	self firstPlayer = aPlayerInteger ifTrue: [playerNumber:=1].
+	self secondPlayer = aPlayerInteger ifTrue: [playerNumber:=2].
+	playerNumber = nil ifTrue: [^nil].
 	tempBoardTiles:= self boardTiles.
 	
-	tempBoardTiles at: aFieldInteger put: aPlayerInteger
+	tempBoardTiles at: aFieldInteger put: playerNumber
+	
 	
 ]

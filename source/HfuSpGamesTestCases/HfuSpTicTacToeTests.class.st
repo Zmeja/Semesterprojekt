@@ -72,7 +72,11 @@ HfuSpTicTacToeTests class >> testOrders [
 	"<^self>"
 	"Tests creation and execution of Game Orders"
 	|secondGamestate firstGameState theGameSession theGameSessionId view1 view2 view1Id view2Id|
+	HfuSpPlayer  addPlayerIfAbsent: 1.
+	HfuSpPlayer  addPlayerIfAbsent: 2.
 
+	
+	
 	theGameSessionId := HfuSpGameSessionsManager createGameSession:  'TicTacToe' . 
 	view1:= HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId.
 

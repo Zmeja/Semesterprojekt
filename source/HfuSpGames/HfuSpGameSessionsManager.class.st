@@ -42,7 +42,7 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionId
 		ifTrue:[^nil].
 	(gameTurnStateController gameOngoing = -1)
 		ifFalse:[^nil].
-	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer makePlayer: 'Player' withId: anPlayer).																				
+	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer players at: (anPlayer)).																				
 	playerView:= playerViewController getPlayerView.
 	playerViewController playerView: playerView.
 	playerView  initializeView.

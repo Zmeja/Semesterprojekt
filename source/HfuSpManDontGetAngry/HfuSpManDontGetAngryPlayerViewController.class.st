@@ -65,8 +65,8 @@ HfuSpManDontGetAngryPlayerViewController >> figures: anObject [
 HfuSpManDontGetAngryPlayerViewController >> join: aIdOfGame [
 	
 	|gameSession|
-	gameSession := (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame).
-	self turnStateController: gameSession.
+	"gameSession := (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame).
+	self turnStateController: gameSession."
 	self offset: gameSession playerViewControllers size - 1.
 ]
 

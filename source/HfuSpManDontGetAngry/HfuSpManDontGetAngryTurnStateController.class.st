@@ -6,8 +6,10 @@ Class {
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
-
-	^HfuSpManDontGetAngryPlayerViewController new
+	|controller|
+	controller:=HfuSpManDontGetAngryPlayerViewController new.
+	controller offset:   (self playerViewControllers) size .
+	^controller
 ]
 
 { #category : 'Not categorized' }
