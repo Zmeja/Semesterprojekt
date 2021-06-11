@@ -87,6 +87,31 @@ HfuSpConnectFourBoardState >> checkCollectionForVictor: aCollection [
 ]
 
 { #category : 'Accessing' }
+HfuSpConnectFourBoardState >> getDescendingDiagonalBoardLine: aInteger [
+
+	"<^aOrderedCollection>"
+	"returns a array representing the horizontal line of the board"
+	|resultingRow offset|
+	resultingRow:= OrderedCollection new.
+	aInteger <= self boardHeight 
+	ifTrue: [
+				1 to: aInteger do:[:currentColumn| resultingRow add: (self getFieldAtColumn: (currentColumn) Row: (aInteger - currentColumn+1))].
+				^resultingRow.
+				].
+	aInteger <= (self boardHeight+ self boardWidth)
+	ifTrue: [
+				offset:=  aInteger - self boardHeight. 
+				(1+ offset) to: (self boardWidth) do:[:currentColumn|  
+					resultingRow add: (self getFieldAtColumn: currentColumn 
+																				Row: (self boardHeight- currentColumn+offset+1))].
+				^resultingRow
+	].
+	"self board do: [:aColumn| 	resultingRow add: (aColumn at: aInteger)]."
+	^resultingRow
+	
+]
+
+{ #category : 'Accessing' }
 HfuSpConnectFourBoardState >> getDiagonalAscendingBoardLine: aInteger [
 
 	"<^aOrderedCollection>"
@@ -104,13 +129,22 @@ HfuSpConnectFourBoardState >> getDiagonalAscendingBoardLine: aInteger [
 ]
 
 { #category : 'Accessing' }
+HfuSpConnectFourBoardState >> getFieldAtColumn: aColumnInteger Row: aRowInteger [
+
+
+	"<^self>"
+	"changes  ownership of a field defined by Column and row to a player"
+	^((self board )at: aColumnInteger )at: aRowInteger
+]
+
+{ #category : 'Accessing' }
 HfuSpConnectFourBoardState >> getFirstEmptyFieldInColumn: anInteger [
 
 	"<^anInteger>"
 	"returns the first field in a column, which is not occupied by a player"
 	|column result|
 	((1 to: (self boardWidth)) includes: anInteger)
-		ifFalse: [^nil].
+		ifFalse: [^-1].
 	column:= self board at: anInteger.
 	result :=column indexOf: -1 ifAbsent: [^-1].
 	^result
@@ -129,6 +163,31 @@ HfuSpConnectFourBoardState >> getHorizontalBoardLine: aInteger [
 ]
 
 { #category : 'Accessing' }
+HfuSpConnectFourBoardState >> getRisingDiagonalBoardLine: aInteger [
+
+	"<^aOrderedCollection>"
+	"returns a array representing the horizontal line of the board"
+	|resultingRow offset|
+	resultingRow:= OrderedCollection new.
+	aInteger <= self boardHeight 
+	ifTrue: [
+				1 to: aInteger do:[:currentColumn| resultingRow add: (self getFieldAtColumn: (currentColumn) Row: (self boardHeight-aInteger + currentColumn))].
+				^resultingRow.
+				].
+	aInteger <= (self boardHeight+ self boardWidth)
+	ifTrue: [
+				offset:=  aInteger - self boardHeight. 
+				(1+ offset) to: (self boardWidth) do:[:currentColumn|  
+					resultingRow add: (self getFieldAtColumn: currentColumn 
+																				Row: (currentColumn-offset))].
+				^resultingRow
+	].
+	"self board do: [:aColumn| 	resultingRow add: (aColumn at: aInteger)]."
+	^resultingRow
+	
+]
+
+{ #category : 'Accessing' }
 HfuSpConnectFourBoardState >> getVictor [
 
 	"<^self>"
@@ -139,10 +198,19 @@ HfuSpConnectFourBoardState >> getVictor [
 	self board do: [:aColumn| 	victorId:= self checkCollectionForVictor:  aColumn . 
 												victorId = -1
 													ifFalse: [^victorId]].
+	"check for horizontal winners"
 	1 to: (self boardHeight) do:[:aRow | 	victorId:= self checkCollectionForVictor: (self getHorizontalBoardLine: aRow).
 																victorId = -1
 																	ifFalse:[^victorId]].
 	
+	1 to: (self boardHeight+ self boardWidth -1) 
+				do:[:aRow | 	victorId:= self checkCollectionForVictor: (self getRisingDiagonalBoardLine: aRow).
+																victorId = -1
+																	ifFalse:[^victorId]].
+	1 to: (self boardHeight+ self boardWidth -1) 
+				do:[:aRow | 	victorId:= self checkCollectionForVictor: (self getDescendingDiagonalBoardLine:  aRow).
+																victorId = -1
+																	ifFalse:[^victorId]].
 	
 	^-1
 	
@@ -171,7 +239,7 @@ HfuSpConnectFourBoardState >> initializeBoardState [
 HfuSpConnectFourBoardState >> isGameDraw [
 
 	"<^Boolean>"
-	"Returnes wether the game is a draw (it is so if no player can make any moves that result in a victory)"
+	"Returnes wether the game is a draw (it is so if no player can make any moves)"
 
 	|unusedFieldsCount|
 	unusedFieldsCount:= 0.
@@ -189,17 +257,9 @@ HfuSpConnectFourBoardState >> isValidOrder: aGameOrder [
 
 	"<^self>"
 	"Checks if a order is valid"
-
+	((1 to: (self boardWidth)) includes: aGameOrder columnId)
+		ifFalse:[^false].	
 	^ (self board at: (aGameOrder columnId)) includes: -1
-]
-
-{ #category : 'Accessing' }
-HfuSpConnectFourBoardState >> setFieldAsPlayerOwned [
-
-	"<^self>"
-	"Answer the receiver"
-
-	self
 ]
 
 { #category : 'Accessing' }
