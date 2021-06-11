@@ -9,7 +9,7 @@ Class {
 	#category : 'HfuSpConnectFour'
 }
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> board [
 
 	"<^iOf aTwoDimensionalArray>"
@@ -18,7 +18,7 @@ HfuSpConnectFourBoardState >> board [
 	^board
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> board: anaTwoDimensionalArray [
 
 	"<anaTwoDimensionalArray: iOf aTwoDimensionalArray, ^self>"
@@ -27,7 +27,7 @@ HfuSpConnectFourBoardState >> board: anaTwoDimensionalArray [
 	board := anaTwoDimensionalArray
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> boardHeight [
 
 	"<^iOf Integer>"
@@ -36,7 +36,7 @@ HfuSpConnectFourBoardState >> boardHeight [
 	^boardHeight
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> boardHeight: anInteger [
 
 	"<anInteger: iOf Integer, ^self>"
@@ -45,7 +45,7 @@ HfuSpConnectFourBoardState >> boardHeight: anInteger [
 	boardHeight := anInteger
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> boardWidth [
 
 	"<^iOf aInteger>"
@@ -54,7 +54,7 @@ HfuSpConnectFourBoardState >> boardWidth [
 	^boardWidth
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> boardWidth: anaInteger [
 
 	"<anaInteger: iOf aInteger, ^self>"
@@ -63,7 +63,7 @@ HfuSpConnectFourBoardState >> boardWidth: anaInteger [
 	boardWidth := anaInteger
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpConnectFourBoardState >> checkCollectionForVictor: aCollection [
 	"<^aPlayerID>"
 	"checks if a player owns four consecutive fields in a row. returns winning player. if no player Won returns -1 "
@@ -86,7 +86,7 @@ HfuSpConnectFourBoardState >> checkCollectionForVictor: aCollection [
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpConnectFourBoardState >> getDescendingDiagonalBoardLine: aInteger [
 
 	"<^aOrderedCollection>"
@@ -110,7 +110,7 @@ HfuSpConnectFourBoardState >> getDescendingDiagonalBoardLine: aInteger [
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpConnectFourBoardState >> getFieldAtColumn: aColumnInteger Row: aRowInteger [
 
 
@@ -119,7 +119,7 @@ HfuSpConnectFourBoardState >> getFieldAtColumn: aColumnInteger Row: aRowInteger 
 	^((self board )at: aColumnInteger )at: aRowInteger
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> getFirstEmptyFieldInColumn: anInteger [
 
 	"<^anInteger>"
@@ -132,7 +132,7 @@ HfuSpConnectFourBoardState >> getFirstEmptyFieldInColumn: anInteger [
 	^result
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpConnectFourBoardState >> getHorizontalBoardLine: aInteger [
 
 	"<^aOrderedCollection>"
@@ -144,7 +144,7 @@ HfuSpConnectFourBoardState >> getHorizontalBoardLine: aInteger [
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpConnectFourBoardState >> getRisingDiagonalBoardLine: aInteger [
 
 	"<^aOrderedCollection>"
@@ -169,7 +169,7 @@ HfuSpConnectFourBoardState >> getRisingDiagonalBoardLine: aInteger [
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> getVictor [
 
 	"<^self>"
@@ -198,7 +198,7 @@ HfuSpConnectFourBoardState >> getVictor [
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> initializeBoardState [
 
 	"<^self>"
@@ -217,7 +217,7 @@ HfuSpConnectFourBoardState >> initializeBoardState [
 	^self
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> isGameDraw [
 
 	"<^Boolean>"
@@ -234,7 +234,7 @@ HfuSpConnectFourBoardState >> isGameDraw [
 	^unusedFieldsCount=0
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> isValidOrder: aGameOrder [
 
 	"<^self>"
@@ -244,7 +244,7 @@ HfuSpConnectFourBoardState >> isValidOrder: aGameOrder [
 	^ (self board at: (aGameOrder columnId)) includes: -1
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpConnectFourBoardState >> setFieldAtColumn: aColumnInteger Row: aRowInteger AsPlayerOwned: aPlayerId [
 
 	"<^self>"

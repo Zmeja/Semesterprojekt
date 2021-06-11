@@ -74,7 +74,7 @@ HfuSpPlayerView >> closeGamesClicked [
 { #category : 'Not categorized' }
 HfuSpPlayerView >> createComponents [
 
-	self playerViewController setPlayerView: self.
+	self playerViewController playerView: self.
 	self sessionHolder: Me5Portlet new.
 	self addChild: self sessionHolder.
 	self updateSite.

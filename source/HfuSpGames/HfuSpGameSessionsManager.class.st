@@ -137,14 +137,3 @@ HfuSpGameSessionsManager class >> removeActiveGameSession: aGameSessionIdInteger
 
 	self activeGameSessions removeKey: aGameSessionIdInteger.
 ]
-
-{ #category : 'Not categorized' }
-HfuSpGameSessionsManager class >> testaddPlayer: anPlayerViewController ToSession: aGameSessionId [
-
-	"<^aHfuSpPlayerView>"
-	"ads a Player to a currently ongoing Game and returns the view of newly added player"
-	|gameSession|
-	gameSession := self activeGameSessions at: aGameSessionId ifAbsent: [^false].
-	gameSession addPlayer: anPlayerViewController.
-	^gameSession.
-]

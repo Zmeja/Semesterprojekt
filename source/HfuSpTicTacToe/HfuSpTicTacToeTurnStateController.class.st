@@ -4,7 +4,7 @@ Class {
 	#category : 'HfuSpTicTacToe'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeTurnStateController >> createPlayerViewController [
 
 	"<^aPlayerViewController>"
@@ -13,7 +13,7 @@ HfuSpTicTacToeTurnStateController >> createPlayerViewController [
 	^HfuSpTicTacToePlayerViewController new
 ]
 
-{ #category : 'ViewControllerNotifying' }
+{ #category : 'API' }
 HfuSpTicTacToeTurnStateController >> executeOrder: anGameOrder [
 
 	"<^self>"
@@ -24,7 +24,7 @@ HfuSpTicTacToeTurnStateController >> executeOrder: anGameOrder [
 	^ anGameOrder playerID
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToeTurnStateController >> initializeBoardState [
 
 	"<^self>"
@@ -40,7 +40,7 @@ HfuSpTicTacToeTurnStateController >> initializeBoardState [
 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToeTurnStateController >> initializeState [
 
 	"<^self>"

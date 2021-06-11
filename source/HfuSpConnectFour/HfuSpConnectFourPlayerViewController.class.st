@@ -4,7 +4,7 @@ Class {
 	#category : 'HfuSpConnectFour'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpConnectFourPlayerViewController >> createPlayerView [
 
 	"<^anPlayerView>"
@@ -16,7 +16,7 @@ HfuSpConnectFourPlayerViewController >> createPlayerView [
 	^self playerView
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpConnectFourPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"

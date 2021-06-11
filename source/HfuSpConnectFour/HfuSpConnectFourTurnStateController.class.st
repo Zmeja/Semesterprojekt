@@ -4,7 +4,7 @@ Class {
 	#category : 'HfuSpConnectFour'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpConnectFourTurnStateController >> createPlayerViewController [
 
 	"<^aPlayerViewController>"
@@ -13,7 +13,7 @@ HfuSpConnectFourTurnStateController >> createPlayerViewController [
 	^HfuSpConnectFourPlayerViewController new
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpConnectFourTurnStateController >> executeOrder: anGameOrder [
 
 	"<^self>"
@@ -27,7 +27,7 @@ HfuSpConnectFourTurnStateController >> executeOrder: anGameOrder [
 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpConnectFourTurnStateController >> initializeBoardState [
 
 	"<^self>"
@@ -42,7 +42,7 @@ HfuSpConnectFourTurnStateController >> initializeBoardState [
 	self currentBoardState: myBoardState
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpConnectFourTurnStateController >> initializeState [
 
 	"<^self>"

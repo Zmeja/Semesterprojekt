@@ -7,7 +7,7 @@ Class {
 	#category : 'HfuSpTicTacToe'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTicTacToePlayerViewController >> createPlayerView [
 
 	"<^anPlayerView>"
@@ -19,7 +19,7 @@ HfuSpTicTacToePlayerViewController >> createPlayerView [
 	^self playerView
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTicTacToePlayerViewController >> transmitOrder: aField [
 
 	"<^self>"

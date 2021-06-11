@@ -10,8 +10,7 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','ViewNotifying'] }
+{ #category : 'API' }
 HfuSpPlayerViewController >> announceVictor: aPlayer [
 
 	"<^self>"
@@ -20,7 +19,7 @@ HfuSpPlayerViewController >> announceVictor: aPlayer [
 		self playerView announceVictor: aPlayer.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerViewController >> createPlayerView [
 
 	"<^anPlayerView>"
@@ -29,7 +28,7 @@ HfuSpPlayerViewController >> createPlayerView [
 	self subclassResponsibility.
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> currentBoardState [
 
 	"<^iOf HfuSpBoardState>"
@@ -38,7 +37,7 @@ HfuSpPlayerViewController >> currentBoardState [
 	^currentBoardState
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> currentBoardState: aHfuSpBoardState [
 
 	"<aHfuSpBoardState: iOf HfuSpBoardState, ^self>"
@@ -47,7 +46,7 @@ HfuSpPlayerViewController >> currentBoardState: aHfuSpBoardState [
 	currentBoardState := aHfuSpBoardState
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> displayCurrentBoardState [
 
 	"tells view to display the Boardstate currently continaed in this PlayerViewController"
@@ -56,13 +55,13 @@ HfuSpPlayerViewController >> displayCurrentBoardState [
 	self playerView setGame: (self currentBoardState)
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> getAllActiveSessions [
 
 	^HfuSpGameSessionsManager listAllActiveSessions
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> getPlayerView [
 
 	"<^anPlayerView>"
@@ -73,7 +72,7 @@ HfuSpPlayerViewController >> getPlayerView [
 	^self playerView.
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpPlayerViewController >> isActingPlayer [
 
 	"<^iOf Boolean>"
@@ -86,26 +85,19 @@ HfuSpPlayerViewController >> isActingPlayer [
 	
 ]
 
-{ #category : 'Not categorized' }
-HfuSpPlayerViewController >> join: aIdOfGame [
-	
-	self turnStateController: (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame)
-
-]
-
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> player [
 
 	^player
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> player: anPlayer [
 
 	player := anPlayer
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> playerView [
 
 	"<^iOf aPlayerView>"
@@ -114,7 +106,7 @@ HfuSpPlayerViewController >> playerView [
 	^playerView
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> playerView: anaPlayerView [
 
 	"<anaPlayerView: iOf aPlayerView, ^self>"
@@ -123,15 +115,7 @@ HfuSpPlayerViewController >> playerView: anaPlayerView [
 	playerView := anaPlayerView
 ]
 
-{ #category : 'Not categorized' }
-HfuSpPlayerViewController >> setPlayerView: aView [
-
-	"<^anPlayerView>"
-	"returns the PlayerView managed by this PlayerViewController"
-	self playerView:  aView.
-]
-
-{ #category : 'NotifyTurnStateController' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> startGame [
 
 	"<^self>"
@@ -140,8 +124,7 @@ HfuSpPlayerViewController >> startGame [
 		self turnStateController startGame
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','TurnStateControllerNotifying'] }
+{ #category : 'API' }
 HfuSpPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
@@ -149,7 +132,7 @@ HfuSpPlayerViewController >> transmitOrder: aField [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> turnStateController [
 
 	"<^iOf HfuSpTurnStateController>"
@@ -158,7 +141,7 @@ HfuSpPlayerViewController >> turnStateController [
 	^turnStateController
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpPlayerViewController >> turnStateController: aHfuSpTurnStateController [
 
 	"<aHfuSpTurnStateController: iOf HfuSpTurnStateController, ^self>"

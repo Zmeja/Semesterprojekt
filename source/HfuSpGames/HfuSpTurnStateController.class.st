@@ -12,7 +12,7 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 
 	"<^PlayerViewController>"
@@ -26,7 +26,7 @@ HfuSpTurnStateController >> addPlayer: anPlayerViewController [
 
 ]
 
-{ #category : 'ViewControllerNotifying' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> announceVictorToPlayers: aPlayer [
 
 	"<^self>"
@@ -37,7 +37,7 @@ HfuSpTurnStateController >> announceVictorToPlayers: aPlayer [
 	self playerViewControllers do: [:aController| aController announceVictor: aPlayer]
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTurnStateController >> containsPlayer: anPlayer [
 
 	"<^boolean>"
@@ -46,7 +46,7 @@ HfuSpTurnStateController >> containsPlayer: anPlayer [
 	^self   containsPlayerWithIdInSession: anPlayer
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'API' }
 HfuSpTurnStateController >> containsPlayerWithIdInSession: aInteger [
 
 	"<^self>"
@@ -55,7 +55,7 @@ HfuSpTurnStateController >> containsPlayerWithIdInSession: aInteger [
 	^false
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> createPlayer: anPlayer [
 
 	"<^PlayerViewController>"
@@ -67,7 +67,7 @@ HfuSpTurnStateController >> createPlayer: anPlayer [
 	^newPlayer
 ]
 
-{ #category : 'InternalStateHandling' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> createPlayerSpecificBoardState: anPlayerId [
 
 	"<^self>"
@@ -77,7 +77,7 @@ HfuSpTurnStateController >> createPlayerSpecificBoardState: anPlayerId [
 	^ self currentBoardState copy
 ]
 
-{ #category : 'InternalStateHandling' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> createPlayerViewController [
 
 	"<^aPlayerViewController>"
@@ -86,7 +86,7 @@ HfuSpTurnStateController >> createPlayerViewController [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> currentBoardState [
 
 	"<^iOf Object>"
@@ -95,7 +95,7 @@ HfuSpTurnStateController >> currentBoardState [
 	^currentBoardState
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> currentBoardState: anBoardState [
 
 	"<anObject: iOf Object, ^self>"
@@ -104,17 +104,7 @@ HfuSpTurnStateController >> currentBoardState: anBoardState [
 	currentBoardState := anBoardState
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','ViewControllerNotifying'] }
-HfuSpTurnStateController >> demandPlayerInput: aPlayerID [
-
-	"<^self>"
-	"Answer the receiver"
-	
-	self
-]
-
-{ #category : 'InternalStateHandling' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> endGameHandling [
 
 	"<^self>"
@@ -132,7 +122,7 @@ HfuSpTurnStateController >> endGameHandling [
 		]
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> executeOrder: anOrder [
 
 	"<^self>"
@@ -142,7 +132,7 @@ HfuSpTurnStateController >> executeOrder: anOrder [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> gameOngoing [
 
 	"<^iOf Integer>"
@@ -151,7 +141,7 @@ HfuSpTurnStateController >> gameOngoing [
 	^gameOngoing
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> gameOngoing: anInteger [
 
 	"<anInteger: iOf Integer, ^self>"
@@ -163,7 +153,7 @@ HfuSpTurnStateController >> gameOngoing: anInteger [
 	gameOngoing := anInteger
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> initializeBoardState [
 
 	"<^self>"
@@ -172,7 +162,7 @@ HfuSpTurnStateController >> initializeBoardState [
 	self subclassResponsibility
 ]
 
-{ #category : 'InternalStateHandling' }
+{ #category : 'API' }
 HfuSpTurnStateController >> initializeState [
 
 	"<^self>"
@@ -182,20 +172,20 @@ HfuSpTurnStateController >> initializeState [
 
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> name [
 
 	^name
 	
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> playerViewControllers [
 
 	"<^iOf Object>"
@@ -204,7 +194,7 @@ HfuSpTurnStateController >> playerViewControllers [
 	^playerViewControllers
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> playerViewControllers: anDictionary [
 
 	"<anObject: iOf Object, ^self>"
@@ -213,8 +203,7 @@ HfuSpTurnStateController >> playerViewControllers: anDictionary [
 	playerViewControllers := anDictionary
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','ViewControllerNotifying'] }
+{ #category : 'API' }
 HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 
 	"<^>"
@@ -226,7 +215,6 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 		ifFalse:[^nil].
 	(self currentBoardState isValidOrder:  aGameOrder)
 		ifFalse:[
-					self demandPlayerInput: (aGameOrder playerID).
 					^nil].
 	self executeOrder: aGameOrder.
 	self endGameHandling.
@@ -234,7 +222,7 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 	self updateGameStateOfAllPlayers.
 ]
 
-{ #category : 'InternalStateHandling' }
+{ #category : 'API' }
 HfuSpTurnStateController >> startGame [
 
 	"^self"
@@ -243,7 +231,7 @@ HfuSpTurnStateController >> startGame [
 	self updateGameStateOfAllPlayers.
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> turnNumber [
 
 	"<^iOf Object>"
@@ -252,7 +240,7 @@ HfuSpTurnStateController >> turnNumber [
 	^self currentBoardState turnNumber
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> turnNumber: anInteger [
 
 	"<anObject: iOf Object, ^self>"
@@ -261,19 +249,19 @@ HfuSpTurnStateController >> turnNumber: anInteger [
 	self currentBoardState turnNumber: anInteger
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> type [
 
 	^type
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'API' }
 HfuSpTurnStateController >> type: anObject [
 
 	type := anObject
 ]
 
-{ #category : 'InternalStateHandling' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> updateBoardState: aGameOrder [
 
 	"<^self>"
@@ -282,7 +270,7 @@ HfuSpTurnStateController >> updateBoardState: aGameOrder [
 	
 ]
 
-{ #category : 'ViewControllerNotifying' }
+{ #category : 'Internal' }
 HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 
 	"<^self>"
