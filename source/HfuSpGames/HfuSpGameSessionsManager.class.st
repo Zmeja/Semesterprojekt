@@ -49,28 +49,6 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionId
 	^playerView.
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','API','Internal'] }
-HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionIdInteger currentView: aView [
-
-	"<^aHfuSpPlayerView>"
-	"ads a Player to a currently ongoing Game and returns the view of newly added player"
-	|gameTurnStateController playerViewController playerView|
-	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
-	gameTurnStateController= nil
-		ifTrue:[^nil].
-	(gameTurnStateController containsPlayer: anPlayer = true)
-		ifTrue:[^nil].
-	(gameTurnStateController gameOngoing = -1)
-		ifFalse:[^nil].
-	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer makePlayer: 'Player' withId: anPlayer).
-	playerView:= aView.
-	playerView playerViewController: playerViewController.
-	playerViewController playerView: playerView.
-	playerView  initializeView.
-	^playerView.
-]
-
 { #category : 'API' }
 HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 

@@ -106,25 +106,7 @@ HfuSpConnectFourBoardState >> getDescendingDiagonalBoardLine: aInteger [
 																				Row: (self boardHeight- currentColumn+offset+1))].
 				^resultingRow
 	].
-	"self board do: [:aColumn| 	resultingRow add: (aColumn at: aInteger)]."
 	^resultingRow
-	
-]
-
-{ #category : 'Accessing' }
-HfuSpConnectFourBoardState >> getDiagonalAscendingBoardLine: aInteger [
-
-	"<^aOrderedCollection>"
-	"returns a array representing the horizontal line of the board"
-	|resultingCollection aColumnInteger aRowInteger|
-	aRowInteger:=aInteger.
-	aColumnInteger:=1.
-	resultingCollection:= OrderedCollection new.
-	aInteger to: 1 do: [:currentNumber| 	resultingCollection add: ((self board at: aColumnInteger )at: aRowInteger).
-																aRowInteger:=aRowInteger+1.
-																aColumnInteger:=aColumnInteger+1].
-
-	^resultingCollection
 	
 ]
 

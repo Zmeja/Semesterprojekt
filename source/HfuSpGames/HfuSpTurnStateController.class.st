@@ -142,25 +142,6 @@ HfuSpTurnStateController >> executeOrder: anOrder [
 	self subclassResponsibility
 ]
 
-{ #category : 'Not categorized' }
-HfuSpTurnStateController >> existsPlayerWithIdInSession: aInteger [
-
-	"<^self>"
-	"Answer the receiver"
-	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player  id = aInteger ifTrue: [^true]].
-	^false
-]
-
-{ #category : 'InternalStateHandling' }
-HfuSpTurnStateController >> findPlayerInSessionById: aInteger [
-
-	"<^self>"
-	"Answer the receiver"
-	|player|
-	self playerViewControllers do:[:eachPlayer| eachPlayer id = aInteger ifTrue: [^eachPlayer]].
-	^nil
-]
-
 { #category : 'Accessing' }
 HfuSpTurnStateController >> gameOngoing [
 
