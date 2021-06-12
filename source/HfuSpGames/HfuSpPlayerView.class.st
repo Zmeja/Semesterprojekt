@@ -66,6 +66,18 @@ HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 ]
 
 { #category : 'Not categorized' }
+HfuSpPlayerView >> announceVictor: aPlayerID [
+	aPlayerID ~= -1
+	ifTrue: [
+	| winnerString |
+	aPlayerID < 0
+	ifTrue:[	winnerString := 'The Game  is a draw'. ] 
+	ifFalse:[ winnerString := 'Player ', aPlayerID asString, ' won!'.].
+	self showInfoNotificationWithMessage: winnerString.].
+
+]
+
+{ #category : 'Not categorized' }
 HfuSpPlayerView >> closeGamesClicked [
 
 	HfuSpGameSessionsManager activeGameSessions: nil.

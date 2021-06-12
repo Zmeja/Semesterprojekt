@@ -13,17 +13,6 @@ Class {
 }
 
 { #category : 'Not categorized' }
-HfuSpTicTacToePlayerView >> announceVictor: aPlayerID [
-	aPlayerID ~= -1
-	ifTrue: [
-	| winnerString |
-	winnerString := 'Player ', aPlayerID asString, ' won!'.
-	self showInfoNotificationWithMessage: winnerString.
-	]
-
-]
-
-{ #category : 'Not categorized' }
 HfuSpTicTacToePlayerView >> createComponents [
 
 	"HfuSpGameSessionsManager activeGameSessions: nil."

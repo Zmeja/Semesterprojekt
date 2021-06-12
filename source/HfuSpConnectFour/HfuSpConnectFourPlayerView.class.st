@@ -3,7 +3,8 @@ Class {
 	#superclass : 'HfuSpPlayerView',
 	#instVars : [
 		'connectRows',
-		'connectFormPortlet'
+		'connectFormPortlet',
+		'startButton'
 	],
 	#category : 'HfuSpConnectFour'
 }
@@ -12,31 +13,45 @@ Class {
 HfuSpConnectFourPlayerView >> createComponents [
 
 	 connectRows:= OrderedCollection new.
+	 
+	 self
+		addChild: ( startButton := Me5Button new
+			text: 'start game';
+			addClickEventSelector: #startGameClicked;
+			yourself).
+			
 	
-	self
+			
+self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> initConnectFour [
 		
+	self	
 		addChild: (connectFormPortlet := Me5FormPortlet new
 			title:'ConnectFour!';			
 			yourself);
 					
 	yourself.
 			
-			1 to: 8 do: [:eachNumber | connectFormPortlet addChildToBody: (connectRows add: (Me5Div new))].
+			1 to: 7 do: [:eachNumber | connectFormPortlet addChildToBody: (connectRows add: (Me5Div new))].
 			Me5Section new.
 			
-			1 to: 8 do: [:eachColumn | eachColumn < 8 
-					ifTrue: [(connectRows at: 1) addChild: (Me5A newAirButton
-						text: '|';
-						"name:'1';"
+			1 to: 7 do: [:eachColumn | eachColumn < 8 
+					ifTrue: [(connectRows at: 1) addChild: (Me5Button newAirButton
+						text: eachColumn asString;
+						name: eachColumn asString;
 						addClickEventSelector: #rowClicked:;
 						yourself)].
 					].
 	
 				Me5Section new.
-			2 to: 8 do: [:eachRow | 
+			2 to: 7 do: [:eachRow | 
 					1 to: 8 do: [:eachColumn | eachColumn < 8 
 					ifTrue: [(connectRows at: eachRow) addChild: (Me5Badge new
-						text: ':';
+						text: '.';
+						"name: eachColumn asString;"
 						yourself)].		
 				].
 			].
@@ -54,4 +69,18 @@ HfuSpConnectFourPlayerView >> setGame: boardState [
 	"Answer the receiver"
 
 	self
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> startGameClicked [
+	
+	self playerViewController startGame.
+	self removeChild: startButton.
+	self initConnectFour.
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> updateSite: updateSiteEvent [
+
+
 ]
