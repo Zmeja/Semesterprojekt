@@ -82,12 +82,13 @@ HfuSpManDontGetAngryPlayerView >> boardRows: anObject [
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 
-"Changes the color of the badge parameter to the color of the given player number where: 
-	0 = empty field
-	1 = blue
-	2 = red
-	3 = green
-	4 = yellow"
+	"Changes the color of the badge parameter to the color of the given player number where: 
+		0 = empty field
+		1 = blue
+		2 = red
+		3 = green
+		4 = yellow
+		Note: this version of the playerView does not change color, but adds text to the field"
 	anInteger = 0
 		ifTrue: [aBadge text: ' '].
 	anInteger = 1
@@ -103,7 +104,7 @@ HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: aPlayerNumber [
 
-"Sets the color of the field at Index anInteger to the corresponding player number"
+	"Sets the color of the field at Index anInteger to the corresponding player number"
 	self colorBadge: (self boardIndexBadgeMap at: anInteger) playerNumber: aPlayerNumber.
 ]
 
@@ -112,7 +113,6 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 
 	boardRows := OrderedCollection new.
 	boardPortlet := Me5Portlet new.
-	
 	self 
 		addChild: (Me5Label new
 			text: 'Man, dont be angry';
@@ -146,7 +146,7 @@ HfuSpManDontGetAngryPlayerView >> displayBoardState: anBoardState [
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> exEvent: event [
 
-	"event component text: (self getIndexbyBadge: event component)."
+	"Communication with the playerViewController"
 	event component text = 'Roll'
 		ifTrue: [self playerViewController transmitOrder: 0.^nil].
 	event component text = 'Figure'
@@ -159,13 +159,13 @@ HfuSpManDontGetAngryPlayerView >> exEvent: event [
 { #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> getFieldByRow: aRow Column: aColumn [
 
-"Returns the Field specified by the coordinates."
+	"Returns the Field specified by the coordinates."
 	^((boardRows at: aRow) childAt: aColumn)
 ]
 
 { #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerView >> getIndexbyBadge: aBadge [
-
+	"Returns the index number of the given badge on the field"
 	self boardIndexBadgeMap keysAndValuesDo: [:eachKey :eachValue |
 		(eachValue = aBadge) ifTrue: [^eachKey]].
 	self player1WinDictionary keysAndValuesDo: [:eachKey :eachValue |
@@ -227,7 +227,7 @@ HfuSpManDontGetAngryPlayerView >> initializeBoardIndexMap [
 
 { #category : 'Initial events' }
 HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
-
+	"Initializes the Win Dictionaries for easier accessing"
 	| tempDictionary |
 	"Initialize Player1WinDictionary"
 	tempDictionary := Dictionary new.
@@ -311,7 +311,6 @@ HfuSpManDontGetAngryPlayerView >> player4WinDictionary: anObject [
 HfuSpManDontGetAngryPlayerView >> renderBaseGameState [
 
 	"Renders the game state with an empty board state"
-		"boardRows := OrderedCollection new."
 		self
 		addChild: (boardPortlet := Me5Portlet new).
 		1 to: 11 do: [:eachNumber | boardPortlet addChildToBody: (boardRows add: (Me5Div new))].
@@ -474,9 +473,6 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 	| index |
 	oldRows := self boardRows.
 	oldPortlet := self boardPortlet.
-	"self removeChild: boardRows.
-	self removeChild: boardPortlet.
-	self renderBaseGameState."
 	index := 1.
 	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
 		index := index + 1.].
@@ -489,6 +485,7 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 { #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinFieldAt: anInteger To: aBoolean [
 
+	"Sets the WinField according to the given boolean"
 	(aPlayerNumberInteger = 1 and: [aBoolean]) ifTrue: [(self player1WinDictionary at: anInteger) text: '1'.].
 	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) text: '2'.].
 	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) text: '3'.].
@@ -502,14 +499,14 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
-	
+
+	"Starts the game"
 	self playerViewController startGame.
 ]
 
 { #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> updateSite: updateSiteEvent [
 
-	"self removeChild: oldRows.
-	self removeChild: oldPortlet."
+	"Event for the timer to update the view"
 	self playerViewController displayCurrentBoardState.
 ]

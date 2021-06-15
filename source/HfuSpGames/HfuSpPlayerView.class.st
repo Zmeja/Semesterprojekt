@@ -172,9 +172,9 @@ HfuSpPlayerView >> resetView [
 	"<^self>"
 	"rebuilds view as if side was just opened.
 	 ->removes GameSessionReresentationViews"
-
-	"!!!Diese Methode muss implementierd werden!!!"
 	
+	"Muss mit Containern gelöst werden"
+
 ]
 
 { #category : 'Accessing' }
