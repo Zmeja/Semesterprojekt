@@ -117,7 +117,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 		addChild: (Me5Label new
 			text: 'Man, dont be angry';
 			yourself).
-	self renderBaseGameState.
+	"self renderBaseGameState."
 			self addChild: (startGameButton:= (Me5Button newAirSecondary
 					text: 'Start Game';
 					addClickEventSelector: #startGameClicked;
@@ -130,7 +130,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Figure';
 					addClickEventSelector: #exEvent:;
 					yourself).
-	self playerViewController displayCurrentBoardState.
+	"self playerViewController displayCurrentBoardState."
 	self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
 		
 
@@ -501,7 +501,10 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
 
 	"Starts the game"
+	self renderBaseGameState.
+	self playerViewController displayCurrentBoardState.
 	self playerViewController startGame.
+	self removeChild: startGameButton.
 ]
 
 { #category : 'Internal' }
