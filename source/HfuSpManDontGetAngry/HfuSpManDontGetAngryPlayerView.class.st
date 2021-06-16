@@ -2,8 +2,6 @@ Class {
 	#name : 'HfuSpManDontGetAngryPlayerView',
 	#superclass : 'HfuSpPlayerView',
 	#instVars : [
-		'oldPortlet',
-		'oldRows',
 		'startGameButton',
 		'boardPortlet',
 		'boardRows',
@@ -108,9 +106,10 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 	self colorBadge: (self boardIndexBadgeMap at: anInteger) playerNumber: aPlayerNumber.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Initial events' }
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
+	|labelText|
 	boardRows := OrderedCollection new.
 	boardPortlet := Me5Portlet new.
 	self 
@@ -471,8 +470,6 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 
 	"displays the given BoardState"
 	| index |
-	oldRows := self boardRows.
-	oldPortlet := self boardPortlet.
 	index := 1.
 	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
 		index := index + 1.].
