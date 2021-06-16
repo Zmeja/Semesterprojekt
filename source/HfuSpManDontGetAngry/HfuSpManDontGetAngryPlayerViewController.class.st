@@ -51,58 +51,49 @@ HfuSpManDontGetAngryPlayerViewController >> displayCurrentBoardState [
 	self playerView setGame: (self currentBoardState)
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> figures [
 
 	^figures
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> figures: anObject [
 
 	figures := anObject
 ]
 
-{ #category : 'Not categorized' }
-HfuSpManDontGetAngryPlayerViewController >> join: aIdOfGame [
-	
-	|gameSession|
-	"gameSession := (HfuSpGameSessionsManager testaddPlayer: self ToSession: aIdOfGame).
-	self turnStateController: gameSession."
-	self offset: gameSession playerViewControllers size - 1.
-]
-
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> numberOfTimesRolled [
 
 	^numberOfTimesRolled
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> numberOfTimesRolled: anObject [
 
 	numberOfTimesRolled := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> offset [
 
 	^offset
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> offset: anObject [
 
 	offset := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> rolledNumber [
 
 	^rolledNumber
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerViewController >> rolledNumber: anObject [
 
 	rolledNumber := anObject

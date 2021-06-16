@@ -10,49 +10,49 @@ Class {
 	#category : 'HfuSpManDontGetAngry'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> fieldID [
 
 	^fieldID
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> fieldID: anObject [
 
 	fieldID := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> hasFigures [
 
 	^hasFigures
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> hasFigures: anObject [
 
 	hasFigures := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> number [
 
 	^number
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> number: anObject [
 
 	number := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> offset [
 
 	^offset
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryOrder >> offset: anObject [
 
 	offset := anObject

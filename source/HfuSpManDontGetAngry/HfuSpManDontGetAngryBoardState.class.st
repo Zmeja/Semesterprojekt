@@ -36,7 +36,7 @@ HfuSpManDontGetAngryBoardState >> getStartfieldWithOffset: aOffset [
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryBoardState >> getVictor [
-
+	"checks if any player has all of his 4 figures in the end positions"
 	((self lastFields copyFrom: 1 to: 4) = #( true true true true) asOrderedCollection)
 		ifTrue:[^'Blue'].
 	((self lastFields copyFrom: 5 to: 8) = #( true true true true) asOrderedCollection)
