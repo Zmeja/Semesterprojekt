@@ -4,7 +4,10 @@ Class {
 	#instVars : [
 		'connectRows',
 		'connectFormPortlet',
-		'startButton'
+		'startButton',
+		'aRowButton',
+		'aBadge',
+		'save'
 	],
 	#category : 'HfuSpConnectFour'
 }
@@ -21,8 +24,15 @@ HfuSpConnectFourPlayerView >> createComponents [
 			yourself).
 			
 	
-			
+"self initConnectFour."			
 self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> displayBoardState: anBoardState [
+
+	"displays the BoardState on the screen"
+	self setGame: anBoardState
 ]
 
 { #category : 'Not categorized' }
@@ -39,7 +49,7 @@ HfuSpConnectFourPlayerView >> initConnectFour [
 			Me5Section new.
 			
 			1 to: 7 do: [:eachColumn | eachColumn < 8 
-					ifTrue: [(connectRows at: 1) addChild: (Me5Button newAirButton
+					ifTrue: [(connectRows at: 1) addChild: (aRowButton:= Me5Button newAirButton
 						text: eachColumn asString;
 						name: eachColumn asString;
 						addClickEventSelector: #rowClicked:;
@@ -47,19 +57,28 @@ HfuSpConnectFourPlayerView >> initConnectFour [
 					].
 	
 				Me5Section new.
+				
 			2 to: 7 do: [:eachRow | 
 					1 to: 8 do: [:eachColumn | eachColumn < 8 
-					ifTrue: [(connectRows at: eachRow) addChild: (Me5Badge new
-						text: '.';
-						"name: eachColumn asString;"
-						yourself)].		
+					ifTrue: [
+					eachColumn = save 
+					ifTrue:[(connectRows at: eachRow) addChild: (aBadge := Me5Badge newInfo
+						text: eachColumn asString;
+						yourself) ]
+					ifFalse:[(connectRows at: eachRow) addChild: (aBadge := Me5Badge new
+						text: eachColumn asString;
+						yourself)].
+						].		
 				].
 			].
+
 ]
 
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> rowClicked: anEventFromCon [
 	self playerViewController transmitOrder: anEventFromCon component name asInteger.
+	save := anEventFromCon component name asInteger.
+	self playerViewController displayCurrentBoardState.
 ]
 
 { #category : 'Not categorized' }
@@ -74,13 +93,20 @@ HfuSpConnectFourPlayerView >> setGame: boardState [
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> startGameClicked [
 	
+	self initConnectFour.
+	self playerViewController displayCurrentBoardState.
 	self playerViewController startGame.
 	self removeChild: startButton.
-	self initConnectFour.
 ]
 
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> updateSite: updateSiteEvent [
 
-
+	"Event for the timer to update the view"
+	self playerViewController displayCurrentBoardState.
+	"self removeChild: connectRows.
+	self removeChild: connectFormPortlet."
+	"self initConnectFour."
+	
+	"self addChild: (Me5Badge newWarning)."
 ]
