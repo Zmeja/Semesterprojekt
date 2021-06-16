@@ -36,6 +36,13 @@ HfuSpConnectFourPlayerView >> displayBoardState: anBoardState [
 ]
 
 { #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> getFieldByRow: aRow Column: aColumn [
+
+	"Returns the Field specified by the coordinates."
+	^((connectRows at: aRow) childAt: aColumn)
+]
+
+{ #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> initConnectFour [
 		
 	self	
@@ -84,10 +91,28 @@ HfuSpConnectFourPlayerView >> rowClicked: anEventFromCon [
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> setGame: boardState [
 
-	"<^self>"
-	"Answer the receiver"
+|savedID thisID offset |
 
-	self
+offset := boardState boardHeight.
+
+		1 to: boardState boardWidth do: [:eachColumn | 
+		1 to: boardState boardHeight do:[:eachRow | 
+		
+			thisID:= ((boardState board at: eachColumn) at: eachRow). 
+				thisID = -1
+				ifTrue: [] 
+				ifFalse: [savedID isNil
+				
+					ifTrue: [savedID := thisID].
+					savedID = thisID
+					ifTrue: [(self getFieldByRow: eachRow + offset  Column: eachColumn) addCssClassMBadgePrimary] 
+					ifFalse: [(self getFieldByRow: eachRow + offset Column: eachColumn) addCssClassMBadgeDanger]
+					].
+			 offset := offset -2.
+			].
+			offset := boardState boardHeight.
+	].
+
 ]
 
 { #category : 'Not categorized' }
