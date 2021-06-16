@@ -498,8 +498,8 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
 
 	"Starts the game"
-	self renderBaseGameState.
-	self playerViewController displayCurrentBoardState.
+	"self renderBaseGameState."
+	"self playerViewController displayCurrentBoardState."
 	self playerViewController startGame.
 	self removeChild: startGameButton.
 ]

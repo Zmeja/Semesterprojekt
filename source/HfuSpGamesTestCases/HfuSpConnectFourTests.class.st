@@ -150,6 +150,23 @@ HfuSpConnectFourTests class >> testGameState [
 	boardState setFieldAtColumn: 1 Row: 6  asPlayerOwned:1.
 	self assert: ((boardState getVictor) = -1) description: ' winner determined when no player won'.
 	
+		boardState initializeBoardState.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 2 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 3 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 4 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 5 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 7 Row: 1  asPlayerOwned:1.
+	self assert: ((boardState getVictor) = -1) description: ' winner determined when no player won'.
+	
+	boardState initializeBoardState.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 2 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 3 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 5 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 7 Row: 1  asPlayerOwned:1.
+	self assert: ((boardState getVictor) = -1) description: ' winner determined when no player won'.
+	
 	"can a draw be detected"
 	boardState initializeBoardState.
 	self assert: ((boardState isGameDraw) = false) description: ' game is recognised as draw despite not being a draw'.

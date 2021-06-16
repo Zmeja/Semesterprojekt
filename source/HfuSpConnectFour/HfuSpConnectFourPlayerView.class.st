@@ -26,6 +26,7 @@ HfuSpConnectFourPlayerView >> createComponents [
 	
 "self initConnectFour."			
 self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
+	self initConnectFour.
 ]
 
 { #category : 'Not categorized' }
@@ -118,10 +119,10 @@ offset := boardState boardHeight.
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> startGameClicked [
 	
-	self initConnectFour.
-	self playerViewController displayCurrentBoardState.
+	"self initConnectFour."
+	"self playerViewController displayCurrentBoardState."
 	self playerViewController startGame.
-	self removeChild: startButton.
+	"self removeChild: startButton."
 ]
 
 { #category : 'Not categorized' }

@@ -84,10 +84,13 @@ HfuSpConnectFourBoardState >> checkCollectionForVictor: aCollection [
 				currentField = lastPlayer
 					ifTrue:[consecutiveOwnedFields := consecutiveOwnedFields + 1]
 					ifFalse: [lastPlayer := currentField.
-								consecutiveOwnedFields := 1]].
-				consecutiveOwnedFields = 4 
-					ifTrue:[^lastPlayer]].
-					
+								consecutiveOwnedFields := 1].		
+				]
+		ifFalse: [consecutiveOwnedFields := 0].
+				
+			consecutiveOwnedFields = 4 
+				ifTrue:[^lastPlayer]
+				].
 	^-1
 	
 	
