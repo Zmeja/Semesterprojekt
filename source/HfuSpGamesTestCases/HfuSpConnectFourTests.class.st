@@ -31,17 +31,17 @@ HfuSpConnectFourTests class >> testGameState [
 		].
 
 	"can field ownership be changed"
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
 	self assert:  (boardState getFieldAtColumn: 1 Row:1 ) =1 description: 'error when seting field ownership'.
 
 	"can the first empty field in a column be detected"
 	self assert: (boardState getFirstEmptyFieldInColumn: 1)= 2 description: 'error when geting first empty field'.
-	boardState setFieldAtColumn: 1 Row: 2  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 2  asPlayerOwned:1.
 	self assert: (boardState getFirstEmptyFieldInColumn: 1)= 3 description: 'error when geting first empty field'.
-	boardState setFieldAtColumn: 1 Row: 3  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 4  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 1 Row: 5  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 6  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 3  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 4  asPlayerOwned:2.
+	boardState setFieldAtColumn: 1 Row: 5  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 6  asPlayerOwned:1.
 	self assert: (boardState getFirstEmptyFieldInColumn: 1)= -1 description: 'error when geting first empty field'.
 
 	"can the first element of a out f bounds field be detected"
@@ -50,47 +50,47 @@ HfuSpConnectFourTests class >> testGameState [
 	
 	"are horizontal lines (rows) detected propperly"
 	boardState initializeBoardState. 
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 2 Row: 1  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 4 Row: 1  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 5 Row: 1  AsPlayerOwned:2.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 2 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 4 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 5 Row: 1  asPlayerOwned:2.
 	self assert: ((boardState getHorizontalBoardLine: 1) = (#(1 2 -1 2 2 -1 -1) asOrderedCollection)) description:'error when geting horizontal line'.
-	boardState setFieldAtColumn: 2 Row: 4  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 4 Row: 4  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 5 Row: 4  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 6 Row: 4  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 7 Row: 4  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 2 Row: 4  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 4 Row: 4  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 5 Row: 4  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 6 Row: 4  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 7 Row: 4  asPlayerOwned: 2.
 	self assert: ((boardState getHorizontalBoardLine: 4) = (#(-1 2 -1 2 2 2 2) asOrderedCollection)) description:'error when geting horizontal line'.
 
 	"are diagonaI Iinesdetected propperly"
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 6  AsPlayerOwned: 1.
-	boardState setFieldAtColumn: 2 Row: 6  AsPlayerOwned: 1.
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 4 Row: 4  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 2 Row: 2  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 1 Row: 6  asPlayerOwned: 1.
+	boardState setFieldAtColumn: 2 Row: 6  asPlayerOwned: 1.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 4 Row: 4  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 2 Row: 2  asPlayerOwned: 2.
 	self assert: ((boardState getRisingDiagonalBoardLine:  1) = (#(1) asOrderedCollection)) description:'error when geting diagonaI line'.
 	self assert: ((boardState getRisingDiagonalBoardLine:  6) = (#(2 2 -1 2 -1 -1 ) asOrderedCollection)) description:'error when geting diagonaI line'.
 
-	boardState setFieldAtColumn: 3 Row: 1  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 4 Row: 2  AsPlayerOwned: 1.
-	boardState setFieldAtColumn: 6 Row: 4  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 7 Row: 5  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 3 Row: 1  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 4 Row: 2  asPlayerOwned: 1.
+	boardState setFieldAtColumn: 6 Row: 4  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 7 Row: 5  asPlayerOwned: 2.
 	self assert: ((boardState getRisingDiagonalBoardLine:  8) = (#(2 1 -1 2 2) asOrderedCollection)) description:'error when geting diagonaI line'.
 
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned: 2.
 	self assert: ((boardState getDescendingDiagonalBoardLine:  1) = (#(2) asOrderedCollection)) description:'error when geting diagonaI line'.
 
-	boardState setFieldAtColumn: 1 Row: 2  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 1 Row: 2  asPlayerOwned: 2.
 	self assert: ((boardState getDescendingDiagonalBoardLine:  2) = (#(2 -1) asOrderedCollection)) description:'error when geting diagonaI line'.
 
-	boardState setFieldAtColumn: 7 Row: 6  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 7 Row: 6  asPlayerOwned: 2.
 	self assert: ((boardState getDescendingDiagonalBoardLine:  1) = (#(2) asOrderedCollection)) description:'error when geting diagonaI line'.
 	
-	boardState setFieldAtColumn: 2 Row: 6  AsPlayerOwned: 2.
-	boardState setFieldAtColumn: 4 Row: 4  AsPlayerOwned: 1.
-	boardState setFieldAtColumn: 5 Row: 3  AsPlayerOwned: 2.
+	boardState setFieldAtColumn: 2 Row: 6  asPlayerOwned: 2.
+	boardState setFieldAtColumn: 4 Row: 4  asPlayerOwned: 1.
+	boardState setFieldAtColumn: 5 Row: 3  asPlayerOwned: 2.
 	self assert: ((boardState getDescendingDiagonalBoardLine:  7) = (#(2 -1 1 2 -1 -1) asOrderedCollection)) description:'error when geting diagonaI line'.
 
 	
@@ -98,63 +98,63 @@ HfuSpConnectFourTests class >> testGameState [
 
 	"horizontal winning line"	
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 2 Row: 1  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 3 Row: 1  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 4 Row: 1  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 5 Row: 1  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 6 Row: 1  AsPlayerOwned:2.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 2 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 3 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 4 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 5 Row: 1  asPlayerOwned:2.
+	boardState setFieldAtColumn: 6 Row: 1  asPlayerOwned:2.
 	self assert: ((boardState getVictor) = 2) description: 'horizonzal winner couldnt be determined'.
 	
 	"vertical winning line"
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 2  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 1 Row: 3  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 4  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 5  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 6  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 2  asPlayerOwned:2.
+	boardState setFieldAtColumn: 1 Row: 3  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 4  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 5  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 6  asPlayerOwned:1.
 	self assert: ((boardState getVictor) = 1) description: 'vertical winner couldnt be determined'.
 	"rising diagonal  winning line"
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 2 Row: 2  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 3 Row: 3  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 4 Row: 4  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 5 Row: 5  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 6 Row: 6  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 2 Row: 2  asPlayerOwned:2.
+	boardState setFieldAtColumn: 3 Row: 3  asPlayerOwned:1.
+	boardState setFieldAtColumn: 4 Row: 4  asPlayerOwned:1.
+	boardState setFieldAtColumn: 5 Row: 5  asPlayerOwned:1.
+	boardState setFieldAtColumn: 6 Row: 6  asPlayerOwned:1.
 	self assert: ((boardState getVictor) = 1) description: 'diagonal rising winner couldnt be determined'.
 
 	"faling diagonal  winning line"
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 4  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 2 Row: 3  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 3 Row: 2  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 4 Row: 1  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 4  asPlayerOwned:1.
+	boardState setFieldAtColumn: 2 Row: 3  asPlayerOwned:1.
+	boardState setFieldAtColumn: 3 Row: 2  asPlayerOwned:1.
+	boardState setFieldAtColumn: 4 Row: 1  asPlayerOwned:1.
 	self assert: ((boardState getVictor) = 1) description: 'diagonal falling winner couldnt be determined'.
 	
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 3 Row: 6  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 4 Row: 5  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 5 Row: 4  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 6 Row: 3  AsPlayerOwned:2.
+	boardState setFieldAtColumn: 3 Row: 6  asPlayerOwned:2.
+	boardState setFieldAtColumn: 4 Row: 5  asPlayerOwned:2.
+	boardState setFieldAtColumn: 5 Row: 4  asPlayerOwned:2.
+	boardState setFieldAtColumn: 6 Row: 3  asPlayerOwned:2.
 	self assert: ((boardState getVictor) = 2) description: 'diagonal falling winner couldnt be determined'.
 	
 	"no winning line"
 	boardState initializeBoardState.
-	boardState setFieldAtColumn: 1 Row: 1  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 2  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 1 Row: 3  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 4  AsPlayerOwned:1.
-	boardState setFieldAtColumn: 1 Row: 5  AsPlayerOwned:2.
-	boardState setFieldAtColumn: 1 Row: 6  AsPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 1  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 2  asPlayerOwned:2.
+	boardState setFieldAtColumn: 1 Row: 3  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 4  asPlayerOwned:1.
+	boardState setFieldAtColumn: 1 Row: 5  asPlayerOwned:2.
+	boardState setFieldAtColumn: 1 Row: 6  asPlayerOwned:1.
 	self assert: ((boardState getVictor) = -1) description: ' winner determined when no player won'.
 	
 	"can a draw be detected"
 	boardState initializeBoardState.
 	self assert: ((boardState isGameDraw) = false) description: ' game is recognised as draw despite not being a draw'.
 	1 to: (boardState boardWidth) do:[:aColumn|
-			1 to: (boardState boardHeight) do:[:aRow| boardState setFieldAtColumn: aColumn Row: aRow AsPlayerOwned: 1].
+			1 to: (boardState boardHeight) do:[:aRow| boardState setFieldAtColumn: aColumn Row: aRow asPlayerOwned: 1].
 		].
 		self assert: ((boardState isGameDraw) = true) description: ' game  is not recognised as draw despite being a draw'.
 

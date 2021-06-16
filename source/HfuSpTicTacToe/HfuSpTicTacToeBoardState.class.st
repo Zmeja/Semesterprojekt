@@ -91,14 +91,19 @@ HfuSpTicTacToeBoardState >> getDiagonal: aInteger [
 	 7 8 9"
 	|result|
 	result:= OrderedCollection new.
-	aInteger = 1 
-		ifTrue: [result add: (self boardTiles at: 1).
-					result add: (self boardTiles at: 5).
-					result add: (self boardTiles at: 9).]
-		ifFalse: [result add: (self boardTiles at: 3).
-					result add: (self boardTiles at: 5).
-					result add: (self boardTiles at: 7)].
-	^result
+	^aInteger = 1 
+		ifTrue: [
+			OrderedCollection new
+				add: (self boardTiles at: 1);
+				add: (self boardTiles at: 5);
+				add: (self boardTiles at: 9);
+				yourself]
+		ifFalse: [
+			OrderedCollection new
+				add: (self boardTiles at: 3);
+				add: (self boardTiles at: 5);
+				add: (self boardTiles at: 7);
+				yourself	].
 ]
 
 { #category : 'API' }
@@ -174,6 +179,15 @@ HfuSpTicTacToeBoardState >> initializeBoardState [
 	self boardTiles: #(-1 -1 -1 -1 -1 -1 -1 -1 -1) asOrderedCollection
 ]
 
+{ #category : 'Internal' }
+HfuSpTicTacToeBoardState >> isFieldIndexedInOrderInValidRange: aOrder [
+
+	"<^(true|false)>"
+	"determines wether a valid field is indexed"
+
+	^self isIndexedFieldInValidRange: aOrder fieldID.
+]
+
 { #category : 'API' }
 HfuSpTicTacToeBoardState >> isGameDraw [
 
@@ -186,20 +200,24 @@ HfuSpTicTacToeBoardState >> isGameDraw [
 	
 ]
 
+{ #category : 'Internal' }
+HfuSpTicTacToeBoardState >> isIndexedFieldInValidRange: aIndexInteger [
+
+	"<^(true|false)>"
+	"determines wether a valid field is indexed"
+
+	^aIndexInteger between: 1 and: 9
+]
+
 { #category : 'API' }
-HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
+HfuSpTicTacToeBoardState >> isValidOrder: aGameOrder [
 
 	"<^self>"
 	"Checks if a order is valid"
-	
-	anGameOrder class = HfuSpTicTacToeOrder 
-		ifFalse: [ ^false.].
-	"a Order is Valid when it calls a field in bounds ..."
-	((anGameOrder fieldID) between: 0 and: 9)
-		ifFalse: [^false].
-	"... and that field is not already occuied"
-	^(self boardTiles at: (anGameOrder fieldID) )=-1
 
+	^aGameOrder class = HfuSpTicTacToeOrder
+		and: [(self isFieldIndexedInOrderInValidRange: aGameOrder)
+			and: [(self boardTiles at: aGameOrder fieldID) =-1 ]]
 ]
 
 { #category : 'Accessing' }
@@ -226,15 +244,18 @@ HfuSpTicTacToeBoardState >> setField: aFieldInteger asPlayerOwned: aPlayerIntege
 	"Changes Ownership of a board tile to a Player"
 	|tempBoardTiles playerNumber|
 	
-	self firstPlayer= nil
+	self firstPlayer isNil
 		ifTrue: [self firstPlayer:aPlayerInteger]
-		ifFalse: [ self secondPlayer = nil & (self firstPlayer = aPlayerInteger)not 
+		ifFalse: [ self secondPlayer isNil & (self firstPlayer = aPlayerInteger) not 
 							ifTrue: [self secondPlayer:aPlayerInteger]].
 	
-	self firstPlayer = aPlayerInteger ifTrue: [playerNumber:=1].
-	self secondPlayer = aPlayerInteger ifTrue: [playerNumber:=2].
-	playerNumber = nil ifTrue: [^nil].
-	tempBoardTiles:= self boardTiles.
+	self firstPlayer = aPlayerInteger 
+		ifTrue: [playerNumber := 1].
+	self secondPlayer = aPlayerInteger 
+		ifTrue: [playerNumber := 2].
+	playerNumber isNil
+		ifTrue: [^nil].
+	tempBoardTiles := self boardTiles.
 	
 	tempBoardTiles at: aFieldInteger put: playerNumber
 	

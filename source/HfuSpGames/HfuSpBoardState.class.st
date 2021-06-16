@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : 'API' }
-HfuSpBoardState >> addPlayerToTurnOrder: anPlayerID [
+HfuSpBoardState >> addPlayerToTurnOrder: aPlayerIdInteger [
 
 	"<^self>"
 	"Adds a Player to the turnorder of active players
 	 within said list players are identified via playerID"
 
-	turnOrder addLast: anPlayerID
+	self turnOrder addLast: aPlayerIdInteger
 ]
 
 { #category : 'API' }
@@ -74,11 +74,8 @@ HfuSpBoardState >> makeTurnOrderStep [
 
 	"<^self>"
 	"Sets new player as Acting Player, adds prevous Acting Player at the lists End"
-	|tempOrder tempFirst|
-	tempFirst:= self turnOrder first.
-	tempOrder := self turnOrder copyFrom: 2 to: (self turnOrder lastIndex ). 
-	tempOrder  add: tempFirst.
-	self turnOrder: tempOrder.
+
+	self turnOrder: ((self turnOrder copyFrom: 2 to: self turnOrder lastIndex)  add: self turnOrder first; yourself).
 ]
 
 { #category : 'API' }
@@ -91,10 +88,10 @@ HfuSpBoardState >> turnOrder [
 ]
 
 { #category : 'API' }
-HfuSpBoardState >> turnOrder: anOrderedCollection [
+HfuSpBoardState >> turnOrder: aOrderedCollection [
 
 	"<anOrderedCollection: iOf OrderedCollection, ^self>"
 	"Set the playerOrder of the receiver"
 
-	turnOrder:= anOrderedCollection
+	turnOrder := aOrderedCollection
 ]

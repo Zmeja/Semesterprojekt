@@ -16,25 +16,26 @@ Class {
 HfuSpTurnStateController >> addPlayerToPlayerViewControllers: anPlayerViewController [
 
 	"<^PlayerViewController>"
-	"Adds Player ViewController to playerViewController list"
+	"Adds Player ViewController to playerViewController list and adjusts Turn order accordingly"
 
-	self playerViewControllers = nil 
+	self playerViewControllers isNil
 		ifTrue: [self initializeState].
 	self currentBoardState addPlayerToTurnOrder: (anPlayerViewController player).
 	anPlayerViewController turnStateController: self.
 	self playerViewControllers add: (Association new key: (anPlayerViewController player) value: anPlayerViewController ).
-
+	^anPlayerViewController
+	
 ]
 
 { #category : 'Internal' }
-HfuSpTurnStateController >> announceVictorToPlayers: aPlayer [
+HfuSpTurnStateController >> announceVictorToPlayers: aPlayerIdInteger [
 
 	"<^self>"
 	"Notifies all players about the potenital Game end. 
 	 aPlayerID is the Victors ID 
 	 If there is no Victor aPlayerID is -1"
 
-	self playerViewControllers do: [:aController| aController announceVictor: aPlayer]
+	self playerViewControllers do: [:aController| aController announceVictor: aPlayerIdInteger]
 ]
 
 { #category : 'API' }
@@ -42,16 +43,19 @@ HfuSpTurnStateController >> containsPlayer: anPlayer [
 
 	"<^boolean>"
 	"checks wether a player identified by an Id is already active in this game"
-	|found|
-	^self   containsPlayerWithIdInSession: anPlayer
+
+	^self containsPlayerWithIdInSession: anPlayer
 ]
 
 { #category : 'API' }
 HfuSpTurnStateController >> containsPlayerWithIdInSession: aInteger [
 
-	"<^self>"
-	"Answer the receiver"
-	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player  id = aInteger ifTrue: [^true]].
+	"<^(true|false)>"
+	"returns true if a player with Id aIteger is already in this session.
+	 returns false otherwise"
+	
+	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player id = aInteger 
+		ifTrue: [^true]].
 	^false
 ]
 
@@ -60,11 +64,13 @@ HfuSpTurnStateController >> createAndInitalizePlayerViewController: anPlayer [
 
 	"<^PlayerViewController>"
 	"Creates a NewPlayerViewController, ads it to playerViewController list"
-	|newPlayer|
-	newPlayer:= self createPlayerViewController.
-	newPlayer player: anPlayer.
-	self addPlayerToPlayerViewControllers:  newPlayer.
-	^newPlayer
+
+	^self addPlayerToPlayerViewControllers: 
+		(self createPlayerViewController
+			player: anPlayer;
+			yourself)
+	
+	
 ]
 
 { #category : 'Internal' }
@@ -105,20 +111,21 @@ HfuSpTurnStateController >> currentBoardState: anBoardState [
 ]
 
 { #category : 'Internal' }
-HfuSpTurnStateController >> endGameHandling [
+HfuSpTurnStateController >> endGameCheckAndHandling [
 
 	"<^self>"
 	"Checks if Game should end and adjusts boardState  and notifies players if it should"
 	"!!This is de default behaviour. Certain games may implement this method differently"
 	self currentBoardState getVictor = -1
-		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor).
-					self gameOngoing:1.
-					^nil].
+		ifFalse: [ 
+			self announceVictorToPlayers: (self currentBoardState getVictor).
+			self gameOngoing:1.
+			^nil].
 	self currentBoardState isGameDraw
 		ifTrue: [
-					self announceVictorToPlayers: -99.
-					self gameOngoing: 1.
-					^nil.
+			self announceVictorToPlayers: -99.
+			self gameOngoing: 1.
+			^nil.
 		]
 ]
 
@@ -137,6 +144,9 @@ HfuSpTurnStateController >> gameOngoing [
 
 	"<^iOf Integer>"
 	"Answer the gameOngoing of the receiver"
+	"aInteger<0 means game didnt start yet
+	 aInteger >0 means the game is already over 
+	 aInteger=0 means the game is ongoing"
 
 	^gameOngoing
 ]
@@ -146,9 +156,7 @@ HfuSpTurnStateController >> gameOngoing: anInteger [
 
 	"<anInteger: iOf Integer, ^self>"
 	"Set the gameOngoing of the receiver"
-	"anInteger<0 means game didnt start yet
-	 anInteger >0 means the game is already over 
-	 anInteger=0 means the game is ongoing"
+
 
 	gameOngoing := anInteger
 ]
@@ -170,6 +178,15 @@ HfuSpTurnStateController >> initializeState [
 	self subclassResponsibility.
 	
 
+]
+
+{ #category : 'API' }
+HfuSpTurnStateController >> isGameAtPlayerCapacity [
+
+	"<^(true|false)>"
+	"returns wether more players may join the game"
+
+	self subclassResponsibility
 ]
 
 { #category : 'API' }
@@ -199,6 +216,7 @@ HfuSpTurnStateController >> playerViewControllers: anDictionary [
 
 	"<anObject: iOf Object, ^self>"
 	"Set the playerViewControllers of the receiver"
+	
 
 	playerViewControllers := anDictionary
 ]
@@ -211,14 +229,14 @@ HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 	 After execution distributes new board State to all players.
 	 "
 	
-	self gameOngoing =0 
+	self gameOngoing = 0 
 		ifFalse: [^nil].
 	self currentBoardState getActingPlayerId = (aGameOrder playerID)
-		ifFalse:[^nil].
+		ifFalse: [^nil].
 	(self currentBoardState isValidOrder:  aGameOrder)
-		ifFalse:[^nil].
+		ifFalse: [^nil].
 	self executeOrder: aGameOrder.
-	self endGameHandling.
+	self endGameCheckAndHandling.
 	self currentBoardState makeTurnOrderStep.
 	self updateGameStateOfAllPlayers.
 ]
@@ -281,7 +299,6 @@ HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 	
 
 	self playerViewControllers do: [:aController| 
-		aController currentBoardState: (self createPlayerSpecificBoardState:  aController player). 	
-		aController displayCurrentBoardState
-		]										
+		aController currentBoardState: (self createPlayerSpecificBoardState: aController player). 	
+		aController displayCurrentBoardState]										
 ]

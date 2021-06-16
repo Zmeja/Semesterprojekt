@@ -13,7 +13,10 @@ HfuSpTicTacToeOrder class >> createOrderForField: aFieldInteger ofPlayer: aPlaye
 	"<^self>"
 	"Answer the receiver"
 
-	^HfuSpTicTacToeOrder new playerID: aPlayerInteger; fieldID: aFieldInteger;yourself.
+	^HfuSpTicTacToeOrder new 
+		playerID: aPlayerInteger; 
+		fieldID: aFieldInteger; 
+		yourself.
 ]
 
 { #category : 'Accessing' }

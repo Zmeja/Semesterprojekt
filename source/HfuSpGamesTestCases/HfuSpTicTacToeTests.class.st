@@ -95,6 +95,10 @@ HfuSpTicTacToeTests class >> testOrders [
 	theGameSession:= HfuSpGameSessionsManager getGameSessionById: theGameSessionId.
 	"can a playe rbe added multiple times to the same session?"
 	self assert: (HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId) = nil .
+	
+	"can more then two players be added to the game ? "
+	self assert: (HfuSpGameSessionsManager addPlayer: 3 ToSession: theGameSessionId) = nil .
+
 	"can orders be given before a game starts?"
 	view1 playerViewController transmitOrder: 1.
 	self assert: (theGameSession currentBoardState getTile: 1 )= -1.
