@@ -137,6 +137,7 @@ HfuSpConnectFourBoardState >> getHorizontalBoardLine: aInteger [
 
 	"<^aOrderedCollection>"
 	"returns a array representing the horizontal line of the board"
+	"aInteger =1 represents the line at the bottom of the field"
 	|resultingRow|
 	resultingRow:= OrderedCollection new.
 	self board do: [:aColumn| 	resultingRow add: (aColumn at: aInteger)].
@@ -180,20 +181,23 @@ HfuSpConnectFourBoardState >> getVictor [
 	self board do: [:aColumn| 	victorId:= self checkCollectionForVictor:  aColumn . 
 												victorId = -1
 													ifFalse: [^victorId]].
-	"check for horizontal winners"
+	"check for  winner in horizontal line"
 	1 to: (self boardHeight) do:[:aRow | 	victorId:= self checkCollectionForVictor: (self getHorizontalBoardLine: aRow).
 																victorId = -1
 																	ifFalse:[^victorId]].
 	
+	"check for winers in diagonaly rising lines"
 	1 to: (self boardHeight+ self boardWidth -1) 
 				do:[:aRow | 	victorId:= self checkCollectionForVictor: (self getRisingDiagonalBoardLine: aRow).
 																victorId = -1
 																	ifFalse:[^victorId]].
+																	
+	"check for winners in diagonally falling lines"
 	1 to: (self boardHeight+ self boardWidth -1) 
 				do:[:aRow | 	victorId:= self checkCollectionForVictor: (self getDescendingDiagonalBoardLine:  aRow).
 																victorId = -1
 																	ifFalse:[^victorId]].
-	
+	"no victor was found"
 	^-1
 	
 ]
@@ -239,8 +243,10 @@ HfuSpConnectFourBoardState >> isValidOrder: aGameOrder [
 
 	"<^self>"
 	"Checks if a order is valid"
+	"a order is valid if there is a column with the coresponding id ..."
 	((1 to: (self boardWidth)) includes: aGameOrder columnId)
 		ifFalse:[^false].	
+	"... and that column is not entirely filled filled "
 	^ (self board at: (aGameOrder columnId)) includes: -1
 ]
 

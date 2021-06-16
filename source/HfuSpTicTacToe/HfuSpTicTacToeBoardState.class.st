@@ -115,27 +115,55 @@ HfuSpTicTacToeBoardState >> getVictor [
 
 	"<^aInteger>"
 	"returns player if there is a winner else returns -1"
-	|currentRow currentCol|
+	|currentRow currentCol potentialVictor|
 	
 	#(1 2 3) do:[:eachRowIndex|
+						"check row for winner"
 						currentRow:= self getBoardRow: eachRowIndex.
-						((currentRow count:[:aField| aField= currentRow first ]) = 3) &  ((currentRow first = -1) not)
-							ifTrue: [^currentRow first].
-							
+						potentialVictor:= self getWinnerFromLine: currentRow.
+						potentialVictor = -1 
+							ifFalse: [^potentialVictor].
+						"check column for winner"
 						currentCol:= self getBoardCol: eachRowIndex.
-						((currentCol count: [:aField| aField= currentCol first ])= 3) &  ((currentCol first = -1) not)
-							ifTrue: [^currentCol first].
+						potentialVictor:= self getWinnerFromLine: currentCol.
+						potentialVictor = -1 
+							ifFalse: [^potentialVictor].
 					].
 	
-			((self getDiagonal:  1) count:[:aField| aField= ((self getDiagonal: 1) first) ] )=3
-				ifTrue: [^ (self getDiagonal: 1) first].
-		((self getDiagonal:  2) count:[:aField| aField= ((self getDiagonal: 2) first) ] )=3
-				ifTrue: [^ (self getDiagonal: 2) first].
+		"check for diagonaly rising line for winner"
+		potentialVictor:= self getWinnerFromLine: (self getDiagonal:  1).
+		potentialVictor = -1 
+			ifFalse: [^potentialVictor].
+		"check  diagonally falling line for winner"
+		potentialVictor:= self getWinnerFromLine: (self getDiagonal:  2).
+		potentialVictor = -1 
+			ifFalse: [^potentialVictor].
 		^-1
 	
 			
 
 	
+]
+
+{ #category : 'Internal' }
+HfuSpTicTacToeBoardState >> getWinnerFromLine: aLine [
+
+	"<^self>"
+	"checks a Line with 3 eIements for a winner"
+	"there is a winner if the same pIayerId is repeted thrice in the Iine "	
+	| previousElement|
+	previousElement:= nil.
+	aLine do:[:currentElement|
+						currentElement = -1 
+							ifTrue: [^-1].
+						previousElement= nil
+							ifFalse: [ 
+										previousElement= currentElement
+											ifFalse: [^-1]
+										].
+						previousElement:=currentElement.					
+					].
+	^previousElement
 ]
 
 { #category : 'API' }
@@ -150,7 +178,7 @@ HfuSpTicTacToeBoardState >> initializeBoardState [
 HfuSpTicTacToeBoardState >> isGameDraw [
 
 	"<^Boolean>"
-	"checks if game can be wone by any player
+	"checks if game can be won by any player
 	asumes that there is no current winner"
 	
 	^ (self boardTiles count: [:aTileOwner| aTileOwner=-1]) =0
@@ -163,11 +191,13 @@ HfuSpTicTacToeBoardState >> isValidOrder: anGameOrder [
 
 	"<^self>"
 	"Checks if a order is valid"
+	
 	anGameOrder class = HfuSpTicTacToeOrder 
 		ifFalse: [ ^false.].
+	"a Order is Valid when it calls a field in bounds ..."
 	((anGameOrder fieldID) between: 0 and: 9)
 		ifFalse: [^false].
-	
+	"... and that field is not already occuied"
 	^(self boardTiles at: (anGameOrder fieldID) )=-1
 
 ]

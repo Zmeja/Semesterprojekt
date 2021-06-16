@@ -36,13 +36,17 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayer ToSession: anGameSessionId
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
 	|gameTurnStateController playerViewController playerView|
 	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
+	"does the game session exist"
 	gameTurnStateController= nil
 		ifTrue:[^nil].
+	"is Player already in a game"
 	(gameTurnStateController containsPlayer: anPlayer)= true
 		ifTrue:[^nil].
+	"has the game already started"
 	(gameTurnStateController gameOngoing = -1)
 		ifFalse:[^nil].
-	playerViewController := gameTurnStateController createPlayer: (HfuSpPlayer players at: (anPlayer)).																				
+	"get and initialize playerView"
+	playerViewController := gameTurnStateController createAndInitalizePlayerViewController: (HfuSpPlayer players at: (anPlayer)).																				
 	playerView:= playerViewController getPlayerView.
 	playerViewController playerView: playerView.
 	playerView  initializeView.

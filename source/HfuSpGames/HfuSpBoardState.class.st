@@ -18,6 +18,22 @@ HfuSpBoardState >> addPlayerToTurnOrder: anPlayerID [
 ]
 
 { #category : 'API' }
+HfuSpBoardState >> getActingPlayer [
+	"<^self>"
+	"Answer the receiver"
+
+	^self turnOrder first.
+]
+
+{ #category : 'API' }
+HfuSpBoardState >> getActingPlayerId [
+	"<^self>"
+	"Answer the receiver"
+
+	^self getActingPlayer id.
+]
+
+{ #category : 'API' }
 HfuSpBoardState >> getVictor [
 
 	"<^self>"

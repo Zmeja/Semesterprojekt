@@ -61,8 +61,15 @@ HfuSpTicTacToeTests class >> testGameState [
 	board boardTiles: #(1 -1 2 1 2 -1 2 -1 -1).
 	self assert: board getVictor = 2  description: 'top left to bottom right duagonalwinner detected'.
 	
-	
-	
+	"Does the internaI heIper Function of BoardState work?"
+	self assert:( board getWinnerFromLine: #( -1 -1 -1)) = -1  description: 'winner in line was deteced when there was none'.
+	self assert:( board getWinnerFromLine: #( 1 -1 -1)) = -1  description: 'winner in line was deteced when there was none'.
+	self assert:( board getWinnerFromLine: #( -1 2 -1)) = -1  description: 'winner in line was deteced when there was none'.
+	self assert:( board getWinnerFromLine: #( -1 -1 2)) = -1  description: 'winner in line was deteced when there was none'.
+
+	self assert:( board getWinnerFromLine: #( 2 2 2)) = 2  description: 'winner in line was not deteced when there was one'.
+	self assert:( board getWinnerFromLine: #( 1 1 1)) = 1  description: 'winner in line was not deteced when there was one'.
+
 	 
 	
 ]

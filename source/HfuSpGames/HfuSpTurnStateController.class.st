@@ -12,8 +12,8 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Internal' }
-HfuSpTurnStateController >> addPlayer: anPlayerViewController [
+{ #category : 'API' }
+HfuSpTurnStateController >> addPlayerToPlayerViewControllers: anPlayerViewController [
 
 	"<^PlayerViewController>"
 	"Adds Player ViewController to playerViewController list"
@@ -56,14 +56,14 @@ HfuSpTurnStateController >> containsPlayerWithIdInSession: aInteger [
 ]
 
 { #category : 'API' }
-HfuSpTurnStateController >> createPlayer: anPlayer [
+HfuSpTurnStateController >> createAndInitalizePlayerViewController: anPlayer [
 
 	"<^PlayerViewController>"
 	"Creates a NewPlayerViewController, ads it to playerViewController list"
 	|newPlayer|
 	newPlayer:= self createPlayerViewController.
 	newPlayer player: anPlayer.
-	self addPlayer: newPlayer.
+	self addPlayerToPlayerViewControllers:  newPlayer.
 	^newPlayer
 ]
 
@@ -108,8 +108,8 @@ HfuSpTurnStateController >> currentBoardState: anBoardState [
 HfuSpTurnStateController >> endGameHandling [
 
 	"<^self>"
-	"Checks if Game should end and adjusts Game State if it should"
-	"!!This is de default behaviour. certain games may implement this method differently"
+	"Checks if Game should end and adjusts boardState  and notifies players if it should"
+	"!!This is de default behaviour. Certain games may implement this method differently"
 	self currentBoardState getVictor = -1
 		ifFalse: [ self announceVictorToPlayers: (self currentBoardState getVictor).
 					self gameOngoing:1.
@@ -207,15 +207,16 @@ HfuSpTurnStateController >> playerViewControllers: anDictionary [
 HfuSpTurnStateController >> receiveGameOrder: aGameOrder [
 
 	"<^>"
-	"Receives a Game Order, checks its Validity and executes it if it is  Valid"
+	"Receives a Game Order, checks its Validity and executes it if it is Valid.
+	 After execution distributes new board State to all players.
+	 "
 	
 	self gameOngoing =0 
 		ifFalse: [^nil].
-	self currentBoardState turnOrder first id = (aGameOrder playerID)
+	self currentBoardState getActingPlayerId = (aGameOrder playerID)
 		ifFalse:[^nil].
 	(self currentBoardState isValidOrder:  aGameOrder)
-		ifFalse:[
-					^nil].
+		ifFalse:[^nil].
 	self executeOrder: aGameOrder.
 	self endGameHandling.
 	self currentBoardState makeTurnOrderStep.
@@ -275,8 +276,8 @@ HfuSpTurnStateController >> updateGameStateOfAllPlayers [
 
 	"<^self>"
 	"hands each player a board state and tells them to display it.
-	 depending on the game a player specific BoardState is Created
-	 (for example a players hand in Poker)"
+	 depending on the game a player specific BoardState may be Created
+	 (a players hand in Poker for example)"
 	
 
 	self playerViewControllers do: [:aController| 

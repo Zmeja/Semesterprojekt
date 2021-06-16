@@ -76,7 +76,8 @@ HfuSpPlayerViewController >> getPlayerView [
 HfuSpPlayerViewController >> isActingPlayer [
 
 	"<^iOf Boolean>"
-	"Answer the isActingPlayer of the receiver"
+	"returns id of active player
+	 The active player is the player that may make a move"
 
 	self currentBoardState = nil 
 	ifFalse: [^(self currentBoardState turnOrder first id )= (self player id) ].
@@ -101,7 +102,7 @@ HfuSpPlayerViewController >> player: anPlayer [
 HfuSpPlayerViewController >> playerView [
 
 	"<^iOf aPlayerView>"
-	"Answer the playerView of the receiver"
+	"Answer the playerView managed by this Controller"
 
 	^playerView
 ]
@@ -128,7 +129,7 @@ HfuSpPlayerViewController >> startGame [
 HfuSpPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
-	"Answer the receiver"
+	"transmits a order from a view to the TurnStateController"
 	self subclassResponsibility
 ]
 
@@ -136,7 +137,7 @@ HfuSpPlayerViewController >> transmitOrder: aField [
 HfuSpPlayerViewController >> turnStateController [
 
 	"<^iOf HfuSpTurnStateController>"
-	"Answer the turnStateController of the receiver"
+	"Answer the turnStateController which manages the game"
 
 	^turnStateController
 ]

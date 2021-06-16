@@ -112,7 +112,7 @@ HfuSpManDontGetAngryPlayerViewController >> rolledNumber: anObject [
 HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
-	"Answer the receiver"
+	"transmits a order from a view to the TurnStateController"
 	|gameOrder|
 	gameOrder := HfuSpManDontGetAngryOrder new.
 	gameOrder playerID: self player id.

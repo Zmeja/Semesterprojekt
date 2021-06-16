@@ -20,7 +20,8 @@ HfuSpConnectFourPlayerViewController >> createPlayerView [
 HfuSpConnectFourPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
-	"creates and sends Order"
+	"transmits a order from a view to the TurnStateController"
+
 	|gameOrder|
 	gameOrder := HfuSpConnectFourOrder new.
 	gameOrder playerID: self player id.

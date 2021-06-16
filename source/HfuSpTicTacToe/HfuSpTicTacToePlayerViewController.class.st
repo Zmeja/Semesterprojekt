@@ -23,7 +23,7 @@ HfuSpTicTacToePlayerViewController >> createPlayerView [
 HfuSpTicTacToePlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
-	"Answer the receiver"
+	"transmits a order from a view to the TurnStateController"
 	|gameOrder|
 	gameOrder := HfuSpTicTacToeOrder new.
 	gameOrder playerID: self player id.

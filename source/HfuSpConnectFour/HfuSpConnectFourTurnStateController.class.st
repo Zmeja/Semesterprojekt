@@ -18,7 +18,7 @@ HfuSpConnectFourTurnStateController >> executeOrder: anGameOrder [
 
 	"<^self>"
 	"executes a order without checking its validity. 
-	 should only be called via receiveGameOrder"
+	 should only be called via receiveGameOrder Method"
 	|rowIndex|
 	rowIndex:= self currentBoardState getFirstEmptyFieldInColumn: (anGameOrder columnId).
 	self currentBoardState setFieldAtColumn: (anGameOrder columnId) Row: rowIndex AsPlayerOwned: (anGameOrder playerID).
