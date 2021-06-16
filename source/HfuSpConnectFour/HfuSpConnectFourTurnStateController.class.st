@@ -8,7 +8,7 @@ Class {
 HfuSpConnectFourTurnStateController >> createPlayerViewController [
 
 	"<^aPlayerViewController>"
-	"Creates a Player View Controller of games type "
+	"Creates a Player View Controller of corresponding game type "
 
 	^HfuSpConnectFourPlayerViewController new
 ]
@@ -20,9 +20,9 @@ HfuSpConnectFourTurnStateController >> executeOrder: anGameOrder [
 	"executes a order without checking its validity. 
 	 should only be called via receiveGameOrder Method"
 	|rowIndex|
-	rowIndex:= self currentBoardState getFirstEmptyFieldInColumn: (anGameOrder columnId).
-	self currentBoardState setFieldAtColumn: (anGameOrder columnId) Row: rowIndex AsPlayerOwned: (anGameOrder playerID).
-	^ anGameOrder playerID
+	rowIndex := self currentBoardState getFirstEmptyFieldInColumn: (anGameOrder columnId).
+	self currentBoardState setFieldAtColumn: (anGameOrder columnId) Row: rowIndex asPlayerOwned: (anGameOrder playerID).
+	
 	
 
 ]
@@ -32,14 +32,11 @@ HfuSpConnectFourTurnStateController >> initializeBoardState [
 
 	"<^self>"
 	"creates the games Board as it is at game Start."
-		| myBoardState |
 
-	self playerViewControllers = nil
-	ifTrue: [self playerViewControllers: Dictionary new.].
-	
-	myBoardState:= HfuSpConnectFourBoardState new.
-	myBoardState initializeBoardState.
-	self currentBoardState: myBoardState
+	self currentBoardState: 
+		HfuSpConnectFourBoardState new 
+			initializeBoardState;
+			yourself.
 ]
 
 { #category : 'API' }
@@ -51,4 +48,13 @@ HfuSpConnectFourTurnStateController >> initializeState [
 	self initializeBoardState.
 	self gameOngoing: -1.
 
+]
+
+{ #category : 'API' }
+HfuSpConnectFourTurnStateController >> isGameAtPlayerCapacity [
+
+	"<^(true|false)>"
+	"returns wether more players may join the game"
+
+	^self playerViewControllers size >=2
 ]

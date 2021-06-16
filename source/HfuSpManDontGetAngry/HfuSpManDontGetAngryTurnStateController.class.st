@@ -7,8 +7,8 @@ Class {
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
 	|controller|
-	controller:=HfuSpManDontGetAngryPlayerViewController new.
-	controller offset:   (self playerViewControllers) size .
+	controller :=HfuSpManDontGetAngryPlayerViewController new.
+	controller offset: (self playerViewControllers) size.
 	^controller
 ]
 
@@ -82,6 +82,15 @@ HfuSpManDontGetAngryTurnStateController >> initializeState [
 	self playerViewControllers: Dictionary new.
 	self initializeBoardState.
 	self gameOngoing: -1.
+]
+
+{ #category : 'Not categorized' }
+HfuSpManDontGetAngryTurnStateController >> isGameAtPlayerCapacity [
+
+	"<^(true|false)>"
+	"returns wether more players may join the game"
+
+	^self playerViewControllers size >=4
 ]
 
 { #category : 'Not categorized' }

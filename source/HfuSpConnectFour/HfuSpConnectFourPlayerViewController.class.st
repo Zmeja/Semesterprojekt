@@ -10,9 +10,9 @@ HfuSpConnectFourPlayerViewController >> createPlayerView [
 	"<^anPlayerView>"
 	"returns the PlayerView managed by this PlayerViewController"
 	|View|
-	View:= HfuSpConnectFourPlayerView new.
+	View := HfuSpConnectFourPlayerView new.
 	View playerViewController: self.
-	self playerView:  View.
+	self playerView: View.
 	^self playerView
 ]
 
@@ -27,5 +27,5 @@ HfuSpConnectFourPlayerViewController >> transmitOrder: aField [
 	gameOrder playerID: self player id.
 	gameOrder columnId: aField.
 
-	^self turnStateController receiveGameOrder:  gameOrder
+	^self turnStateController receiveGameOrder: gameOrder
 ]

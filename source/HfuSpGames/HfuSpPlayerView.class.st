@@ -173,7 +173,7 @@ HfuSpPlayerView >> resetView [
 	"rebuilds view as if side was just opened.
 	 ->removes GameSessionReresentationViews"
 	
-	"Muss mit Containern gelÃƒÂ¶st werden"
+	"Muss mit Containern gelÃƒÆ’Ã‚Â¶st werden"
 
 ]
 

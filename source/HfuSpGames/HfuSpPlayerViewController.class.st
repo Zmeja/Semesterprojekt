@@ -52,7 +52,7 @@ HfuSpPlayerViewController >> displayCurrentBoardState [
 	"tells view to display the Boardstate currently continaed in this PlayerViewController"
 	self currentBoardState = nil
 		ifTrue: [self currentBoardState: self turnStateController currentBoardState].
-	self playerView setGame: (self currentBoardState)
+	self playerView setGame: self currentBoardState
 ]
 
 { #category : 'API' }
@@ -68,7 +68,7 @@ HfuSpPlayerViewController >> getPlayerView [
 	"returns the Player View managed by this PlayerViewController"
 
 	self playerView = nil
-		ifTrue:[self createPlayerView].
+		ifTrue: [self createPlayerView].
 	^self playerView.
 ]
 
@@ -78,10 +78,8 @@ HfuSpPlayerViewController >> isActingPlayer [
 	"<^iOf Boolean>"
 	"returns id of active player
 	 The active player is the player that may make a move"
-
-	self currentBoardState = nil 
-	ifFalse: [^(self currentBoardState turnOrder first id )= (self player id) ].
-	^(self currentBoardState turnOrder first id) = self player id.
+	
+	^(self currentBoardState getActingPlayerId) = self player id.
 	
 	
 ]
@@ -108,19 +106,19 @@ HfuSpPlayerViewController >> playerView [
 ]
 
 { #category : 'API' }
-HfuSpPlayerViewController >> playerView: anaPlayerView [
+HfuSpPlayerViewController >> playerView: aPlayerView [
 
-	"<anaPlayerView: iOf aPlayerView, ^self>"
+	"<aPlayerView: iOf aPlayerView, ^self>"
 	"Set the playerView of the receiver"
 
-	playerView := anaPlayerView
+	playerView := aPlayerView
 ]
 
 { #category : 'API' }
 HfuSpPlayerViewController >> startGame [
 
 	"<^self>"
-	"tells the controlled view to display the games vicror"
+	"tells the turn state controller to start the game"
 
 		self turnStateController startGame
 ]

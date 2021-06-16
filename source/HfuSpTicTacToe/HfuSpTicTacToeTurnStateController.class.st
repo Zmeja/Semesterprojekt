@@ -21,7 +21,7 @@ HfuSpTicTacToeTurnStateController >> executeOrder: anGameOrder [
 	 should only be called via receiveGameOrder"
 	
 	self currentBoardState setField: (anGameOrder fieldID) asPlayerOwned: (anGameOrder playerID).
-	^ anGameOrder playerID
+
 ]
 
 { #category : 'Internal' }
@@ -29,14 +29,11 @@ HfuSpTicTacToeTurnStateController >> initializeBoardState [
 
 	"<^self>"
 	"creates the games Board as it is at game Start."
-		| myBoardState |
 
-	self playerViewControllers: Dictionary new.
-	
-	myBoardState:= HfuSpTicTacToeBoardState new.
-	myBoardState initializeBoardState.
-	self currentBoardState: myBoardState
-	
+	self currentBoardState:  
+		HfuSpTicTacToeBoardState new	
+			initializeBoardState;
+			yourself.
 
 ]
 
@@ -48,4 +45,13 @@ HfuSpTicTacToeTurnStateController >> initializeState [
 	self playerViewControllers: Dictionary new.
 	self initializeBoardState.
 	self gameOngoing: -1.
+]
+
+{ #category : 'API' }
+HfuSpTicTacToeTurnStateController >> isGameAtPlayerCapacity [
+
+	"<^(true|false)>"
+	"returns wether more players may join the game"
+
+	^self playerViewControllers size >=2
 ]
