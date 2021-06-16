@@ -18,6 +18,9 @@ HfuSpLobbyView >> createComponents [
 	self
 	addChild:(Me5Portlet new
 	title: 'Lobby';		
+	addChildToHead: (Me5Img newImgResponsive
+		src: (self userDataDictionary at: 'picture');
+		yourself);
 		addChildToBody: (Me5Section new
 			title: 'Games:';
 			"self playerViewController: HfuSpPlayerViewController new.
@@ -39,7 +42,6 @@ HfuSpLobbyView >> createComponents [
 					yourself);"
 					
 				addChild:  Me5SectionSeparator new;
-				
 				addChild: (Me5ViewHolder new
 					holdingView: (chatView := HfuSpChatView new
 						username: thePlayer id;
@@ -48,40 +50,7 @@ HfuSpLobbyView >> createComponents [
 				yourself);
 			yourself);
 		yourself);
-		
-			
 yourself.
-self userDataDictionary notNil
-			ifTrue: [self
-			addChild: (Me5Portlet new
-				text: 'Your Personal Data';
-				addChildToBody: (Me5Row new
-					addChild: (Me5Div new
-						addCssClassCol12;
-						addCssClassColLg9;
-						addChild: (theTable:= Me5Table new
-							addCssClassTableBordered;
-							addChildToHead: (Me5TableRow new
-								addTableHeaderWithText: 'Attribute';
-								addTableHeaderWithText: 'Value';
-								yourself);
-							yourself);
-						yourself);
-					addChild: (Me5Div new
-						addCssClassCol12;
-						addCssClassColLg3;
-						addChild: (Me5Img newImgResponsive
-							src: (self userDataDictionary at: 'picture');
-							yourself);
-						yourself);
-					yourself);
-				yourself).
-			self userDataDictionary keysAndValuesDo: [ :eachKey :eachValue |
-				theTable addChildToBody: (Me5TableRow new 
-					addTableDataWithText: eachKey;
-					addTableDataWithText: eachValue;
-					yourself)]].
-
 HfuSpChatView addChatUser: chatView.
 ]
 
