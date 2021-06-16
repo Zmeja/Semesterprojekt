@@ -13,7 +13,7 @@ Class {
 { #category : 'Not categorized' }
 HfuSpLobbyView >> createComponents [
 
-	|theTable thePlayer|
+	|theTable thePlayer chatView|
 	thePlayer := HfuSpPlayer addPlayerIfAbsent: (self userDataDictionary at: 'id') asInteger.
 	self
 	addChild:(Me5Portlet new
@@ -41,7 +41,8 @@ HfuSpLobbyView >> createComponents [
 				addChild:  Me5SectionSeparator new;
 				
 				addChild: (Me5ViewHolder new
-					holdingView: (HfuSpChatView new
+					holdingView: (chatView := HfuSpChatView new
+						username: thePlayer id;
 						yourself);
 					yourself);
 				yourself);
@@ -79,13 +80,9 @@ self userDataDictionary notNil
 				theTable addChildToBody: (Me5TableRow new 
 					addTableDataWithText: eachKey;
 					addTableDataWithText: eachValue;
-					yourself)]]
-		
+					yourself)]].
 
-
-
-	
-
+HfuSpChatView addChatUser: chatView.
 ]
 
 { #category : 'Not categorized' }
@@ -135,6 +132,12 @@ HfuSpLobbyView >> startUp [
 	theHttpServer addViewClass: HfuSpPlayerView.
 	theHttpServer addViewClass: HfuSpChatView;
 	yourself
+]
+
+{ #category : 'Not categorized' }
+HfuSpLobbyView >> updateSite [
+
+	""
 ]
 
 { #category : 'Not categorized' }
