@@ -6,6 +6,9 @@ Class {
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
+
+	"creates ManDontGetAngryPlayerViewController and returns it"
+	
 	|controller|
 	controller :=HfuSpManDontGetAngryPlayerViewController new.
 	controller offset: (self playerViewControllers) size.
@@ -14,7 +17,10 @@ HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
-
+	"executes an Order.
+	 -1 correspondes to the figures that are out of field
+	 1 to 40 are the fields that every player walks on
+	 41 to 56 are the last fields of each player"
 	|playerViewController kickedPlayer |
 	playerViewController := (self playerViewControllers at: (HfuSpPlayer players at: anOrder playerID)).
 	playerViewController rolledNumber: 0.
@@ -96,6 +102,7 @@ HfuSpManDontGetAngryTurnStateController >> isGameAtPlayerCapacity [
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryTurnStateController >> kickFigure: aColorOfPlayer [
 
+	"searches the controller with the given offset and adds a figure to his figures that are not on the board"
 	self playerViewControllers do: [:eachController|
 									(eachController offset - 1) = aColorOfPlayer
 										ifTrue: [eachController figures add: 1]].

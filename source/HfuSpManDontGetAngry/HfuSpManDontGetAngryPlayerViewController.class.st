@@ -13,6 +13,8 @@ Class {
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerViewController >> checkRolledDice: anOrder [
 
+	"Goes through every possible field you can click and tests if there is anOrder that is valid.
+	 If not returns false"
 	anOrder fieldID: -1.
 	(self currentBoardState isValidOrder: anOrder)
 		ifTrue:[^true].

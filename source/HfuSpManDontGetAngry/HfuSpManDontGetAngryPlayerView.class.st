@@ -117,7 +117,8 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 { #category : 'Initial events' }
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
-	|labelText|
+	"create view components"
+		
 	boardRows := OrderedCollection new.
 	boardPortlet := Me5Portlet new.
 	self 

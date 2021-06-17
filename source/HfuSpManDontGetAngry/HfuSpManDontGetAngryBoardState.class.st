@@ -63,7 +63,8 @@ HfuSpManDontGetAngryBoardState >> initializeBoardState [
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryBoardState >> isField: currentField overLastField: aNextField withOffset: aOffset [
-
+	"Checks if a currentField is over aNextField from a specific player.
+	 Returns number of Fields that it is over or 0"
 	|lastField nextField|
 	nextField := aNextField.
 	lastField := aOffset*10.
@@ -190,13 +191,14 @@ HfuSpManDontGetAngryBoardState >> lastFields: anObject [
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryBoardState >> putNewFigureOnBoard: aOffset [
 
+	"Puts Figure of specific player on his startfield"
 	^self setPlayerat: aOffset*10+1 withcolor: aOffset.
 	
 ]
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryBoardState >> removePlayerFromField: aField [
-	
+	"Removes a figure from aField"
 	self board at: aField put: 0.
 	
 ]
