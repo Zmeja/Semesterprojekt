@@ -161,7 +161,7 @@ HfuSpChatView >> populateChatMessages [
 				"addTableDataWithText: (eachElement at:1 componentText);
 				addTableDataWithText: (eachElement at:2 componentText);"
 				yourself.
-			(numberOfMessages +9 > eachElement childrenSize)
+			(numberOfMessages +11 > HfuSpChatView chatMessages size)
 			ifTrue: [
 				self chatArea addChildToBody: tableRow.
 			].
@@ -188,14 +188,6 @@ HfuSpChatView >> sendMessage [
 		yourself.
 		
 	HfuSpChatView addChatMessage: tableRow.
-	"HfuSpChatView ch"
-	
-		
-	
-	"HfuSpChatView chatUsers do: [ :eachElement | 
-		eachElement chatArea addChildToBody: tableRow.
-	]."
-	
 	
 	self textArea value: ''.
 ]
