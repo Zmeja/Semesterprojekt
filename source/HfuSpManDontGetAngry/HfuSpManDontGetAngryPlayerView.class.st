@@ -11,8 +11,7 @@ Class {
 		'player3WinDictionary',
 		'player4WinDictionary',
 		'rollButton',
-		'figureButton',
-		'lastIsActingPlayerState'
+		'figureButton'
 	],
 	#category : 'HfuSpManDontGetAngry'
 }
@@ -27,13 +26,6 @@ HfuSpManDontGetAngryPlayerView class >> startUp [
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9010' serverApplicationClass: HfuSpManDontGetAngryPlayerView).
 	theHttpServer addViewClass: HfuSpManDontGetAngryPlayerView;
 		yourself
-]
-
-{ #category : 'Internal' }
-HfuSpManDontGetAngryPlayerView >> announceIsActingPlayer [
-
-	"Tells the acting player that it's their turn"
-	self showInfoNotificationWithMessage: 'Its your turn!'.
 ]
 
 { #category : 'Accessing',
@@ -268,18 +260,6 @@ HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
 ]
 
 { #category : 'Accessing' }
-HfuSpManDontGetAngryPlayerView >> lastIsActingPlayerState [
-
-	^lastIsActingPlayerState
-]
-
-{ #category : 'Accessing' }
-HfuSpManDontGetAngryPlayerView >> lastIsActingPlayerState: anObject [
-
-	lastIsActingPlayerState := anObject
-]
-
-{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerView >> player1WinDictionary [
 
 	^player1WinDictionary
@@ -491,8 +471,6 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 
 	"displays the given BoardState"
 	| index |
-	self lastIsActingPlayerState isNil
-	ifTrue: [self lastIsActingPlayerState: self playerViewController isActingPlayer].
 	index := 1.
 	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
 		index := index + 1.].
@@ -500,9 +478,6 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 2 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 4))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 3 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 8))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 4 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 12))].
-	((self lastIsActingPlayerState not) and: [(self playerViewController isActingPlayer)])
-	ifTrue: [self announceIsActingPlayer.
-				self lastIsActingPlayerState: self playerViewController isActingPlayer.]
 ]
 
 { #category : 'Internal' }
