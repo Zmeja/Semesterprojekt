@@ -188,6 +188,7 @@ HfuSpChatView >> sendMessage [
 		yourself.
 		
 	HfuSpChatView addChatMessage: tableRow.
+
 	
 	self textArea value: ''.
 ]

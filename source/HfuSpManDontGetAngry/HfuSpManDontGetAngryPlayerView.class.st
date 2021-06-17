@@ -132,7 +132,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Figure';
 					addClickEventSelector: #exEvent:;
 					yourself).
-	self turnLabel: (Me5Label newWithText: 'Its your turn!').
+		self addChild: (turnLabel := Me5Label newWithText: 'Its your turn!' ).
 	self turnLabelVisibleBool: false.
 	self playerViewController displayCurrentBoardState.
 	self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
@@ -483,11 +483,11 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 3 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 8))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 4 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 12))].
 	self playerViewController isActingPlayer
-	ifTrue: [self turnLabelVisibleBool
-		ifFalse: [self addChild: self turnLabel.
-					self turnLabelVisibleBool: true]]
-		ifFalse: [self removeChild: self turnLabel.
-					self turnLabelVisibleBool: false.]
+	ifTrue: [self turnLabel show: self turnLabelVisibleBool.
+		self turnLabelVisibleBool: true]
+	ifFalse: [self turnLabel show: self turnLabelVisibleBool.
+		self turnLabelVisibleBool: false]
+
 
 ]
 
