@@ -11,7 +11,8 @@ Class {
 		'player3WinDictionary',
 		'player4WinDictionary',
 		'rollButton',
-		'figureButton'
+		'figureButton',
+		'lastIsActingPlayerState'
 	],
 	#category : 'HfuSpManDontGetAngry'
 }
@@ -26,6 +27,13 @@ HfuSpManDontGetAngryPlayerView class >> startUp [
 	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9010' serverApplicationClass: HfuSpManDontGetAngryPlayerView).
 	theHttpServer addViewClass: HfuSpManDontGetAngryPlayerView;
 		yourself
+]
+
+{ #category : 'Internal' }
+HfuSpManDontGetAngryPlayerView >> announceIsActingPlayer [
+
+	"Tells the acting player that it's their turn"
+	self showInfoNotificationWithMessage: 'Its your turn!'.
 ]
 
 { #category : 'Accessing',
@@ -116,7 +124,6 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 		addChild: (Me5Label new
 			text: 'Man, dont be angry';
 			yourself).
-	"self renderBaseGameState."
 			self addChild: (startGameButton:= (Me5Button newAirSecondary
 					text: 'Start Game';
 					addClickEventSelector: #startGameClicked;
@@ -129,7 +136,6 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Figure';
 					addClickEventSelector: #exEvent:;
 					yourself).
-	"self playerViewController displayCurrentBoardState."
 	self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
 		
 
@@ -256,6 +262,18 @@ HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
 	tempDictionary at: 3 put: (self getFieldByRow: 6 Column: 3).
 	tempDictionary at: 4 put: (self getFieldByRow: 6 Column: 2).
 	self player4WinDictionary: tempDictionary.
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> lastIsActingPlayerState [
+
+	^lastIsActingPlayerState
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> lastIsActingPlayerState: anObject [
+
+	lastIsActingPlayerState := anObject
 ]
 
 { #category : 'Accessing' }
@@ -470,6 +488,8 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 
 	"displays the given BoardState"
 	| index |
+	self lastIsActingPlayerState isNil
+	ifTrue: [self lastIsActingPlayerState: self playerViewController isActingPlayer].
 	index := 1.
 	aBoardState board do: [:eachValue | self colorBadgeAtIndex: index toPlayerNumber: eachValue.
 		index := index + 1.].
@@ -477,6 +497,9 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 2 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 4))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 3 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 8))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 4 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 12))].
+	((self lastIsActingPlayerState not) and: [(self playerViewController isActingPlayer)])
+	ifTrue: [self announceIsActingPlayer.
+				self lastIsActingPlayerState: self playerViewController isActingPlayer.]
 ]
 
 { #category : 'Internal' }
@@ -498,7 +521,7 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
 
 	"Starts the game"
-	"self renderBaseGameState."
+	self renderBaseGameState.
 	"self playerViewController displayCurrentBoardState."
 	self playerViewController startGame.
 	self removeChild: startGameButton.
