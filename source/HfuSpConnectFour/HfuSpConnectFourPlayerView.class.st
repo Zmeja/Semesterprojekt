@@ -70,9 +70,6 @@ HfuSpConnectFourPlayerView >> initConnectFour [
 					1 to: 8 do: [:eachColumn | eachColumn < 8 
 					ifTrue: [
 					eachColumn = save 
-					ifTrue:[(connectRows at: eachRow) addChild: (aBadge := Me5Badge newInfo
-						text: eachColumn asString;
-						yourself) ]
 					ifFalse:[(connectRows at: eachRow) addChild: (aBadge := Me5Badge new
 						text: eachColumn asString;
 						yourself)].
@@ -92,28 +89,39 @@ HfuSpConnectFourPlayerView >> rowClicked: anEventFromCon [
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> setGame: boardState [
 
-|savedID thisID offset |
+|savedID thisID offset theBadge theNewBadge |
 
-offset := boardState boardHeight.
+	offset := boardState boardHeight.
 
-		1 to: boardState boardWidth do: [:eachColumn | 
+	1 to: boardState boardWidth do: [:eachColumn | 
 		1 to: boardState boardHeight do:[:eachRow | 
-		
-			thisID:= ((boardState board at: eachColumn) at: eachRow). 
-				thisID = -1
-				ifTrue: [] 
-				ifFalse: [savedID isNil
-				
-					ifTrue: [savedID := thisID].
-					savedID = thisID
-					ifTrue: [(self getFieldByRow: eachRow + offset  Column: eachColumn) addCssClassMBadgePrimary] 
-					ifFalse: [(self getFieldByRow: eachRow + offset Column: eachColumn) addCssClassMBadgeDanger]
-					].
-			 offset := offset -2.
-			].
-			offset := boardState boardHeight.
-	].
 
+		thisID:= ((boardState board at: eachColumn) at: eachRow). 
+			thisID = -1
+			ifFalse: [
+				savedID isNil
+					ifTrue: [savedID := thisID].
+				theBadge := (self getFieldByRow: eachRow + offset Column: eachColumn).
+				savedID = thisID
+					ifTrue: [
+						theBadge 
+							removeAllCssClasses;
+							addCssClass: MeCssMeBadge;
+							addCssClassMBadge;
+							setWideStyle;
+							addCssClassMBadgePrimary;
+							yourself]
+					ifFalse: [
+						theBadge
+							removeAllCssClasses;
+							addCssClass: MeCssMeBadge;
+							addCssClassMBadge;
+							setWideStyle;
+							addCssClassMBadgeDanger;
+							yourself.].
+		].
+		 offset := offset -2].
+	offset := boardState boardHeight].
 ]
 
 { #category : 'Not categorized' }
