@@ -132,8 +132,9 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Figure';
 					addClickEventSelector: #exEvent:;
 					yourself).
-		self addChild: (turnLabel := Me5Label newWithText: 'Its your turn!' ).
+	self addChild: (turnLabel := Me5Label newWithText: 'Its your turn!' ).
 	self turnLabelVisibleBool: false.
+	self turnLabel show: false.
 	self playerViewController displayCurrentBoardState.
 	self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
 		

@@ -7,7 +7,9 @@ Class {
 		'createGameView',
 		'gameView',
 		'playerView',
-		'startGameButton'
+		'startGameButton',
+		'turnLabel',
+		'turnLabelVisibleBool'
 	],
 	#category : 'HfuSpTicTacToe'
 }
@@ -83,6 +85,9 @@ HfuSpTicTacToePlayerView >> createComponents [
 					text: 'Start Game';
 					addClickEventSelector: #startGameClicked;
 					yourself)).
+		self addChild: (turnLabel := Me5Label newWithText: 'Its your turn!' ).
+		self turnLabelVisibleBool: false.
+		self turnLabel show: false.		
 		self gameView show.
 		self playerViewController displayCurrentBoardState.
 		self addChild: (Me5Timeout new addIntervalSeconds: 1 selector:#updateSite:; activate ;yourself).
@@ -139,6 +144,11 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 		counter := counter + 1.
 		eachIndex text: textToSet.
 	].
+	self playerViewController isActingPlayer
+	ifTrue: [self turnLabel show: self turnLabelVisibleBool.
+		self turnLabelVisibleBool: true]
+	ifFalse: [self turnLabel show: self turnLabelVisibleBool.
+		self turnLabelVisibleBool: false].
 	
 	^true
 ]
@@ -177,6 +187,30 @@ HfuSpTicTacToePlayerView >> tics [
 HfuSpTicTacToePlayerView >> tics: anObject [
 
 	tics := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> turnLabel [
+
+	^turnLabel
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> turnLabel: anObject [
+
+	turnLabel := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> turnLabelVisibleBool [
+
+	^turnLabelVisibleBool
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToePlayerView >> turnLabelVisibleBool: anObject [
+
+	turnLabelVisibleBool := anObject
 ]
 
 { #category : 'Not categorized' }

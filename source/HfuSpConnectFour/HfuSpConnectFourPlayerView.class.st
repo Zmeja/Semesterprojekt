@@ -7,7 +7,9 @@ Class {
 		'startButton',
 		'aRowButton',
 		'aBadge',
-		'save'
+		'save',
+		'turnLabel',
+		'turnLabelVisibleBool'
 	],
 	#category : 'HfuSpConnectFour'
 }
@@ -22,11 +24,14 @@ HfuSpConnectFourPlayerView >> createComponents [
 			text: 'start game';
 			addClickEventSelector: #startGameClicked;
 			yourself).
-			
+
 	
-"self initConnectFour."			
 self addChild: (Me5Timeout new addIntervalSeconds: 4 selector:#updateSite:; activate ;yourself).
 	self initConnectFour.
+	self addChild: (turnLabel := Me5Label newWithText: 'Its your turn!' ).
+	self turnLabelVisibleBool: false.
+	self turnLabel show: false.		
+	
 ]
 
 { #category : 'Not categorized' }
@@ -122,6 +127,11 @@ HfuSpConnectFourPlayerView >> setGame: boardState [
 		].
 		 offset := offset -2].
 	offset := boardState boardHeight].
+	self playerViewController isActingPlayer
+	ifTrue: [self turnLabel show: self turnLabelVisibleBool.
+		self turnLabelVisibleBool: true]
+	ifFalse: [self turnLabel show: self turnLabelVisibleBool.
+		self turnLabelVisibleBool: false]
 ]
 
 { #category : 'Not categorized' }
@@ -131,6 +141,30 @@ HfuSpConnectFourPlayerView >> startGameClicked [
 	"self playerViewController displayCurrentBoardState."
 	self playerViewController startGame.
 	"self removeChild: startButton."
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> turnLabel [
+
+	^turnLabel
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> turnLabel: anObject [
+
+	turnLabel := anObject
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> turnLabelVisibleBool [
+
+	^turnLabelVisibleBool
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourPlayerView >> turnLabelVisibleBool: anObject [
+
+	turnLabelVisibleBool := anObject
 ]
 
 { #category : 'Not categorized' }
