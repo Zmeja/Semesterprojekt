@@ -161,6 +161,17 @@ HfuSpTurnStateController >> gameOngoing: anInteger [
 	gameOngoing := anInteger
 ]
 
+{ #category : 'API' }
+HfuSpTurnStateController >> getViewOfPlayerWithId: aInteger [
+
+	"<^boolean>"
+	"checks wether a player identified by an Id is already active in this game"
+
+	(self containsPlayerWithIdInSession:  aInteger)
+		ifTrue: [^(self playerViewControllers at: (HfuSpPlayer players at: aInteger) ) getPlayerView]
+		ifFalse: [^nil].
+]
+
 { #category : 'Internal' }
 HfuSpTurnStateController >> initializeBoardState [
 
@@ -278,15 +289,6 @@ HfuSpTurnStateController >> type [
 HfuSpTurnStateController >> type: anObject [
 
 	type := anObject
-]
-
-{ #category : 'Internal' }
-HfuSpTurnStateController >> updateBoardState: aGameOrder [
-
-	"<^self>"
-	"Updates Board State Based on aOrder"
-	self subclassResponsibility
-	
 ]
 
 { #category : 'Internal' }
