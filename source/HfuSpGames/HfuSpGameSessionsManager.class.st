@@ -34,7 +34,7 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 
 	"<^aHfuSpPlayerView>"
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
-	|gameTurnStateController playerViewController playerView|
+	|gameTurnStateController  playerView|
 	
 	gameTurnStateController:=self getGameSessionById: anGameSessionIdInteger.
 	
@@ -51,10 +51,8 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 		ifTrue: [^nil].
 		
 	"get and initialize playerView"
-	playerViewController := gameTurnStateController createAndInitalizePlayerViewController: (HfuSpPlayer players at: (anPlayerIdInteger)).																				
-	"playerView := playerViewController getPlayerView."
+	gameTurnStateController createAndInitalizePlayerViewController: (HfuSpPlayer players at: (anPlayerIdInteger)).																				
 	playerView:=  gameTurnStateController  getViewOfPlayerWithId: anPlayerIdInteger.
-	"playerViewController playerView: playerView."
 	playerView  initializeView.
 	^playerView.
 ]
