@@ -70,11 +70,6 @@ HfuSpGameSessionLobbyRepresentationView >> button: anObject [
 ]
 
 { #category : 'Not categorized' }
-HfuSpGameSessionLobbyRepresentationView >> closeThisGameClicked [
-	self replaceView
-]
-
-{ #category : 'Not categorized' }
 HfuSpGameSessionLobbyRepresentationView >> createComponents [
 
 	self addChild: self createGameForm.
@@ -159,15 +154,6 @@ HfuSpGameSessionLobbyRepresentationView >> sessionHolder [
 HfuSpGameSessionLobbyRepresentationView >> sessionHolder: anObject [
 
 	sessionHolder := anObject
-]
-
-{ #category : 'Not categorized' }
-HfuSpGameSessionLobbyRepresentationView >> startUp [
-	
-	| theHttpServer |
-	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9099' serverApplicationClass: HfuSpGameSessionLobbyRepresentationView).
-	theHttpServer addViewClass: HfuSpGameSessionLobbyRepresentationView;
-	yourself
 ]
 
 { #category : 'Accessing' }

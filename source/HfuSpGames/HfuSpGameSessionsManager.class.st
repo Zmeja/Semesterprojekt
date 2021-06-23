@@ -66,7 +66,7 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 	|newGameSession newGameSessionID|
 	self activeGameSessions = nil
 		ifTrue: [self activeGameSessions: Dictionary new ].
-	aGameNameString = 'TicTacToe'
+	aGameNameString = 'Tic Tac Toe'
 		ifTrue: [
 			newGameSession:= HfuSpTicTacToeTurnStateController new.
 			newGameSession initializeState.
@@ -74,7 +74,7 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 			self activeGameSessions add: ( Association new key: newGameSessionID value: newGameSession ).
 			^newGameSessionID
 			].
-		aGameNameString = 'ConnectFour'
+		aGameNameString = 'Connect Four'
 		ifTrue: [
 			newGameSession:= HfuSpConnectFourTurnStateController new.
 			newGameSession initializeState.
@@ -83,7 +83,7 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 			^newGameSessionID
 			].
 			
-			aGameNameString = 'ManDontGetAngry'
+			aGameNameString = 'Man Dont Get Angry'
 		ifTrue: [
 			newGameSession:= HfuSpManDontGetAngryTurnStateController new.
 			newGameSession initializeState.

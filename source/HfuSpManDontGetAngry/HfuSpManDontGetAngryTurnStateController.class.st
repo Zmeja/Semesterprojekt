@@ -4,21 +4,6 @@ Class {
 	#category : 'HfuSpManDontGetAngry'
 }
 
-{ #category : 'Not categorized' }
-HfuSpManDontGetAngryTurnStateController >> addFigure: aColorOfPlayer [
-
-	"Searches the controller with the given offset and adds a figure to his figures that are not on the board"
-	self playerViewControllers do: [:eachController|
-		(eachController offset ) = aColorOfPlayer
-			ifTrue: [
-				eachController figures remove: false.
-				eachController figures add: true.
-			]
-	].
-	
-	
-]
-
 { #category : 'Initialization' }
 HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
 
@@ -45,10 +30,10 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 				and: (anOrder hasFigures)) 
 					and: (((self currentBoardState isOwnPlayer: playerViewController offset onField: (self currentBoardState getStartfieldWithOffset: playerViewController offset))) = false))
 						ifTrue: [
-							self removeFigure: playerViewController offset.
+							self currentBoardState removeFigureFromPlayer: playerViewController offset.
 							kickedPlayer := self currentBoardState putNewFigureOnBoard: playerViewController offset.
 							kickedPlayer = -1
-								ifFalse: [self addFigure: kickedPlayer].
+								ifFalse: [self currentBoardState addFigureToPlayer: kickedPlayer].
 							].
 			^true.
 		].
@@ -69,14 +54,14 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 					kickedPlayer := self currentBoardState setPlayerat: nextField withcolor: playerViewController offset.
 					self currentBoardState removePlayerFromField: anOrder fieldID.
 					kickedPlayer = -1
-								ifFalse: [self addFigure: kickedPlayer].
+								ifFalse: [self currentBoardState addFigureToPlayer: kickedPlayer].
 							].
 			].
 		(anOrder fieldID between: 41 and: 56)
 			ifTrue: [
 				|nextField|
 				nextField:= (anOrder fieldID) + (anOrder number).
-				self currentBoardState lastFields at: nextField-40 put: true.
+				self currentBoardState lastFields at: nextField - 40 put: true.
 				self currentBoardState lastFields at: (anOrder fieldID - 40) put: false.
 			]
 	
@@ -112,19 +97,4 @@ HfuSpManDontGetAngryTurnStateController >> isGameAtPlayerCapacity [
 	"returns wether more players may join the game"
 
 	^self playerViewControllers size >=4
-]
-
-{ #category : 'Not categorized' }
-HfuSpManDontGetAngryTurnStateController >> removeFigure: aColorOfPlayer [
-
-	"Searches the controller with the given offset and removes a figure to his figures that are not on the board"
-	self playerViewControllers do: [:eachController|
-		(eachController offset) = aColorOfPlayer
-			ifTrue: [
-				eachController figures remove: true.
-				eachController figures add: false.
-			]
-	].
-	
-	
 ]

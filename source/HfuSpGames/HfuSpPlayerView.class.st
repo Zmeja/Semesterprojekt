@@ -31,12 +31,7 @@ HfuSpPlayerView >> activateJoinGameView: anEvent [
 HfuSpPlayerView >> addGameButtonClicked: aForm [
 	|tempID createdGameSession children|
 	children := aForm portletBody.
-	children firstChild value= 'TicTacToe'
-		ifTrue: [tempID := HfuSpGameSessionsManager createGameSession: 'TicTacToe'.].
-	children firstChild value = 'Man Dont Get Angry'
-		ifTrue: [tempID := HfuSpGameSessionsManager createGameSession: 'ManDontGetAngry'.].
-	children firstChild value = 'Connect Four'
-		ifTrue: [tempID := HfuSpGameSessionsManager createGameSession: 'ConnectFour'.].
+	tempID := HfuSpGameSessionsManager createGameSession: (children firstChild value).
 	createdGameSession := HfuSpGameSessionsManager getGameSessionById: tempID.
 	createdGameSession name: ((children children at: 2) value).
 	createdGameSession type: children firstChild value.
@@ -47,7 +42,7 @@ HfuSpPlayerView >> addGameButtonClicked: aForm [
 
 { #category : 'Not categorized' }
 HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
-	|aGameView gameType|
+	|aGameView|
 	aGameView:= HfuSpGameSessionsManager addPlayer: self playerViewController player id ToSession: anPlayerAddEvent.
 	aGameView= nil ifTrue: [^nil].
 	self replaceView: aGameView.
@@ -81,14 +76,14 @@ HfuSpPlayerView >> createComponents [
 	self sessionHolder: Me5Portlet new.
 	self addChild: self sessionHolder.
 	self updateSite.
-		self addChild: (createGameButton := Me5Button newAirSecondary
-					text: 'Create Game';
-					addClickEventSelector: #activateCreateGameView;
-					yourself).
+	self addChild: (createGameButton := Me5Button newAirSecondary
+								text: 'Create Game';
+								addClickEventSelector: #activateCreateGameView;
+								yourself).
 	self addChild: (closeGamesButton := Me5Button newAirSecondary
-					text: 'Force Close all Games';
-					addClickEventSelector: #closeGamesClicked;
-					yourself).
+								text: 'Force Close all Games';
+								addClickEventSelector: #closeGamesClicked;
+								yourself).
 	self addChild: (Me5Timeout new 
 								addIntervalSeconds: 3 selector:#updateSite; 
 								activate;
@@ -99,7 +94,7 @@ HfuSpPlayerView >> createComponents [
 													yourself).
 	self addChild: (Me5ViewHolder new
 							holdingView: (self lobbyRepresentation);
-								yourself).
+							yourself).
 					
 ]
 
@@ -152,23 +147,11 @@ HfuSpPlayerView >> playerViewController: anaPlayerViewController [
 HfuSpPlayerView >> removePlayerButtonClicked: anPlayerAddEvent [
 
 	HfuSpGameSessionsManager  removeActiveGameSession:  anPlayerAddEvent.
-	self resetView.
 
 
 
 	
 	
-]
-
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> resetView [
-
-	"<^self>"
-	"rebuilds view as if side was just opened.
-	 ->removes GameSessionReresentationViews"
-	
-	"Muss mit Containern geloest werden"
-
 ]
 
 { #category : 'Accessing' }

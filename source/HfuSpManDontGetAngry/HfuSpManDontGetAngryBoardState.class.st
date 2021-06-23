@@ -3,10 +3,19 @@ Class {
 	#superclass : 'HfuSpBoardState',
 	#instVars : [
 		'board',
-		'lastFields'
+		'lastFields',
+		'figureFields'
 	],
 	#category : 'HfuSpManDontGetAngry'
 }
+
+{ #category : 'Internal' }
+HfuSpManDontGetAngryBoardState >> addFigureToPlayer: aOffset [
+
+	self figureFields at:(aOffset +1 ) put: ((self figureFields at:(aOffset + 1)) + 1).
+	
+	^true.
+]
 
 { #category : 'Accessing' }
 HfuSpManDontGetAngryBoardState >> board [
@@ -18,6 +27,18 @@ HfuSpManDontGetAngryBoardState >> board [
 HfuSpManDontGetAngryBoardState >> board: anObject [
 
 	board := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryBoardState >> figureFields [
+
+	^figureFields
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryBoardState >> figureFields: anObject [
+
+	figureFields := anObject
 ]
 
 { #category : 'Internal' }
@@ -53,6 +74,8 @@ HfuSpManDontGetAngryBoardState >> initializeBoardState [
 	1 to: 40 do: [:aField| self board add: 0].
 	self lastFields: OrderedCollection new.
 	1 to: 16 do:[:aField|self lastFields add: false].
+	self figureFields: OrderedCollection new.
+	1 to: 4do:[:aField|self figureFields add:4].
 	
 ]
 
@@ -197,6 +220,12 @@ HfuSpManDontGetAngryBoardState >> putNewFigureOnBoard: aOffset [
 	
 	^self setPlayerat: aOffset*10+1 withcolor: aOffset.
 	
+]
+
+{ #category : 'Internal' }
+HfuSpManDontGetAngryBoardState >> removeFigureFromPlayer: aOffset [
+
+	self figureFields at:(aOffset +1 ) put: ((self figureFields at:(aOffset + 1)) - 1).
 ]
 
 { #category : 'Internal' }
