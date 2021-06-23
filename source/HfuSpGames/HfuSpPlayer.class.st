@@ -15,6 +15,7 @@ Class {
 { #category : 'Not categorized' }
 HfuSpPlayer class >> addPlayerIfAbsent: ID [
 
+	"Checks if a player with <ID> already exists, if not makes new player object with <ID>"
 	self players at: ID ifAbsentPut: [HfuSpPlayer new id:ID; yourself].
 	
 	^self players at: ID.

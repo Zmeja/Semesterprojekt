@@ -8,5 +8,16 @@ Class {
 HfuSpGames class >> startUp [
 
 	"Starts the server automatically"
-	HfuSpLoginView startUp.
+	| theHttpServer |
+	HfuSpPlayer startUp.
+	theHttpServer := (Me5SstHttpServer startUpHttpServerOnPort: '9009' serverApplicationClass: HfuSpLoginView).
+	theHttpServer addViewClass: HfuSpLoginView;
+	addViewClass: HfuSpLobbyView;
+	addViewClass: HfuSpPlayerView;
+	addViewClass: HfuSpTicTacToePlayerView;
+	addViewClass: HfuSpManDontGetAngryPlayerView;
+	addViewClass: HfuSpGameSessionLobbyRepresentationView;
+	addViewClass: HfuSpPlayerView;
+	addViewClass: HfuSpChatView;
+		yourself
 ]
