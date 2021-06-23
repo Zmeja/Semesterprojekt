@@ -3,7 +3,6 @@ Class {
 	#superclass : 'HfuSpPlayerViewController',
 	#instVars : [
 		'rolledNumber',
-		'figures',
 		'offset',
 		'numberOfTimesRolled'
 	],
@@ -34,7 +33,6 @@ HfuSpManDontGetAngryPlayerViewController >> createPlayerView [
 	"<^anPlayerView>"
 	"returns the PlayerView managed by this PlayerViewController"
 	|View|
-	self figures: #(true true true true) asOrderedCollection.
 	self rolledNumber: 0.
 	self numberOfTimesRolled: 0.
 	View:= HfuSpManDontGetAngryPlayerView new.
@@ -50,18 +48,6 @@ HfuSpManDontGetAngryPlayerViewController >> displayCurrentBoardState [
 	self currentBoardState = nil
 		ifTrue: [self currentBoardState: self turnStateController currentBoardState].
 	self playerView setGame: (self currentBoardState)
-]
-
-{ #category : 'Accessing' }
-HfuSpManDontGetAngryPlayerViewController >> figures [
-
-	^figures
-]
-
-{ #category : 'Accessing' }
-HfuSpManDontGetAngryPlayerViewController >> figures: anObject [
-
-	figures := anObject
 ]
 
 { #category : 'Accessing' }
@@ -110,7 +96,7 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 								playerID: self player id;
 								fieldID: aField;
 								offset: self offset;
-								hasFigures: (self figures includes: true);
+								hasFigures: ((self currentBoardState figureFields at: self offset + 1)>0);
 								number: self rolledNumber;
 								yourself).
 	self turnStateController gameOngoing = -1

@@ -13,8 +13,6 @@ Class {
 HfuSpManDontGetAngryBoardState >> addFigureToPlayer: aOffset [
 
 	self figureFields at:(aOffset +1 ) put: ((self figureFields at:(aOffset + 1)) + 1).
-	
-	^true.
 ]
 
 { #category : 'Accessing' }
