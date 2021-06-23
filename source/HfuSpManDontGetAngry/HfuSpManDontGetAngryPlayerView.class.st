@@ -10,6 +10,10 @@ Class {
 		'player2WinDictionary',
 		'player3WinDictionary',
 		'player4WinDictionary',
+		'player1FiguresField',
+		'player2FiguresField',
+		'player3FiguresField',
+		'player4FiguresField',
 		'rollButton',
 		'figureButton',
 		'turnLabel',
@@ -269,6 +273,38 @@ HfuSpManDontGetAngryPlayerView >> initializeBoardIndexMap [
 	self boardIndexBadgeMap: theMap.
 ]
 
+{ #category : 'Internal' }
+HfuSpManDontGetAngryPlayerView >> initializePlayerFiguresFields [
+
+"Initializes the FiguresFields"
+
+		self player1FiguresField: OrderedCollection new.
+		self player2FiguresField: OrderedCollection new.
+		self player3FiguresField: OrderedCollection new.
+		self player4FiguresField: OrderedCollection new.
+
+		self player1FiguresField add: (self getFieldByRow: 1 Column: 10).
+		self player1FiguresField add: (self getFieldByRow: 1 Column: 11).
+		self player1FiguresField add: (self getFieldByRow: 2 Column: 10).
+		self player1FiguresField add: (self getFieldByRow: 2 Column: 11).
+		
+		self player2FiguresField add: (self getFieldByRow: 10 Column: 10).
+		self player2FiguresField add: (self getFieldByRow: 10 Column: 11).
+		self player2FiguresField add: (self getFieldByRow: 11 Column: 10).
+		self player2FiguresField add: (self getFieldByRow: 11 Column: 11).
+		
+		self player3FiguresField add: (self getFieldByRow: 10 Column: 1).
+		self player3FiguresField add: (self getFieldByRow: 10 Column: 2).
+		self player3FiguresField add: (self getFieldByRow: 11 Column: 1).
+		self player3FiguresField add: (self getFieldByRow: 11 Column: 2).
+		
+		self player4FiguresField add: (self getFieldByRow: 1 Column: 1).
+		self player4FiguresField add: (self getFieldByRow: 1 Column: 2).
+		self player4FiguresField add: (self getFieldByRow: 2 Column: 1).
+		self player4FiguresField add: (self getFieldByRow: 2 Column: 2).
+	
+]
+
 { #category : 'Initial events' }
 HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
 	"Initializes the Win Dictionaries for easier accessing"
@@ -304,6 +340,18 @@ HfuSpManDontGetAngryPlayerView >> initializePlayerWinDictionaries [
 ]
 
 { #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player1FiguresField [
+
+	^player1FiguresField
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player1FiguresField: anObject [
+
+	player1FiguresField := anObject
+]
+
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerView >> player1WinDictionary [
 
 	^player1WinDictionary
@@ -313,6 +361,18 @@ HfuSpManDontGetAngryPlayerView >> player1WinDictionary [
 HfuSpManDontGetAngryPlayerView >> player1WinDictionary: anObject [
 
 	player1WinDictionary := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player2FiguresField [
+
+	^player2FiguresField
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player2FiguresField: anObject [
+
+	player2FiguresField := anObject
 ]
 
 { #category : 'Accessing' }
@@ -328,6 +388,18 @@ HfuSpManDontGetAngryPlayerView >> player2WinDictionary: anObject [
 ]
 
 { #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player3FiguresField [
+
+	^player3FiguresField
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player3FiguresField: anObject [
+
+	player3FiguresField := anObject
+]
+
+{ #category : 'Accessing' }
 HfuSpManDontGetAngryPlayerView >> player3WinDictionary [
 
 	^player3WinDictionary
@@ -337,6 +409,18 @@ HfuSpManDontGetAngryPlayerView >> player3WinDictionary [
 HfuSpManDontGetAngryPlayerView >> player3WinDictionary: anObject [
 
 	player3WinDictionary := anObject
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player4FiguresField [
+
+	^player4FiguresField
+]
+
+{ #category : 'Accessing' }
+HfuSpManDontGetAngryPlayerView >> player4FiguresField: anObject [
+
+	player4FiguresField := anObject
 ]
 
 { #category : 'Accessing' }
@@ -485,29 +569,9 @@ HfuSpManDontGetAngryPlayerView >> renderBaseGameState [
 				addClickEventSelector:#exEvent: ;
 				yourself)].
 			].
-			
-		"Add the out of game figures"
-		(self getFieldByRow: 1 Column: 10) addCssClassMBadgeInfo.
-		(self getFieldByRow: 1 Column: 11) addCssClassMBadgeInfo.
-		(self getFieldByRow: 2 Column: 10) addCssClassMBadgeInfo.
-		(self getFieldByRow: 2 Column: 11) addCssClassMBadgeInfo.
-		
-		(self getFieldByRow: 10 Column: 10) addCssClassMBadgeDanger.
-		(self getFieldByRow: 10 Column: 11) addCssClassMBadgeDanger.
-		(self getFieldByRow: 11 Column: 10) addCssClassMBadgeDanger.
-		(self getFieldByRow: 11 Column: 11) addCssClassMBadgeDanger.
-		
-		(self getFieldByRow: 10 Column: 1) addCssClassMBadgeSuccess.
-		(self getFieldByRow: 10 Column: 2) addCssClassMBadgeSuccess.
-		(self getFieldByRow: 11 Column: 1) addCssClassMBadgeSuccess.
-		(self getFieldByRow: 11 Column: 2) addCssClassMBadgeSuccess.
-		
-		(self getFieldByRow: 1 Column: 1) addCssClassMBadgeWarning.
-		(self getFieldByRow: 1 Column: 2) addCssClassMBadgeWarning.
-		(self getFieldByRow: 2 Column: 1) addCssClassMBadgeWarning.
-		(self getFieldByRow: 2 Column: 2) addCssClassMBadgeWarning.
 		self initializeBoardIndexMap.
 		self initializePlayerWinDictionaries.
+		self initializePlayerFiguresFields.
 ]
 
 { #category : 'Internal' }
@@ -522,6 +586,11 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 2 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 4))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 3 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 8))].
 	1 to: 4 do: [:eachNumber | self setPlayerNumber: 4 WinFieldAt: eachNumber To: (aBoardState lastFields at: (eachNumber + 12))].
+	
+	1 to: (aBoardState figureFields at: 1 ) do:[:eachField | (self player1FiguresField at: eachField )addCssClassMBadgeInfo].
+	1 to: (aBoardState figureFields at: 2 ) do:[:eachField | (self player2FiguresField at: eachField )addCssClassMBadgeDanger].
+	1 to: (aBoardState figureFields at: 3 ) do:[:eachField | (self player3FiguresField at: eachField )addCssClassMBadgeSuccess].
+	1 to: (aBoardState figureFields at: 4 ) do:[:eachField | (self player4FiguresField at: eachField )addCssClassMBadgeWarning].
 	self playerViewController isActingPlayer
 	ifTrue: [self turnLabel show: self turnLabelVisibleBool.
 		self turnLabelVisibleBool: true]

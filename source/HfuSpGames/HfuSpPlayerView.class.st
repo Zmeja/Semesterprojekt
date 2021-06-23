@@ -74,7 +74,9 @@ HfuSpPlayerView >> closeGamesClicked [
 HfuSpPlayerView >> createComponents [
 
 	self playerViewController playerView: self.
-	self sessionHolder: Me5Portlet new.
+	self sessionHolder: (Me5Portlet new
+										addChildToHead: (Me5H5 newWithText: 'Games:');
+										yourself).
 	self addChild: self sessionHolder.
 	self updateSite.
 	self addChild: (createGameButton := Me5Button newAirSecondary

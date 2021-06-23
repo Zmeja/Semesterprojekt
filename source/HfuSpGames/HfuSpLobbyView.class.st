@@ -22,7 +22,6 @@ HfuSpLobbyView >> createComponents [
 		src: (self userDataDictionary at: 'picture');
 		yourself);
 		addChildToBody: (Me5Section new
-			title: 'Games:';
 			addChildToBody:(Me5Row new
 				addChild: (Me5ViewHolder new
 					holdingView: (HfuSpPlayerView new playerViewController: 
