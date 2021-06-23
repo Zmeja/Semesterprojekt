@@ -14,6 +14,7 @@ Class {
 HfuSpManDontGetAngryPlayerViewController >> checkRolledDice: anOrder [
 
 	"Goes through every possible field you can click and tests if there is anOrder that is valid.
+	 Meaning that it checks if the player can make a move.
 	 If not returns false"
 	anOrder fieldID: -1.
 	(self currentBoardState isValidOrder: anOrder)
@@ -48,8 +49,6 @@ HfuSpManDontGetAngryPlayerViewController >> displayCurrentBoardState [
 	"tells view to display the Boardstate currently continaed in this PlayerViewController"
 	self currentBoardState = nil
 		ifTrue: [self currentBoardState: self turnStateController currentBoardState].
-	"self playerView removeChild: self playerView boardPortlet.
-	self playerView removeChild: self playerView boardRows."
 	self playerView setGame: (self currentBoardState)
 ]
 
@@ -107,18 +106,22 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 	"<^self>"
 	"transmits a order from a view to the TurnStateController"
 	|gameOrder|
-	gameOrder := HfuSpManDontGetAngryOrder new.
-	gameOrder playerID: self player id.
-	gameOrder fieldID: aField.
-	gameOrder offset: self offset.
-	gameOrder number: self rolledNumber.
-	gameOrder hasFigures: (self figures size > 0).
+	gameOrder := (HfuSpManDontGetAngryOrder new
+								playerID: self player id;
+								fieldID: aField;
+								offset: self offset;
+								hasFigures: (self figures includes: true);
+								number: self rolledNumber;
+								yourself).
 	self turnStateController gameOngoing = -1
 		ifTrue: [self playerView showInfoNotificationWithMessage: 'Game has not started yet'.^nil].
+		
 	self isActingPlayer 
 		ifFalse:[self playerView showInfoNotificationWithMessage: 'It is not your turn'. ^nil].
+		
 	(((gameOrder fieldID = 0) not) and: (self rolledNumber = 0))
 		ifTrue:[self playerView showInfoNotificationWithMessage: 'Please Roll'. ^nil].
+		
 	((gameOrder fieldID = 0) and: (self rolledNumber = 0))
 		ifTrue: [
 			self rolledNumber: (EsRandom new nextInt: 6).
@@ -138,5 +141,6 @@ HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 					self turnStateController updateGameStateOfAllPlayers.
 					self rolledNumber: 0.^nil].
 			].
-	self turnStateController receiveGameOrder:  gameOrder
+			
+	self turnStateController receiveGameOrder:  gameOrder.
 ]

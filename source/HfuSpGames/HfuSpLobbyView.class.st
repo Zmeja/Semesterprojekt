@@ -14,7 +14,7 @@ Class {
 HfuSpLobbyView >> createComponents [
 
 	|theTable thePlayer chatView|
-	thePlayer := HfuSpPlayer addPlayerIfAbsent: (self userDataDictionary at: 'id') asInteger.
+	thePlayer := HfuSpPlayer addPlayerIfAbsent: (self userDataDictionary).
 	self
 	addChild:(Me5Portlet new
 	title: 'Lobby';		
@@ -23,8 +23,6 @@ HfuSpLobbyView >> createComponents [
 		yourself);
 		addChildToBody: (Me5Section new
 			title: 'Games:';
-			"self playerViewController: HfuSpPlayerViewController new.
-	self playerViewController setPlayerView: self."
 			addChildToBody:(Me5Row new
 				addChild: (Me5ViewHolder new
 					holdingView: (HfuSpPlayerView new playerViewController: 
@@ -33,18 +31,10 @@ HfuSpLobbyView >> createComponents [
 					yourself);
 						
 				addChild:  Me5SectionSeparator new;
-				
-			"	addChild: (Me5ViewHolder new
-					holdingView: (HfuSpGameSessionLobbyRepresentationView new
-						gameID: '3013101';
-						gameType: 'TicTacToe';
-						yourself);
-					yourself);"
-					
 				addChild:  Me5SectionSeparator new;
 				addChild: (Me5ViewHolder new
 					holdingView: (chatView := HfuSpChatView new
-						username: thePlayer id;
+						username: thePlayer playerName;
 						yourself);
 					yourself);
 				yourself);

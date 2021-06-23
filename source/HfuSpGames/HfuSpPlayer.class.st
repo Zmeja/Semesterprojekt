@@ -13,12 +13,17 @@ Class {
 }
 
 { #category : 'Not categorized' }
-HfuSpPlayer class >> addPlayerIfAbsent: ID [
+HfuSpPlayer class >> addPlayerIfAbsent: userData [
 
 	"Checks if a player with <ID> already exists, if not makes new player object with <ID>"
-	self players at: ID ifAbsentPut: [HfuSpPlayer new id:ID; yourself].
+	|aID aName|
+	aID := userData at:'id'.
+	aName := userData at:'given_name'.
+	^self players at:aID ifAbsentPut: [HfuSpPlayer new 
+															id:aID;
+															playerName: aName;
+															yourself].
 	
-	^self players at: ID.
 	
 ]
 

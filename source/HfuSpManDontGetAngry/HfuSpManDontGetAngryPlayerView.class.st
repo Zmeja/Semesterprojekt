@@ -30,8 +30,7 @@ HfuSpManDontGetAngryPlayerView class >> startUp [
 		yourself
 ]
 
-{ #category : 'Accessing',
- #vaCategories : ['Accessing','Initial events','Internal'] }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> announceVictor: aColorString [
 
 	"<^self>"
@@ -112,12 +111,21 @@ HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: a
 HfuSpManDontGetAngryPlayerView >> createComponents [
 
 	"create view components"
-		
+	|color|
 	boardRows := OrderedCollection new.
 	boardPortlet := Me5Portlet new.
+	self playerViewController offset = 0
+		ifTrue: [color:= 'Blue']
+		ifFalse: [
+			self playerViewController offset = 1
+				ifTrue: [color:= 'Red']
+				ifFalse: [
+					self playerViewController offset = 2
+						ifTrue: [color:= 'Green']
+							ifFalse: [color:='Yellow']]].
 	self 
 		addChild: (Me5Label new
-			text: 'Man, dont be angry';
+			text: 'Man, dont be angry. You are ', color,' (', ((self playerViewController offset) + 1) asString, ')';
 			yourself).
 	self renderBaseGameState.
 			self addChild: (startGameButton:= (Me5Button newAirSecondary
