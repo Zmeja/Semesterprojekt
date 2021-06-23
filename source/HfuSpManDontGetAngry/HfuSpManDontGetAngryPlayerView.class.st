@@ -89,15 +89,45 @@ HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 		4 = yellow
 		Note: this version of the playerView does not change color, but adds text to the field"
 	anInteger = 0
-		ifTrue: [aBadge text: ' '].
+		ifTrue: [aBadge 
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgePrimary;
+					yourself].
 	anInteger = 1
-		ifTrue: [aBadge text: '1'].
+		ifTrue: [aBadge 
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeInfo;
+					yourself].
 	anInteger = 2
-		ifTrue: [aBadge text: '2'].
+		ifTrue: [aBadge 
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeDanger;
+					yourself].
 	anInteger = 3
-		ifTrue: [aBadge text: '3'].
+		ifTrue: [aBadge 
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeSuccess;
+					yourself].
 	anInteger = 4
-		ifTrue: [aBadge text: '4']
+		ifTrue: [aBadge 
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeWarning;
+					yourself]
 ]
 
 { #category : 'Not categorized' }
@@ -504,15 +534,63 @@ HfuSpManDontGetAngryPlayerView >> setGame: aBoardState [
 HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinFieldAt: anInteger To: aBoolean [
 
 	"Sets the WinField according to the given boolean"
-	(aPlayerNumberInteger = 1 and: [aBoolean]) ifTrue: [(self player1WinDictionary at: anInteger) text: '1'.].
-	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger) text: '2'.].
-	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger) text: '3'.].
-	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger) text: '4'.].
+	(aPlayerNumberInteger = 1 and: [aBoolean]) ifTrue: [(self player1WinDictionary at: anInteger) 
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgePrimary;
+					yourself].
+	(aPlayerNumberInteger = 2 and: [aBoolean]) ifTrue: [(self player2WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgePrimary;
+					yourself].
+	(aPlayerNumberInteger = 3 and: [aBoolean]) ifTrue: [(self player3WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgePrimary;
+					yourself].
+	(aPlayerNumberInteger = 4 and: [aBoolean]) ifTrue: [(self player4WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgePrimary;
+					yourself].
 	
-	(aPlayerNumberInteger = 1 and: [aBoolean not]) ifTrue: [(self player1WinDictionary at: anInteger) text: ' '.].
-	(aPlayerNumberInteger = 2 and: [aBoolean not]) ifTrue: [(self player2WinDictionary at: anInteger) text: ' '.].
-	(aPlayerNumberInteger = 3 and: [aBoolean not]) ifTrue: [(self player3WinDictionary at: anInteger) text: ' '.].
-	(aPlayerNumberInteger = 4 and: [aBoolean not]) ifTrue: [(self player4WinDictionary at: anInteger) text: ' '.].
+	(aPlayerNumberInteger = 1 and: [aBoolean not]) ifTrue: [(self player1WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeInfo;
+					yourself].
+	(aPlayerNumberInteger = 2 and: [aBoolean not]) ifTrue: [(self player2WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeDanger;
+					yourself].
+	(aPlayerNumberInteger = 3 and: [aBoolean not]) ifTrue: [(self player3WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeSuccess;
+					yourself].
+	(aPlayerNumberInteger = 4 and: [aBoolean not]) ifTrue: [(self player4WinDictionary at: anInteger)
+					removeAllCssClasses;
+					addCssClass: MeCssMeBadge;
+					addCssClassMBadge;
+					setWideStyle;
+					addCssClassMBadgeWarning;
+					yourself].
 ]
 
 { #category : 'Not categorized' }
