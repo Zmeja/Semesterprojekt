@@ -19,7 +19,7 @@ HfuSpManDontGetAngryTurnStateController >> addFigure: aColorOfPlayer [
 	
 ]
 
-{ #category : 'Initialisation' }
+{ #category : 'Initialization' }
 HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
 
 	"creates ManDontGetAngryPlayerViewController and returns it"
@@ -84,7 +84,7 @@ HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 	
 ]
 
-{ #category : 'Initialisation' }
+{ #category : 'Initialization' }
 HfuSpManDontGetAngryTurnStateController >> initializeBoardState [
 
 	"<^self>"
@@ -95,7 +95,7 @@ HfuSpManDontGetAngryTurnStateController >> initializeBoardState [
 	self currentBoardState initializeBoardState.
 ]
 
-{ #category : 'Initialisation' }
+{ #category : 'Initialization' }
 HfuSpManDontGetAngryTurnStateController >> initializeState [
 
 	"<^self>"
