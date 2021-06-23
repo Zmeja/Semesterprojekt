@@ -49,6 +49,7 @@ HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 	
 	
 	
+	
 ]
 
 { #category : 'Not categorized' }

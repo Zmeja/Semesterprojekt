@@ -80,8 +80,7 @@ HfuSpManDontGetAngryPlayerView >> boardRows: anObject [
 
 { #category : 'Not categorized' }
 HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
-
-	"Changes the color of the badge parameter to the color of the given player number where: 
+"Changes the color of the badge parameter to the color of the given player number where: 
 		0 = empty field
 		1 = blue
 		2 = red
@@ -157,7 +156,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 		addChild: (Me5Label new
 			text: 'Man, dont be angry. You are ', color,' (', ((self playerViewController offset) + 1) asString, ')';
 			yourself).
-	self renderBaseGameState.
+	self addChild: (Me5Div new).
 			self addChild: (startGameButton:= (Me5Button newAirSecondary
 					text: 'Start Game';
 					addClickEventSelector: #startGameClicked;
@@ -170,7 +169,9 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Figure';
 					addClickEventSelector: #exEvent:;
 					yourself).
+	self addChild: (Me5Div new).
 	self addChild: (turnLabel := Me5Label newWithText: 'Its your turn!' ).
+	self renderBaseGameState.
 	self turnLabelVisibleBool: false.
 	self turnLabel show: false.
 	self playerViewController displayCurrentBoardState.
@@ -631,5 +632,9 @@ HfuSpManDontGetAngryPlayerView >> turnLabelVisibleBool: anObject [
 HfuSpManDontGetAngryPlayerView >> updateSite: updateSiteEvent [
 
 	"Event for the timer to update the view"
+	self removeChild: self boardPortlet.
+	boardRows := OrderedCollection new.
+	boardPortlet := Me5Portlet new.
+	self renderBaseGameState.
 	self playerViewController displayCurrentBoardState.
 ]
