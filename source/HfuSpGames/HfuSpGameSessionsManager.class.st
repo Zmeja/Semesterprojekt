@@ -66,7 +66,7 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 	|newGameSession newGameSessionID|
 	self activeGameSessions = nil
 		ifTrue: [self activeGameSessions: Dictionary new ].
-	aGameNameString = 'Tic Tac Toe'
+	aGameNameString = 'TicTacToe'
 		ifTrue: [
 			newGameSession:= HfuSpTicTacToeTurnStateController new.
 			newGameSession initializeState.
