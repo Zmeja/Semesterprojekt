@@ -73,10 +73,6 @@ HfuSpTicTacToePlayerView >> createComponents [
 					yourself));
 				yourself);
 				addChildToBody: (Me5Div new
-				addChild: (Me5Button newAirSecondary
-					text: 'Refresh';
-					addClickEventSelector: #refreshClicked;
-					yourself);
 				yourself);
 				hide;
 			yourself);
@@ -140,7 +136,12 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 	counter := 1.
 	tics do: [
 		:eachIndex |
-		textToSet:= boardState boardTiles at: counter.
+		(boardState boardTiles at: counter) = 1
+			ifTrue: [textToSet:= 'X']
+			ifFalse:[ (boardState boardTiles at: counter) = 2
+				ifTrue: [textToSet:= 'O']
+				ifFalse:[textToSet:= '-'].
+			].
 		counter := counter + 1.
 		eachIndex text: textToSet.
 	].
