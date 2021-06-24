@@ -82,7 +82,7 @@ HfuSpManDontGetAngryPlayerView >> boardRows: anObject [
 	boardRows := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 "Changes the color of the badge parameter to the color of the given player number where: 
 		0 = empty field
@@ -133,7 +133,7 @@ HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 					yourself]
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> colorBadgeAtIndex: anInteger toPlayerNumber: aPlayerNumber [
 
 	"Sets the color of the field at Index anInteger to the corresponding player number"
@@ -184,14 +184,14 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> displayBoardState: anBoardState [
 
 	"displays the BoardState on the screen"
 	self setGame: anBoardState
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> exEvent: event [
 
 	"Communication with the playerViewController"
@@ -663,7 +663,7 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 					yourself].
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
 
 	"Starts the game"

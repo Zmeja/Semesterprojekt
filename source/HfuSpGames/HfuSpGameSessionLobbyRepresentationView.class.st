@@ -13,7 +13,7 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpGameSessionLobbyRepresentationView >> buildGameForm [
 
 	self createGameForm: Me5FormPortlet new.
@@ -31,7 +31,7 @@ HfuSpGameSessionLobbyRepresentationView >> buildGameForm [
 	self createGameForm hide.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpGameSessionLobbyRepresentationView >> buildSessionForm: aGameID [
 
 	|gameSession |
@@ -69,14 +69,14 @@ HfuSpGameSessionLobbyRepresentationView >> button: anObject [
 	button := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Initialization' }
 HfuSpGameSessionLobbyRepresentationView >> createComponents [
 
 	self addChild: self createGameForm.
 	self addChild: self sessionForm.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpGameSessionLobbyRepresentationView >> createGameClicked [
 	|createdGameSession|
 	createdGameSession := self parentView addGameButtonClicked: self createGameForm.
@@ -95,7 +95,7 @@ HfuSpGameSessionLobbyRepresentationView >> createGameForm: anObject [
 	createGameForm := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpGameSessionLobbyRepresentationView >> joinGameClicked: anEvent [
 
 	self parentView addPlayerButtonClicked: (anEvent component name) asInteger.
@@ -113,7 +113,7 @@ HfuSpGameSessionLobbyRepresentationView >> removeButton: anObject [
 	removeButton := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpGameSessionLobbyRepresentationView >> removeGameClicked: anEvent [
 
 	self parentView removePlayerButtonClicked: (anEvent component name) asInteger.
@@ -144,7 +144,7 @@ HfuSpGameSessionLobbyRepresentationView >> sessionForm: anObject [
 	sessionForm := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpGameSessionLobbyRepresentationView >> sessionHolder [
 
 	^sessionHolder

@@ -12,33 +12,33 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayer class >> addPlayerIfAbsent: userData [
 
 	"Checks if a player with <ID> already exists, if not makes new player object with <ID>"
 	|aID aName|
 	aID := userData at:'id'.
 	aName := userData at:'given_name'.
-	^self players at:aID ifAbsentPut: [HfuSpPlayer new 
+	^self players at:aID ifAbsentPut: [(HfuSpPlayer new 
 															id:aID;
 															playerName: aName;
-															yourself].
+															yourself)].
 	
 	
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpPlayer class >> players [
 
 	^players
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Accessing' }
 HfuSpPlayer class >> players: aListOfPlayers [
 	players := aListOfPlayers
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Initialization' }
 HfuSpPlayer class >> startUp [
 	players := Dictionary new.
 ]

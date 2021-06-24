@@ -12,14 +12,14 @@ Class {
 	#category : 'HfuSpGames'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> activateCreateGameView [
 
 	self lobbyRepresentation createGameForm show.
 	self lobbyRepresentation sessionForm hide.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> activateJoinGameView: anEvent [
 	
 	self lobbyRepresentation buildSessionForm: anEvent component name asInteger.
@@ -27,7 +27,7 @@ HfuSpPlayerView >> activateJoinGameView: anEvent [
 	self lobbyRepresentation createGameForm hide.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> addGameButtonClicked: aForm [
 	|tempID createdGameSession children|
 	children := aForm portletBody.
@@ -40,10 +40,10 @@ HfuSpPlayerView >> addGameButtonClicked: aForm [
 	
 ]
 
-{ #category : 'Not categorized' }
-HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
+{ #category : 'Internal' }
+HfuSpPlayerView >> addPlayerButtonClicked: anIDOfaGame [
 	|aGameView|
-	aGameView:= HfuSpGameSessionsManager addPlayer: self playerViewController player id ToSession: anPlayerAddEvent.
+	aGameView:= HfuSpGameSessionsManager addPlayer: self playerViewController player id ToSession: anIDOfaGame.
 	aGameView= nil ifTrue: [^nil].
 	self replaceView: aGameView.
 	
@@ -52,7 +52,7 @@ HfuSpPlayerView >> addPlayerButtonClicked: anPlayerAddEvent [
 	
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> announceVictor: aPlayerID [
 	aPlayerID ~= -1
 	ifTrue: [
@@ -64,13 +64,13 @@ HfuSpPlayerView >> announceVictor: aPlayerID [
 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> closeGamesClicked [
 
 	HfuSpGameSessionsManager activeGameSessions: nil.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Initialization' }
 HfuSpPlayerView >> createComponents [
 
 	self playerViewController playerView: self.
@@ -101,7 +101,7 @@ HfuSpPlayerView >> createComponents [
 					
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> displayBoardState: anBoardState [
 
 	"<^self>"
@@ -110,7 +110,7 @@ HfuSpPlayerView >> displayBoardState: anBoardState [
 	self subclassResponsibility
 ]
 
-{ #category : 'Accessing' }
+{ #category : 'Initialization' }
 HfuSpPlayerView >> initializeView [
 
 	^self
@@ -146,7 +146,7 @@ HfuSpPlayerView >> playerViewController: anaPlayerViewController [
 	playerViewController := anaPlayerViewController
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> removePlayerButtonClicked: anPlayerAddEvent [
 
 	HfuSpGameSessionsManager  removeActiveGameSession:  anPlayerAddEvent.
@@ -169,7 +169,7 @@ HfuSpPlayerView >> sessionHolder: anObject [
 	sessionHolder := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpPlayerView >> updateSite [
 		
 		"updates main-lobby with all available game-lobbies"

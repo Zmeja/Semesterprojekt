@@ -15,7 +15,7 @@ HfuSpManDontGetAngryTurnStateController >> createPlayerViewController [
 	^controller
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryTurnStateController >> executeOrder: anOrder [
 	"executes an Order.
 	 -1 correspondes to the figures that are outside of the board
@@ -90,7 +90,7 @@ HfuSpManDontGetAngryTurnStateController >> initializeState [
 	self gameOngoing: -1.
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryTurnStateController >> isGameAtPlayerCapacity [
 
 	"<^(true|false)>"

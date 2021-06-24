@@ -62,7 +62,7 @@ HfuSpManDontGetAngryBoardState >> getVictor [
 	^-1
 ]
 
-{ #category : 'Internal' }
+{ #category : 'Initialization' }
 HfuSpManDontGetAngryBoardState >> initializeBoardState [
 
 	"<^self>"

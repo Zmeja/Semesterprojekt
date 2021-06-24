@@ -9,7 +9,7 @@ Class {
 	#category : 'HfuSpManDontGetAngry'
 }
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerViewController >> checkRolledDice: anOrder [
 
 	"Goes through every possible field you can click and tests if there is anOrder that is valid.
@@ -27,7 +27,7 @@ HfuSpManDontGetAngryPlayerViewController >> checkRolledDice: anOrder [
 
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Initialization' }
 HfuSpManDontGetAngryPlayerViewController >> createPlayerView [
 
 	"<^anPlayerView>"
@@ -41,7 +41,7 @@ HfuSpManDontGetAngryPlayerViewController >> createPlayerView [
 	^self playerView
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerViewController >> displayCurrentBoardState [
 
 	"tells view to display the Boardstate currently continaed in this PlayerViewController"
@@ -86,7 +86,7 @@ HfuSpManDontGetAngryPlayerViewController >> rolledNumber: anObject [
 	rolledNumber := anObject
 ]
 
-{ #category : 'Not categorized' }
+{ #category : 'Internal' }
 HfuSpManDontGetAngryPlayerViewController >> transmitOrder: aField [
 
 	"<^self>"
