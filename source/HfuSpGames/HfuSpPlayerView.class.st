@@ -57,7 +57,7 @@ HfuSpPlayerView >> announceVictor: aPlayerID [
 	aPlayerID ~= -1
 	ifTrue: [
 	| winnerString |
-	aPlayerID < 0
+	(aPlayerID asNumber) < 0
 	ifTrue:[	winnerString := 'The Game  is a draw'. ] 
 	ifFalse:[ winnerString := 'Player ', aPlayerID asString, ' won!'.].
 	self showInfoNotificationWithMessage: winnerString.].

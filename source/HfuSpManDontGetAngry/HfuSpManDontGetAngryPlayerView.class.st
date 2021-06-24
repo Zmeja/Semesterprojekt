@@ -139,7 +139,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					addClickEventSelector: #exEvent:;
 					yourself).
 	self addChild: (figureButton := Me5Button newAirSecondary
-					text: 'Figure';
+					text: 'Put Figure on Board';
 					addClickEventSelector: #exEvent:;
 					yourself).
 	self addChild: (Me5Div new).
