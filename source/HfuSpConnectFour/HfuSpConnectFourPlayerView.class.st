@@ -55,9 +55,9 @@ HfuSpConnectFourPlayerView >> initConnectFour [
 	1 to: 7 do: [:eachNumber | connectFormPortlet addChildToBody: (connectRows add: (Me5Div new))].
 	Me5Section new.
 	1 to: 7 do: [:eachColumn | eachColumn < 8 
-		ifTrue: [(connectRows at: 1) addChild: (aRowButton:= Me5Button newAirButton
+		ifTrue: [(connectRows at: 1) addChild: (aRowButton:= Me5Badge newWarning
 			text: eachColumn asString;
-			name: eachColumn asString;
+			"name: eachColumn asString;"
 			addClickEventSelector: #rowClicked:;
 			yourself)].
 			].
@@ -75,7 +75,7 @@ HfuSpConnectFourPlayerView >> initConnectFour [
 
 { #category : 'Not categorized' }
 HfuSpConnectFourPlayerView >> rowClicked: anEventFromCon [
-	self playerViewController transmitOrder: anEventFromCon component name asInteger.
+	self playerViewController transmitOrder: anEventFromCon component text asInteger.
 	self playerViewController displayCurrentBoardState.
 ]
 
