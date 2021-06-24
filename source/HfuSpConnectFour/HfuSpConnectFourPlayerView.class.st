@@ -96,22 +96,8 @@ HfuSpConnectFourPlayerView >> setGame: boardState [
 							ifTrue: [savedID := thisID].
 						theBadge := (self getFieldByRow: eachRow + offset Column: eachColumn).
 						savedID = thisID
-						ifTrue: [
-								theBadge 
-								removeAllCssClasses;
-								addCssClass: MeCssMeBadge;
-								addCssClassMBadge;
-								setWideStyle;
-								addCssClassMBadgePrimary;
-								yourself]
-						ifFalse: [
-								theBadge
-								removeAllCssClasses;
-								addCssClass: MeCssMeBadge;
-								addCssClassMBadge;
-								setWideStyle;
-								addCssClassMBadgeDanger;
-								yourself.].
+						ifTrue: [theBadge removeAllStylesAndSetPrimary]
+						ifFalse: [theBadge removeAllStylesAndSetDanger].
 					].
 	offset := offset -2].
 	offset := boardState boardHeight].
