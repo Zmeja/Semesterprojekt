@@ -89,8 +89,7 @@ HfuSpManDontGetAngryPlayerView >> colorBadge: aBadge playerNumber: anInteger [
 		1 = blue
 		2 = red
 		3 = green
-		4 = yellow
-		Note: this version of the playerView does not change color, but adds text to the field"
+		4 = yellow"
 	anInteger = 0
 		ifTrue: [aBadge 
 					removeAllCssClasses;
@@ -157,11 +156,11 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 						ifTrue: [color:= 'Green']
 							ifFalse: [color:='Yellow']]].
 	self 
-		addChild: (Me5Label new
+			addChild: (Me5Label new
 			text: 'Man, dont be angry. You are ', color,' (', ((self playerViewController offset) + 1) asString, ')';
 			yourself).
 	self addChild: (Me5Div new).
-			self addChild: (startGameButton:= (Me5Button newAirSecondary
+	self addChild: (startGameButton:= (Me5Button newAirSecondary
 					text: 'Start Game';
 					addClickEventSelector: #startGameClicked;
 					yourself)).
@@ -169,7 +168,7 @@ HfuSpManDontGetAngryPlayerView >> createComponents [
 					text: 'Roll';
 					addClickEventSelector: #exEvent:;
 					yourself).
-		self addChild: (figureButton := Me5Button newAirSecondary
+	self addChild: (figureButton := Me5Button newAirSecondary
 					text: 'Figure';
 					addClickEventSelector: #exEvent:;
 					yourself).
@@ -276,8 +275,7 @@ HfuSpManDontGetAngryPlayerView >> initializeBoardIndexMap [
 { #category : 'Internal' }
 HfuSpManDontGetAngryPlayerView >> initializePlayerFiguresFields [
 
-"Initializes the FiguresFields"
-
+	"Initializes the FiguresFields"
 		self player1FiguresField: OrderedCollection new.
 		self player2FiguresField: OrderedCollection new.
 		self player3FiguresField: OrderedCollection new.
@@ -667,10 +665,8 @@ HfuSpManDontGetAngryPlayerView >> setPlayerNumber: aPlayerNumberInteger WinField
 HfuSpManDontGetAngryPlayerView >> startGameClicked [
 
 	"Starts the game"
-	"self renderBaseGameState."
-	"self playerViewController displayCurrentBoardState."
 	self playerViewController startGame.
-	"self removeChild: startGameButton."
+
 ]
 
 { #category : 'Accessing' }
