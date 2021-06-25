@@ -52,15 +52,17 @@ HfuSpPlayerView >> addPlayerButtonClicked: anIDOfaGame [
 	
 ]
 
+{ #category : 'Accessing' }
+HfuSpPlayerView >> announceDraw [
+	
+	self showInfoNotificationWithMessage: ('this game is a draw ').
+
+]
+
 { #category : 'Internal' }
 HfuSpPlayerView >> announceVictor: aPlayerID [
-	aPlayerID ~= -1
-	ifTrue: [
-	| winnerString |
-	(aPlayerID asNumber) < 0
-	ifTrue:[	winnerString := 'The Game  is a draw'. ] 
-	ifFalse:[ winnerString := 'Player ', aPlayerID asString, ' won!'.].
-	self showInfoNotificationWithMessage: winnerString.].
+	
+	self showInfoNotificationWithMessage: ('Player ', aPlayerID asString, ' won!').
 
 ]
 

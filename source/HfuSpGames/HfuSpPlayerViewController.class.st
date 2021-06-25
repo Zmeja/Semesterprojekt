@@ -14,9 +14,10 @@ Class {
 HfuSpPlayerViewController >> announceVictor: aPlayer [
 
 	"<^self>"
-	"tells the controlled view to display the games vicror"
-
-		self playerView announceVictor: aPlayer.
+	"tells the controlled view to display the games victor"
+		(aPlayer = -99)
+			ifTrue: [self playerView announceDraw]
+			ifFalse: [self playerView announceVictor: (aPlayer)].
 ]
 
 { #category : 'Internal' }

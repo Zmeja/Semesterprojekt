@@ -136,11 +136,11 @@ HfuSpTicTacToePlayerView >> setGame: boardState [
 	counter := 1.
 	tics do: [
 		:eachIndex |
-		(boardState boardTiles at: counter) = 1
+		((boardState boardTiles at: counter) = (self playerViewController player id)) 
 			ifTrue: [textToSet:= 'X']
-			ifFalse:[ (boardState boardTiles at: counter) = 2
-				ifTrue: [textToSet:= 'O']
-				ifFalse:[textToSet:= '-'].
+			ifFalse:[ (boardState boardTiles at: counter) = -1
+				ifTrue: [textToSet:= '-']
+				ifFalse:[textToSet:= 'O'].
 			].
 		counter := counter + 1.
 		eachIndex text: textToSet.

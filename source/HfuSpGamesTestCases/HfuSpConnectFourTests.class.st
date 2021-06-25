@@ -190,7 +190,7 @@ HfuSpConnectFourTests class >> testOrders [
 	HfuSpPlayer  addPlayerIfAbsent: 1.
 	HfuSpPlayer  addPlayerIfAbsent: 2.
 	
-	theGameSessionId := HfuSpGameSessionsManager createGameSession:  'ConnectFour' . 
+	theGameSessionId := HfuSpGameSessionsManager createGameSession:  'Connect Four' . 
 	view1:= HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId.
 	view1 createComponents.
 	view1Id:= view1 playerViewController player id.
