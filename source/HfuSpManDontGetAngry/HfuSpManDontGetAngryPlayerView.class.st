@@ -166,7 +166,7 @@ HfuSpManDontGetAngryPlayerView >> exEvent: event [
 	"Communication with the playerViewController"
 	event component text = 'Roll'
 		ifTrue: [self playerViewController transmitOrder: 0.^nil].
-	event component text = 'Figure'
+	event component text = 'Put Figure on Board'
 		ifTrue:[self playerViewController transmitOrder: -1. ^nil].
 	event component .
 	self playerViewController transmitOrder: (self getIndexbyBadge: event component).
