@@ -30,7 +30,7 @@ HfuSpGameSessionsManager class >> activeGameSessions: anDictionary [
 ]
 
 { #category : 'API' }
-HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGameSessionIdInteger [
+HfuSpGameSessionsManager class >> addPlayer: anPlayerId ToSession: anGameSessionIdInteger [
 
 	"<^aHfuSpPlayerView>"
 	"ads a Player to a currently ongoing Game and returns the view of newly added player"
@@ -42,7 +42,7 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 	gameTurnStateController= nil
 		ifTrue:[^nil].
 	"is Player already in a game"
-	(gameTurnStateController containsPlayer: anPlayerIdInteger)
+	(gameTurnStateController containsPlayer: anPlayerId)
 		ifTrue:[^nil].
 	"has the game already started"
 	gameTurnStateController gameOngoing = -1
@@ -51,8 +51,8 @@ HfuSpGameSessionsManager class >> addPlayer: anPlayerIdInteger ToSession: anGame
 		ifTrue: [^nil].
 		
 	"get and initialize playerView"
-	gameTurnStateController createAndInitalizePlayerViewController: (HfuSpPlayer players at: (anPlayerIdInteger)).																				
-	playerView:=  gameTurnStateController  getViewOfPlayerWithId: anPlayerIdInteger.
+	gameTurnStateController createAndInitalizePlayerViewController: (HfuSpPlayer players at: (anPlayerId)).																				
+	playerView:=  gameTurnStateController  getViewOfPlayerWithId: anPlayerId.
 	playerView  initializeView.
 	^playerView.
 ]
@@ -96,13 +96,13 @@ HfuSpGameSessionsManager class >> createGameSession: aGameNameString [
 ]
 
 { #category : 'API' }
-HfuSpGameSessionsManager class >> getGameSessionById: anGameIdInteger [
+HfuSpGameSessionsManager class >> getGameSessionById: anGameId [
 
 	"<^aHfuSpTurnStateController>"
 	"Checks if there is a ongoing Game Session with the correct ID.
 	If there is a Game Session its TurnStateController is Returned."
 
-	^self  activeGameSessions at:  anGameIdInteger
+	^self  activeGameSessions at:  anGameId
 ]
 
 { #category : 'Internal' }
@@ -113,18 +113,27 @@ HfuSpGameSessionsManager class >> getNextGameID [
 	 and increments IDOFNextGame"
 	self iDOfNextGame = nil
 		ifTrue: [
-		IDOfNextGame:=-1.].
-	IDOfNextGame := IDOfNextGame + 1.
+		self iDOfNextGame: -1.].
+	self iDOfNextGame: (self iDOfNextGame + 1).
 	^self iDOfNextGame.
 ]
 
 { #category : 'Accessing' }
 HfuSpGameSessionsManager class >> iDOfNextGame [
 
-	"<^iOf Integer>"
+	"<^hOf Integer>"
 	"Answer the IDOfNextGame of the receiver"
 
 	^IDOfNextGame
+]
+
+{ #category : 'Accessing' }
+HfuSpGameSessionsManager class >> iDOfNextGame: anInteger [
+
+	"<anInteger: hOf Integer, ^self>"
+	"Set the IDOfNextGame of the receiver"
+
+	IDOfNextGame := anInteger
 ]
 
 { #category : 'API' }
@@ -138,10 +147,10 @@ HfuSpGameSessionsManager class >> listAllActiveSessions [
 ]
 
 { #category : 'API' }
-HfuSpGameSessionsManager class >> removeActiveGameSession: aGameSessionIdInteger [
+HfuSpGameSessionsManager class >> removeActiveGameSession: aGameSessionId [
 
 	"<^selfr>"
 	"removes a HfuSpTurnstateController from the list of  active Sessions."
 
-	self activeGameSessions removeKey: aGameSessionIdInteger.
+	self activeGameSessions removeKey: aGameSessionId.
 ]

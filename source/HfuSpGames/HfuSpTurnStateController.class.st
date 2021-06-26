@@ -28,14 +28,14 @@ HfuSpTurnStateController >> addPlayerToPlayerViewControllers: anPlayerViewContro
 ]
 
 { #category : 'Internal' }
-HfuSpTurnStateController >> announceVictorToPlayers: aPlayerIdInteger [
+HfuSpTurnStateController >> announceVictorToPlayers: aPlayerId [
 
 	"<^self>"
 	"Notifies all players about the potenital Game end. 
 	 aPlayerID is the Victors ID 
 	 If there is no Victor aPlayerID is -1"
 
-	self playerViewControllers do: [:aController| aController announceVictor: aPlayerIdInteger]
+	self playerViewControllers do: [:aController| aController announceVictor: aPlayerId]
 ]
 
 { #category : 'API' }
@@ -48,13 +48,13 @@ HfuSpTurnStateController >> containsPlayer: anPlayer [
 ]
 
 { #category : 'API' }
-HfuSpTurnStateController >> containsPlayerWithIdInSession: aInteger [
+HfuSpTurnStateController >> containsPlayerWithIdInSession: aIdString [
 
 	"<^(true|false)>"
 	"returns true if a player with Id aIteger is already in this session.
 	 returns false otherwise"
 	
-	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player id = aInteger 
+	self playerViewControllers do:[:eachPlayerViewController| eachPlayerViewController player id = aIdString 
 		ifTrue: [^true]].
 	^false
 ]
@@ -162,13 +162,13 @@ HfuSpTurnStateController >> gameOngoing: anInteger [
 ]
 
 { #category : 'API' }
-HfuSpTurnStateController >> getViewOfPlayerWithId: aInteger [
+HfuSpTurnStateController >> getViewOfPlayerWithId: aIdString [
 
 	"<^boolean>"
 	"checks wether a player identified by an Id is already active in this game"
 
-	(self containsPlayerWithIdInSession:  aInteger)
-		ifTrue: [^(self playerViewControllers at: (HfuSpPlayer players at: aInteger) ) getPlayerView]
+	(self containsPlayerWithIdInSession:  aIdString)
+		ifTrue: [^(self playerViewControllers at: (HfuSpPlayer players at: aIdString) ) getPlayerView]
 		ifFalse: [^nil].
 ]
 

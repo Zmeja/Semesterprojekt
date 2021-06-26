@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : 'API' }
-HfuSpBoardState >> addPlayerToTurnOrder: aPlayerIdInteger [
+HfuSpBoardState >> addPlayerToTurnOrder: aPlayerId [
 
 	"<^self>"
 	"Adds a Player to the turnorder of active players
 	 within said list players are identified via playerID"
 
-	self turnOrder addLast: aPlayerIdInteger
+	self turnOrder addLast: aPlayerId
 ]
 
 { #category : 'API' }
