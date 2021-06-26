@@ -241,22 +241,6 @@ HfuSpTicTacToeBoardState >> secondPlayer: anInteger [
 { #category : 'API' }
 HfuSpTicTacToeBoardState >> setField: aFieldInteger asPlayerOwned: aPlayerInteger [
 
-	"Changes Ownership of a board tile to a Player"
-	|tempBoardTiles playerNumber|
-	
-	"self firstPlayer isNil
-		ifTrue: [self firstPlayer:aPlayerInteger]
-		ifFalse: [ self secondPlayer isNil & (self firstPlayer = aPlayerInteger) not 
-							ifTrue: [self secondPlayer:aPlayerInteger]]."
-	
-"	self firstPlayer = aPlayerInteger 
-		ifTrue: [playerNumber := 1].
-	self secondPlayer = aPlayerInteger 
-		ifTrue: [playerNumber := 2].
-	playerNumber isNil
-		ifTrue: [^nil].
-	tempBoardTiles := self boardTiles."
-	
 	self boardTiles at: aFieldInteger put: aPlayerInteger
 	
 	
