@@ -5,6 +5,44 @@ Class {
 }
 
 { #category : 'Not categorized' }
+HfuSpTicTacToeTests class >> player1_identification [
+
+	"<^self>"
+	"Answer the receiver"
+
+	^Dictionary new
+		at: 'id' put: '00000000000000000001';
+		at: 'email' put:'player1@gmail.com';
+		at: 'family_name' put:'lastName1';
+		at: 'given_name' put:'firstName1';
+		at: 'locale' put:'de';
+		at: 'name' put:'display_Name1';
+		at: 'picture' put:'img_path';
+		at: 'verified_email' put: false;
+		yourself.
+		
+]
+
+{ #category : 'Not categorized' }
+HfuSpTicTacToeTests class >> player2_identification [
+
+	"<^self>"
+	"Answer the receiver"
+
+	^Dictionary new
+		at: 'id' put: '00000000000000000002';
+		at: 'email' put:'player2@gmail.com';
+		at: 'family_name' put:'lastName2';
+		at: 'given_name' put:'firstName2';
+		at: 'locale' put:'de';
+		at: 'name' put:'display_Name2';
+		at: 'picture' put:'img_path';
+		at: 'verified_email' put: false;
+		yourself.
+		
+]
+
+{ #category : 'Not categorized' }
 HfuSpTicTacToeTests class >> testAll [
 
 	"<^self>"
@@ -79,25 +117,25 @@ HfuSpTicTacToeTests class >> testOrders [
 	"<^self>"
 	"Tests creation and execution of Game Orders"
 	|secondGamestate firstGameState theGameSession theGameSessionId view1 view2 view1Id view2Id|
-	HfuSpPlayer  addPlayerIfAbsent: 1.
-	HfuSpPlayer  addPlayerIfAbsent: 2.
+	HfuSpPlayer  addPlayerIfAbsent:  (self player1_identification).
+	HfuSpPlayer  addPlayerIfAbsent:  (self player2_identification).
 
 	
 	
 	theGameSessionId := HfuSpGameSessionsManager createGameSession:  'TicTacToe' . 
-	view1:= HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId.
+	view1:= HfuSpGameSessionsManager addPlayer:  (self player1_identification at: 'id') ToSession: theGameSessionId.
 
 	view1 createComponents.
-	view1Id:= view1 playerViewController player id.
-	view2 := HfuSpGameSessionsManager addPlayer: 2 ToSession: theGameSessionId.
+	view1Id := view1 playerViewController player id.
+	view2 := HfuSpGameSessionsManager addPlayer:  (self player2_identification at: 'id') ToSession: theGameSessionId.
 	view2 createComponents.
-	view2Id:= view2 playerViewController player id.
+	view2Id := view2 playerViewController player id.
 	theGameSession:= HfuSpGameSessionsManager getGameSessionById: theGameSessionId.
 	"can a playe rbe added multiple times to the same session?"
-	self assert: (HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId) = nil .
+	self assert: (HfuSpGameSessionsManager addPlayer: view1Id ToSession: theGameSessionId) = nil .
 	
 	"can more then two players be added to the game ? "
-	self assert: (HfuSpGameSessionsManager addPlayer: 3 ToSession: theGameSessionId) = nil .
+	self assert: (HfuSpGameSessionsManager addPlayer: '0000000000000003' ToSession: theGameSessionId) = nil .
 
 	"can orders be given before a game starts?"
 	view1 playerViewController transmitOrder: 1.

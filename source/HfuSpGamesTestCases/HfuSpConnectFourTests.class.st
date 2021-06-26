@@ -5,6 +5,44 @@ Class {
 }
 
 { #category : 'Not categorized' }
+HfuSpConnectFourTests class >> player1_identification [
+
+	"<^self>"
+	"Answer the receiver"
+
+	^Dictionary new
+		at: 'id' put: '00000000000000000001';
+		at: 'email' put:'player1@gmail.com';
+		at: 'family_name' put:'lastName1';
+		at: 'given_name' put:'firstName1';
+		at: 'locale' put:'de';
+		at: 'name' put:'display_Name1';
+		at: 'picture' put:'img_path';
+		at: 'verified_email' put: false;
+		yourself.
+		
+]
+
+{ #category : 'Not categorized' }
+HfuSpConnectFourTests class >> player2_identification [
+
+	"<^self>"
+	"Answer the receiver"
+
+	^Dictionary new
+		at: 'id' put: '00000000000000000002';
+		at: 'email' put:'player2@gmail.com';
+		at: 'family_name' put:'lastName2';
+		at: 'given_name' put:'firstName2';
+		at: 'locale' put:'de';
+		at: 'name' put:'display_Name2';
+		at: 'picture' put:'img_path';
+		at: 'verified_email' put: false;
+		yourself.
+		
+]
+
+{ #category : 'Not categorized' }
 HfuSpConnectFourTests class >> testAll [
 
 	"<^self>"
@@ -187,36 +225,36 @@ HfuSpConnectFourTests class >> testOrders [
 	"<^self>"
 	"Tests creation and execution of Game Orders"
 	|secondGamestate firstGameState theGameSession theGameSessionId view1 view2 view1Id view2Id gameState|
-	HfuSpPlayer  addPlayerIfAbsent: 1.
-	HfuSpPlayer  addPlayerIfAbsent: 2.
+	HfuSpPlayer  addPlayerIfAbsent: (self player1_identification).
+	HfuSpPlayer  addPlayerIfAbsent: (self player2_identification).
 	
 	theGameSessionId := HfuSpGameSessionsManager createGameSession:  'Connect Four' . 
-	view1:= HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId.
+	view1:= HfuSpGameSessionsManager addPlayer: (self player1_identification at:'id') ToSession: theGameSessionId.
 	view1 createComponents.
-	view1Id:= view1 playerViewController player id.
-	view2 := HfuSpGameSessionsManager addPlayer: 2 ToSession: theGameSessionId.
+	view1Id := view1 playerViewController player id.
+	view2 := HfuSpGameSessionsManager addPlayer: (self player2_identification at:'id') ToSession: theGameSessionId.
 	view2 createComponents.
 	view2Id:= view2 playerViewController player id.
 	theGameSession:= HfuSpGameSessionsManager getGameSessionById: theGameSessionId.
 	gameState:= theGameSession currentBoardState.
 	"can a player be added multiple times to the same session?"
-	self assert: (HfuSpGameSessionsManager addPlayer: 1 ToSession: theGameSessionId) = nil .
+	self assert: (HfuSpGameSessionsManager addPlayer: '0000000000000000000003' ToSession: theGameSessionId) = nil .
 	"can orders be given before a game starts?"
-	self assert:  (view1 playerViewController transmitOrder: 1) = nil description: 'order was prcessed before game start'.
+	self assert:  (view1 playerViewController transmitOrder: view1Id) = nil description: 'order was prcessed before game start'.
 
 	theGameSession startGame.
 	
 	"can gameorders be processed"
 	view1 playerViewController transmitOrder: 1.
-	self assert: (gameState getFieldAtColumn: 1 Row:1 )=1  description: 'game order wasnt processed'.
+	self assert: (gameState getFieldAtColumn: 1 Row:1 )=view1Id  description: 'game order wasnt processed'.
 	
 	"can a player give a order when it isnt his turn"
 	self assert: (view1 playerViewController transmitOrder: 1) =nil  description: 'game order was processed when it wasnt the players turn'.
-	self assert: (gameState getFieldAtColumn: 1 Row:1 )=1  description: 'game order was processed when it wasnt the players turn'.
+	self assert: (gameState getFieldAtColumn: 1 Row:1 )=view1Id  description: 'game order was processed when it wasnt the players turn'.
 	
 	"can both pIayers act in order"
 	view2 playerViewController transmitOrder: 1.
-	self assert: (gameState getFieldAtColumn: 1 Row:2 )=2  description: 'game order wasnt processed'.
+	self assert: (gameState getFieldAtColumn: 1 Row:2 )=view2Id  description: 'game order wasnt processed'.
 	
 	"can you waste your turn by selecting a column which is already full"
 	view1 playerViewController transmitOrder: 2.
