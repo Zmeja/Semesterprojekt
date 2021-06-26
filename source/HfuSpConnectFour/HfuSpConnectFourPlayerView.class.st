@@ -17,7 +17,7 @@ Class {
 HfuSpConnectFourPlayerView >> createComponents [
 	connectRows:= OrderedCollection new.
 	  self
-		addChild: ( startButton := Me5Button new
+		addChild: ( startButton := Me5Button newAirSecondary
 			text: 'start game';
 			addClickEventSelector: #startGameClicked;
 			yourself).
